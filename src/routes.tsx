@@ -1,12 +1,13 @@
-import React, { Fragment } from "react";
-import { Route } from "react-router";
-import Home from "./Pages/Home/home";
-import Login from "./Pages/Login/login";
+import { Fragment } from "react";
+import { Route } from "react-router-dom";
+import Home from "./pages/home/home";
+import Login from "./pages/login/login";
+
 const Router = () => {
   return (
     <Fragment>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
+      <Route exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
     </Fragment>
   );
 };

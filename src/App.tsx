@@ -1,14 +1,14 @@
-import React from "react";
-import Router from "./routes";
+import { Fragment } from "react";
+import Routes from "./routes";
 import { GlobalStyle } from "./theme";
-import Login from "./Pages/Login/login";
-function App() {
+
+const App = () => {
   return (
-    <>
+    <Fragment>
       <GlobalStyle />
-      <Router />
-    </>
+      <Routes />
+    </Fragment>
   );
-}
+};
 
 export default App;

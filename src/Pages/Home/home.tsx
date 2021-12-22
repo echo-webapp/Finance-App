@@ -1,7 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
+import styled from "styled-components";
 
-const Home: any = () => {
-  return <div>Home Page</div>;
+const HomeContainer = styled("div")``;
+
+const Home = () => {
+  return (
+    <Fragment>
+      <HomeContainer>hello</HomeContainer>
+    </Fragment>
+  );
 };
 
 export default Home;
