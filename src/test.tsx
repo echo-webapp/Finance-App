@@ -3,15 +3,22 @@ import styled from "styled-components";
 import Button from "./components/atoms/button";
 import Header from "./components/molecules/header";
 import Input from "./components/atoms/input";
-
-const HomeContainer = styled("div")``;
+import CustomerCard from "./components/molecules/customerCard";
+const HomeContainer = styled("div")`
+  background-color: var(--black);
+  height: 100vh;
+`;
 
 const Test = () => {
   const [input, setinput] = useState("");
 
   return (
-    <Fragment>
-      {/* <Button title="Add new client" type="secondary"></Button> */}
+    <HomeContainer>
+      {/* <Button
+        title="Add new client"
+        type="secondary"
+        clickHandler={() => {}}
+      ></Button>
       <Header
         heading="Your clientele"
         subheading="13 new client"
@@ -25,8 +32,9 @@ const Test = () => {
           value={input}
           setvalue={setinput}
         />
-      </div>
-    </Fragment>
+      </div> */}
+      <CustomerCard />
+    </HomeContainer>
   );
 };
 
