@@ -5,6 +5,7 @@ interface HeaderProps {
   heading: string;
   subheading: string;
   buttonText: string;
+  buttonHandler: any;
 }
 
 const HeaderContainer = styled.div`
@@ -15,7 +16,6 @@ const HeaderContainer = styled.div`
   align-items: center;
   background-color: var(--green);
   border-radius: 93px;
-  margin: auto;
   margin-top: 40px;
 `;
 
@@ -24,6 +24,7 @@ const Details = styled.div``;
 const MainHeading = styled.h1`
   font-size: 88px;
   text-align: right;
+  font-family: "Ostwald";
 `;
 
 const SubHeading = styled.div`
@@ -31,10 +32,20 @@ const SubHeading = styled.div`
   text-align: right;
 `;
 
-const Header = ({ heading, subheading, buttonText }: HeaderProps) => {
+const Header = ({
+  heading,
+  subheading,
+  buttonText,
+  buttonHandler,
+}: HeaderProps) => {
   return (
     <HeaderContainer>
-      <Button title={buttonText} type="primary" clickHandler={() => {}} />
+      <Button
+        title={buttonText}
+        type="primary"
+        clickHandler={buttonHandler}
+        padding="20px 30px"
+      />
       <Details>
         <SubHeading>{subheading}</SubHeading>
         <MainHeading>{heading}</MainHeading>

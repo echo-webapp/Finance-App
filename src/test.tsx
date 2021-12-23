@@ -12,25 +12,39 @@ const HomeContainer = styled("div")`
 const Test = () => {
   const [input, setinput] = useState("");
 
+  const somefunc = () => {
+    console.log("clicked");
+  };
+
   return (
     <HomeContainer>
       {/* <Button
         title="Add new client"
         type="secondary"
         clickHandler={() => {}}
+    <Fragment>
+      <Button
+        title="Add new client"
+        type="secondary"
+        padding="30px 40px"
+        clickHandler={somefunc}
       ></Button>
       <Header
         heading="Your clientele"
         subheading="13 new client"
         buttonText="+ Add New Client"
+        buttonHandler={() => {
+          return null;
+        }}
       />
-      <div style={{ width: 200, height: 30 }}>
+      <div style={{ width: 200 }}>
         <Input
           type="text"
           placeholder="Some Input"
           label="Input Field"
           value={input}
           setvalue={setinput}
+          height={30}
         />
       </div> */}
       <CustomerCard />

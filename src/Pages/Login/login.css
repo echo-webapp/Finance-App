@@ -13,10 +13,6 @@
   background: #ffffff;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 27px;
-  /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; */
 }
 .login-Header {
   margin-top: 90px;
@@ -81,14 +77,14 @@
   font-weight: 550;
 }
 .Login-email {
-  margin-top: 50px;
+  margin-top: 65px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .Login-password {
-  margin-top: 85px;
+  margin-top: 26px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -114,7 +110,7 @@
   color: #343a40;
 }
 .Login-button {
-  margin-top: 60px;
+  margin-top: 46px;
   width: 100%;
   display: flex;
   align-items: center;

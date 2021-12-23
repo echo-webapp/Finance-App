@@ -13,6 +13,9 @@ const Template: ComponentStory<typeof Header> = (args: any) => (
     heading="Your clientele"
     subheading="13 active client"
     buttonText="+ Add new Client"
+    buttonHandler={() => {
+      return null;
+    }}
   />
 );
 

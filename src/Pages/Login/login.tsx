@@ -74,26 +74,28 @@ const Login: any = () => {
         )}
         {flag && (
           <div className="Login-email">
-            <div style={{ width: "80%", height: 56 }}>
+            <div style={{ width: "80%" }}>
               <Input
                 type="email"
                 placeholder="pandey27nilesh@gmail.com"
                 label="Email"
                 value={email}
                 setvalue={setEmail}
+                height={56}
               />
             </div>
           </div>
         )}
         {flag && (
           <div className="Login-password">
-            <div style={{ width: "80%", height: 56 }}>
+            <div style={{ width: "80%" }}>
               <Input
                 type="password"
                 placeholder=""
                 label="Password"
                 value={password}
                 setvalue={setPassword}
+                height={56}
               />
             </div>
           </div>
@@ -104,6 +106,7 @@ const Login: any = () => {
             title="Login"
             type="secondary"
             clickHandler={clickHandler}
+            padding="24px 170px"
           ></Button>
         )}
       </div>

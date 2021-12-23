@@ -3,7 +3,6 @@ import { useState } from "react";
 
 const InputContainer = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,6 +18,7 @@ const Label = styled.div`
 
 const InputBase = styled.input<InputBaseProps>`
   margin-top: 8px;
+  height: ${(props) => props.height}px;
   text-align: right;
   padding: 16px;
   border: 1px solid var(--black);
@@ -34,17 +34,26 @@ const InputBase = styled.input<InputBaseProps>`
 
 interface InputBaseProps {
   focus: boolean;
+  height: number;
 }
 
 interface InputProps {
   label: string;
   placeholder: string;
   type: string;
+  height: number;
   value: any;
   setvalue: any;
 }
 
-const Input = ({ type, label, placeholder, value, setvalue }: InputProps) => {
+const Input = ({
+  type,
+  label,
+  placeholder,
+  height,
+  value,
+  setvalue,
+}: InputProps) => {
   const [focus, setFocus] = useState(false);
 
   return (
@@ -56,6 +65,7 @@ const Input = ({ type, label, placeholder, value, setvalue }: InputProps) => {
         focus={focus}
         type={type}
         value={value}
+        height={height}
         placeholder={placeholder}
         onChange={(e) => setvalue(e.target.value)}
       />

@@ -3,11 +3,13 @@ import styled from "styled-components";
 interface ButtonTypes {
   title: string;
   type: string;
+  padding: string;
   clickHandler: any;
 }
 
 interface ButtonSubContainerProps {
   color: string;
+  padding: string;
 }
 
 const ButtonContainer = styled.div`
@@ -20,12 +22,13 @@ const ButtonContainer = styled.div`
 const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 106px;
-  padding: 30px 48px;
+  padding: ${(props) => props.padding};
   font-size: 24px;
   outline: none;
   text-decoration: none;
   border: none;
   cursor: pointer;
+  font-weight: 600;
   background-color: ${(props) => {
     if (props.color == "primary") {
       return "var(--white)";
@@ -33,6 +36,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
       return "var(--black)";
     }
   }};
+
   color: ${(props) => {
     if (props.color == "primary") {
       return "var(--black)";
@@ -43,10 +47,10 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   }};
 `;
 
-const Button = ({ title, type, clickHandler }: ButtonTypes) => {
+const Button = ({ title, type, padding, clickHandler }: ButtonTypes) => {
   return (
     <ButtonContainer>
-      <ButtonSubContainer color={type} onClick={clickHandler}>
+      <ButtonSubContainer color={type} onClick={clickHandler} padding={padding}>
         {title}
       </ButtonSubContainer>
     </ButtonContainer>

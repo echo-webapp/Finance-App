@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle: any = createGlobalStyle`
+
   :root{
     --black:#343A40;
     --lightgrey:#E5E5E5;
@@ -10,13 +11,12 @@ export const GlobalStyle: any = createGlobalStyle`
     --yellow:#F2E206;
     --white:#FFFFFF;
     --notif:#FDA600;
-    --font:"poppins";
   }
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* font-family:var(--font) !important; */
+    font-family: 'Poppins', sans-serif;
   }
 `;
