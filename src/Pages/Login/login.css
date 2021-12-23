@@ -10,7 +10,6 @@
 }
 .login-Container {
   width: 516px;
-  min-height: 509px;
   background: #ffffff;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 27px;
@@ -80,4 +79,44 @@
 }
 .login-Email1 {
   font-weight: 550;
+}
+.Login-email {
+  margin-top: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Login-password {
+  margin-top: 85px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-divider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  font-weight: 500;
+  font-size: 18px;
+  color: #adb5bd;
+}
+.login-forget {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 80%;
+  font-weight: normal;
+  font-size: 15px;
+  color: #343a40;
+}
+.Login-button {
+  margin-top: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

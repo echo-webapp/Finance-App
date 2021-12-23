@@ -1,4 +1,5 @@
 export { default as Ink } from "./Ink";
+export { default as Line2 } from "./Line2";
 export { default as Arrowdown } from "./Arrowdown";
 export { default as Arrowup } from "./Arrowup";
 export { default as Copy } from "./Copy";

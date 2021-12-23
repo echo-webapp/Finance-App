@@ -1,32 +1,17 @@
-import { Fragment, useState } from "react";
-import styled from "styled-components";
-import Button from "../../components/atoms/button";
-import Header from "../../components/molecules/header";
-import Input from "../../components/atoms/input";
-
-const HomeContainer = styled("div")``;
-
+import React from "react";
+import { useDispatch } from "react-redux";
+import { RemoveToken } from "../../store/Reducers/Auth";
 const Home = () => {
-  const [input, setinput] = useState("");
-
+  const dispatch = useDispatch();
   return (
-    <Fragment>
-      <Button title="Add new client" type="secondary"></Button>
-      <Header
-        heading="Your clientele"
-        subheading="13 new client"
-        buttonText="+ Add New Client"
-      />
-      <div style={{ width: 200, height: 30 }}>
-        <Input
-          type="text"
-          placeholder="Some Input"
-          label="Input Field"
-          value={input}
-          setvalue={setinput}
-        />
-      </div>
-    </Fragment>
+    <button
+      onClick={() => {
+        localStorage.removeItem("token");
+        dispatch(RemoveToken());
+      }}
+    >
+      Logout
+    </button>
   );
 };
 

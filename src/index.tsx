@@ -6,7 +6,7 @@ import { store } from "./store/store";
 import { Provider } from "react-redux";
 
 ReactDOM.render(
-  <BrowserRouter basename="React-Flow">
+  <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>

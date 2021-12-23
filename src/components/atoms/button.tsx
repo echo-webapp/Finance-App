@@ -3,6 +3,7 @@ import styled from "styled-components";
 interface ButtonTypes {
   title: string;
   type: string;
+  clickHandler: any;
 }
 
 interface ButtonSubContainerProps {
@@ -24,6 +25,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   outline: none;
   text-decoration: none;
   border: none;
+  cursor: pointer;
   background-color: ${(props) => {
     if (props.color == "primary") {
       return "var(--white)";
@@ -41,10 +43,12 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   }};
 `;
 
-const Button = ({ title, type }: ButtonTypes) => {
+const Button = ({ title, type, clickHandler }: ButtonTypes) => {
   return (
     <ButtonContainer>
-      <ButtonSubContainer color={type}>{title}</ButtonSubContainer>
+      <ButtonSubContainer color={type} onClick={clickHandler}>
+        {title}
+      </ButtonSubContainer>
     </ButtonContainer>
   );
 };

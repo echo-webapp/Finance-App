@@ -34,7 +34,7 @@ const SubHeading = styled.div`
 const Header = ({ heading, subheading, buttonText }: HeaderProps) => {
   return (
     <HeaderContainer>
-      <Button title={buttonText} type="primary" />
+      <Button title={buttonText} type="primary" clickHandler={() => {}} />
       <Details>
         <SubHeading>{subheading}</SubHeading>
         <MainHeading>{heading}</MainHeading>

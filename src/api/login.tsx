@@ -1,6 +1,6 @@
 export const login: any = async (email: any, password: any) => {
   const url = `https://pikel-it.com/finapp/login.php`;
-  fetch(url, {
+  return fetch(url, {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/json",
@@ -12,7 +12,7 @@ export const login: any = async (email: any, password: any) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data`1`);
+      return data;
     })
     .catch((error) => {
       console.error("Error:", error);

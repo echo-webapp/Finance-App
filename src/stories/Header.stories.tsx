@@ -8,7 +8,7 @@ export default {
   component: Header,
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = (args) => (
+const Template: ComponentStory<typeof Header> = (args: any) => (
   <Header
     heading="Your clientele"
     subheading="13 active client"
