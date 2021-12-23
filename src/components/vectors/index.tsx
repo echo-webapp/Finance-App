@@ -1,4 +1,6 @@
 export { default as Ink } from "./Ink";
+export { default as Arrowdown } from "./Arrowdown";
+export { default as Arrowup } from "./Arrowup";
 export { default as Copy } from "./Copy";
 export { default as Delete } from "./Delete";
 export { default as Filter } from "./Filter";

@@ -10,8 +10,9 @@ export const GlobalStyle: any = createGlobalStyle`
     --yellow:#F2E206;
     --white:#FFFFFF;
     --notif:#FDA600;
-    /* --font: 'Poppins', sans-serif; */
+    --font:"poppins";
   }
+
   * {
     margin: 0;
     padding: 0;
