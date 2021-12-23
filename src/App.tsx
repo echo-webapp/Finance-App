@@ -17,13 +17,11 @@ const App = () => {
     const val = localStorage.getItem("token");
     dispatch(SetToken(val));
   }
-  useEffect(() => {
-    if (token) {
-      history.push("/");
-    } else {
-      history.push("/login");
-    }
-  }, [token]);
+  // useEffect(() => {
+  //   if (!token) {
+  //     history.push("/login");
+  //   }
+  // }, [token]);
   return (
     <Fragment>
       <GlobalStyle />

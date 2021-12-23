@@ -74,7 +74,7 @@ const Login: any = () => {
         )}
         {flag && (
           <div className="Login-email">
-            <div style={{ width: "80%", height: 30 }}>
+            <div style={{ width: "80%", height: 56 }}>
               <Input
                 type="email"
                 placeholder="pandey27nilesh@gmail.com"
@@ -87,7 +87,7 @@ const Login: any = () => {
         )}
         {flag && (
           <div className="Login-password">
-            <div style={{ width: "80%", height: 30 }}>
+            <div style={{ width: "80%", height: 56 }}>
               <Input
                 type="password"
                 placeholder=""
