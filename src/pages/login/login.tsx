@@ -11,6 +11,7 @@ import { SetToken } from "../../store/Reducers/Auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useHistory } from "react-router";
+import Circle from "../../components/atoms/circle";
 const Login: any = () => {
   const history = useHistory();
   const token = useSelector((state: RootState) => {
@@ -39,9 +40,17 @@ const Login: any = () => {
       <div
         className="login-Container"
         style={{
-          minHeight: `${flag ? "800px" : "509px"}`,
+          minHeight: `${flag ? "880px" : "509px"}`,
         }}
       >
+        <div className="login-circle">
+          <div className="login-circle-dark">
+            <Circle color="dark" />
+          </div>
+          <div className="login-circle-light">
+            <Circle color="light" />
+          </div>
+        </div>
         <div className="login-Header">
           <div className="login-text-1">Login</div>
           <div className="login-text-2">Welcome back !</div>

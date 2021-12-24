@@ -1,7 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router";
 import Button from "../atoms/button";
+import Circle from "../atoms/circle";
+
 const Text1 = styled.div`
   margin-top: 5px;
   font-weight: 500;
@@ -15,6 +16,7 @@ const Text2 = styled.div`
 `;
 const MainContainer = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -25,10 +27,32 @@ const MainContainer = styled.div`
   border-radius: 27px;
 `;
 
+const CircleContainer = styled.div`
+  position: absolute;
+  right: 0;
+  top: 0;
+  .dark {
+    position: absolute;
+    transform: translate(65%, -55%);
+    z-index: 220;
+  }
+  .light {
+    transform: translate(40%, -70%);
+  }
+`;
+
 const NewCustomer = () => {
   const history = useHistory();
   return (
     <MainContainer>
+      <CircleContainer>
+        <div className="dark">
+          <Circle color="dark" />
+        </div>
+        <div className="light">
+          <Circle color="light" />
+        </div>
+      </CircleContainer>
       <Text1>New client added !</Text1>
       <Text2>Username@27_#</Text2>
       <div style={{ marginTop: "30px" }}>

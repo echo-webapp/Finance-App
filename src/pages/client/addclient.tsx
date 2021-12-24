@@ -4,6 +4,7 @@ import Input from "../../components/atoms/input";
 import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -76,18 +77,37 @@ const Divider = styled.div`
   transform: translate(-50%, -50%) rotate(90deg);
   background-color: var(--grey);
 `;
+
 const AddClient = () => {
+  //   {"firstName":"ניסיון",
+  //  "lastName":"מהשררת",
+  //  "DOB":"1971-05-09",
+  //  "mobile":"0543451311",
+  //  "eMail":"test1.pikel@gmail.com",
+  //  "Children":"12",
+  //  "CSN":"031734399",
+  //  "marriageStatus":"רווק",
+  //  "additionalAnnIncome":"5000",
+  //  "netWorth":"13000",
+  //  "processStartDate":"2021-01-01",
+  //  "processEndDate":"2021-01-01"
+  //  }
+
   const SubmitData = () => {
     const data = {
-      firstname: firstname,
-      lastname: lastname,
-      marriage_status: marriage_status,
-      dob: dob,
-      noc: noc,
-      id_number: id_number,
-      annual_income: annual_income,
-      annual_outcome: annual_outcome,
-      additional_soi: additional_soi,
+      firstName: firstname,
+      lastName: lastname,
+      DOB: dob,
+      mobile: mobile,
+      marriageStatus: marriage_status,
+      eMail: email,
+      Children: noc,
+      CSN: csn,
+      additionalAnnIncome: annual_income,
+      netWorth: networth,
+      additionalSourceofIncome: additional_soi,
+      processStartData: "2021-01-01",
+      processEndDate: "2021-01-01",
     };
 
     console.log(data);
@@ -95,12 +115,15 @@ const AddClient = () => {
 
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
-  const [marriage_status, setmarriage_status] = useState("");
+  const [email, setemail] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [marriage_status, setmarriage_status] = useState("single");
   const [dob, setdob] = useState("");
   const [noc, setnoc] = useState("");
   const [id_number, setid_number] = useState("");
   const [annual_income, setannual_income] = useState("");
-  const [annual_outcome, setannual_outcome] = useState("");
+  const [networth, setnetworth] = useState("");
+  const [csn, setcsn] = useState("");
   const [additional_soi, setadditional_soi] = useState([]);
 
   return (
@@ -147,7 +170,7 @@ const AddClient = () => {
             </InputContainerLeft>
             <InputContainerLeft>
               <Input
-                type="text"
+                type="date"
                 label="Date of Birth"
                 placeholder="04/12/1989"
                 height={56}
@@ -170,6 +193,26 @@ const AddClient = () => {
                 setvalue={setid_number}
               />
             </InputContainerLeft>
+            <InputContainerLeft>
+              <Input
+                type="email"
+                label="Email"
+                placeholder="test1.pikel@gmail.com"
+                height={56}
+                value={email}
+                setvalue={setemail}
+              />
+            </InputContainerLeft>
+            <InputContainerLeft>
+              <Input
+                type="text"
+                label="Mobile No."
+                placeholder="0543451311"
+                height={56}
+                value={mobile}
+                setvalue={setmobile}
+              />
+            </InputContainerLeft>
           </PInputFields>
         </PersonalDetails>
         <Divider />
@@ -179,18 +222,30 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="text"
-                label="Annual Outcome"
-                placeholder="dfdfdfdfdf"
+                label="Net Worth"
+                placeholder="13000"
                 height={56}
-                value={annual_outcome}
-                setvalue={setannual_outcome}
+                value={networth}
+                setvalue={setnetworth}
               />
             </InputContainerRight>
+
             <InputContainerRight>
               <Input
                 type="text"
-                label="Annual Income"
-                placeholder="scsc"
+                label="CSN"
+                placeholder="031734399"
+                height={56}
+                value={csn}
+                setvalue={setcsn}
+              />
+            </InputContainerRight>
+            <InputContainerRight></InputContainerRight>
+            <InputContainerRight>
+              <Input
+                type="text"
+                label="Additional Annual Income"
+                placeholder="5000"
                 height={56}
                 value={annual_income}
                 setvalue={setannual_income}

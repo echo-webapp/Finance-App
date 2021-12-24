@@ -89,6 +89,7 @@ const CardContainer = styled.div`
   width: 70%;
   padding: 22px;
 `;
+
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();

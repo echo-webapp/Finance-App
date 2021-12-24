@@ -7,6 +7,7 @@ import CustomerCard from "./components/molecules/customerCard";
 import { useDispatch } from "react-redux";
 import { RemoveToken } from "./store/Reducers/Auth";
 import Circle from "./components/atoms/circle";
+import NewCustomer from "./components/molecules/newCustomer";
 
 const HomeContainer = styled("div")`
   background-color: var(--black);
@@ -15,6 +16,7 @@ const HomeContainer = styled("div")`
 
 const Test = () => {
   const [input, setinput] = useState("");
+  console.log("hello in sde");
 
   const somefunc = () => {
     console.log("clicked");
@@ -22,6 +24,13 @@ const Test = () => {
 
   return (
     <HomeContainer>
+      <Button
+        title="Add new client"
+        type="secondary"
+        clickHandler={() => {}}
+        padding="20px 20px"
+      />
+
       {/* <Button
         title="Add new client"
         type="secondary"
@@ -51,7 +60,7 @@ const Test = () => {
           height={30}
         />
       </div> */}
-      {/* <CustomerCard /> */}
+      <NewCustomer />
     </HomeContainer>
   );
 };

@@ -9,6 +9,7 @@
   background: var(--black);
 }
 .login-Container {
+  position: relative;
   width: 516px;
   background: #ffffff;
   box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -115,4 +116,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.login-circle {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.login-circle-dark {
+  position: absolute;
+  transform: translate(65%, -55%);
+  z-index: 220;
+}
+
+.login-circle-light {
+  transform: translate(40%, -70%);
 }
