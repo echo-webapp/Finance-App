@@ -1,7 +1,6 @@
-import React from "react";
 import { Avatar } from "antd";
-import { UserOutlined } from "@ant-design/icons";
 import styled from "styled-components";
+
 const MainContainer = styled("div")`
   padding: 24px;
   width: 388.32px;

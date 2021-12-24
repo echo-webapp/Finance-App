@@ -4,7 +4,10 @@ import Button from "./components/atoms/button";
 import Header from "./components/molecules/header";
 import Input from "./components/atoms/input";
 import CustomerCard from "./components/molecules/customerCard";
-import NewCustomer from "./components/molecules/newCustomer";
+import { useDispatch } from "react-redux";
+import { RemoveToken } from "./store/Reducers/Auth";
+import Circle from "./components/atoms/circle";
+
 const HomeContainer = styled("div")`
   background-color: var(--black);
   height: 100vh;
@@ -48,7 +51,7 @@ const Test = () => {
           height={30}
         />
       </div> */}
-      <NewCustomer />
+      {/* <CustomerCard /> */}
     </HomeContainer>
   );
 };

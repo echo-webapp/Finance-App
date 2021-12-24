@@ -11,11 +11,14 @@ export const GlobalStyle: any = createGlobalStyle`
     --yellow:#F2E206;
     --white:#FFFFFF;
     --notif:#FDA600;
+    --oswald:"Oswald";
+    --font:"Poppins";
   }
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:var(--font);
   }
 `;

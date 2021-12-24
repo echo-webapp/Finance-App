@@ -24,12 +24,14 @@ const Details = styled.div``;
 const MainHeading = styled.h1`
   font-size: 88px;
   text-align: right;
-  font-family: "Ostwald";
+  font-family: var(--oswald);
 `;
 
 const SubHeading = styled.div`
   font-size: 31px;
   text-align: right;
+  font-family: var(--oswald);
+  transform: translateY(40%);
 `;
 
 const Header = ({

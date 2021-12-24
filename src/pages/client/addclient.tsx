@@ -89,6 +89,7 @@ const AddClient = () => {
       annual_outcome: annual_outcome,
       additional_soi: additional_soi,
     };
+
     console.log(data);
   };
 
