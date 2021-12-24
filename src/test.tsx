@@ -11,7 +11,7 @@ import NewCustomer from "./components/molecules/newCustomer";
 
 const HomeContainer = styled("div")`
   background-color: var(--black);
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const Test = () => {

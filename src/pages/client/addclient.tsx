@@ -12,7 +12,7 @@ const AddClientContainer = styled.div`
   gap: 40px;
   background-color: var(--black);
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const Details = styled.div`
