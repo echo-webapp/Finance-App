@@ -1,6 +1,6 @@
 import { Avatar } from "antd";
 import styled from "styled-components";
-
+import { useHistory } from "react-router";
 const MainContainer = styled("div")`
   padding: 24px;
   width: 388.32px;
@@ -10,6 +10,11 @@ const MainContainer = styled("div")`
   border-radius: 31.5294px;
   display: flex;
   margin: 12px;
+  transition: ease-in all 0.2s;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
 `;
 const SubContainer = styled("div")`
   display: flex;
@@ -60,9 +65,17 @@ const SubJob = styled("div")`
   margin-left: 10px;
 `;
 
-const CustomerCard = () => {
+const CustomerCard = ({ data }: any) => {
+  const history = useHistory();
+  const clickHandler: any = (id: any) => {
+    history.push(`/source/${id}`);
+  };
   return (
-    <MainContainer>
+    <MainContainer
+      onClick={() => {
+        clickHandler(data.ID);
+      }}
+    >
       <Avatar
         style={{
           color: "#f56a00",
@@ -79,11 +92,13 @@ const CustomerCard = () => {
         U
       </Avatar>
       <SubContainer>
-        <SubId>aditya@gmail.com</SubId>
-        <SubName>Kristin Watson</SubName>
+        <SubId>{data.eMail}</SubId>
+        <SubName>
+          {data.firstName} {data.lastName}
+        </SubName>
         <SubHeader>
           <SubNew>New</SubNew>
-          <SubJob>CEO | Infotech</SubJob>
+          <SubJob>{data.DOB}</SubJob>
         </SubHeader>
       </SubContainer>
     </MainContainer>

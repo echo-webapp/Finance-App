@@ -115,13 +115,13 @@ const Home = () => {
     <AddClientContainer>
       <Header
         heading="Your clientele"
-        subheading="13 active clients"
+        subheading={`${allClients.length} active clients`}
         buttonText="+ Add New Client"
         buttonHandler={AddClient}
       />
       <SubHeader>
         <SubHeader1>
-          <SubHeaderT1>Active clients (13)</SubHeaderT1>
+          <SubHeaderT1>Active clients ({allClients.length})</SubHeaderT1>
           <InputContainer>
             <SubHeaderInput placeholder="Search...." />
             <div>
@@ -132,7 +132,7 @@ const Home = () => {
       </SubHeader>
       <CardContainer>
         {allClients?.map((data: any) => {
-          return <CustomerCard />;
+          return <CustomerCard data={data} />;
         })}
       </CardContainer>
     </AddClientContainer>

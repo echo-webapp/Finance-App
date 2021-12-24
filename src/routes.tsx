@@ -5,7 +5,7 @@ import Login from "./pages/login/login";
 import Test from "./test";
 import Client from "./pages/client/client";
 import AddClient from "./pages/client/addclient";
-
+import Source from "./pages/source/source";
 const Router = () => {
   return (
     <Fragment>
@@ -14,6 +14,7 @@ const Router = () => {
       <Route exact path="/test" component={Test} />
       <Route exact path="/client" component={Client} />
       <Route exact path="/addclient" component={AddClient} />
+      <Route exact path="/source/:id" component={Source} />
     </Fragment>
   );
 };
