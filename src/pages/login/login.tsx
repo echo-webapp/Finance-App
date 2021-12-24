@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 // import * as S from "./styles";
-import { login } from "./../../api/login";
+import { login } from "../../api/login";
 import { Google } from "../../components/vectors";
 import Input from "../../components/atoms/input";
 import SvgLine2 from "../../components/vectors/Line2";

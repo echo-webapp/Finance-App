@@ -10,6 +10,7 @@ const MainContainer = styled("div")`
   box-shadow: 0px 4.00332px 4.00332px rgba(0, 0, 0, 0.25);
   border-radius: 31.5294px;
   display: flex;
+  margin: 12px;
 `;
 const SubContainer = styled("div")`
   display: flex;
