@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./login.css";
-// import * as S from "./styles";
 import { login } from "../../api/login";
 import { Google } from "../../components/vectors";
 import Input from "../../components/atoms/input";
@@ -12,6 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useHistory } from "react-router";
 import Circle from "../../components/atoms/circle";
+
 const Login: any = () => {
   const history = useHistory();
   const token = useSelector((state: RootState) => {
@@ -35,6 +35,7 @@ const Login: any = () => {
       return;
     }
   };
+
   return (
     <div className="login-MainContainer">
       <div
@@ -45,10 +46,10 @@ const Login: any = () => {
       >
         <div className="login-circle">
           <div className="login-circle-dark">
-            <Circle color="dark" />
+            <Circle color="dark" size="large" />
           </div>
           <div className="login-circle-light">
-            <Circle color="light" />
+            <Circle color="light" size="large" />
           </div>
         </div>
         <div className="login-Header">

@@ -14,6 +14,7 @@ export const get_AllClients: any = async (val: any) => {
       console.error("Error:", error);
     });
 };
+
 export const get_AllTransactions: any = async (val: any) => {
   const url = `https://pikel-it.com/finapp/sources/get.php?clientId=${val}`;
   return fetch(url, {

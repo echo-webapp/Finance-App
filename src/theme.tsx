@@ -11,6 +11,7 @@ export const GlobalStyle: any = createGlobalStyle`
     --yellow:#F2E206;
     --white:#FFFFFF;
     --notif:#FDA600;
+    --card-grey:#C4C4C4;
     --oswald:"Oswald";
     --font:"Poppins";
   }

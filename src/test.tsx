@@ -8,10 +8,14 @@ import { useDispatch } from "react-redux";
 import { RemoveToken } from "./store/Reducers/Auth";
 import Circle from "./components/atoms/circle";
 import NewCustomer from "./components/molecules/newCustomer";
+import SvgAnimate from "./components/vectors/Animate";
+import Physical_card from "./components/molecules/physical_card";
+import BankaccountCard from "./components/molecules/bankaccount_card";
 
 const HomeContainer = styled("div")`
   background-color: var(--black);
   min-height: 100vh;
+  z-index: 100;
 `;
 
 const Test = () => {
@@ -60,7 +64,19 @@ const Test = () => {
           height={30}
         />
       </div> */}
-      <NewCustomer />
+      <div style={{ marginTop: 100 }}></div>
+      <div style={{ marginLeft: 100 }}>
+        <NewCustomer />
+      </div>
+      <div style={{ marginLeft: 300, marginTop: 300 }}>
+        <Physical_card />
+      </div>
+      <div style={{ marginLeft: 300, marginTop: 300 }}>
+        <BankaccountCard theme="light" />
+      </div>
+      <div style={{ marginLeft: 300, marginTop: 300, paddingBottom: 300 }}>
+        <BankaccountCard theme="dark" />
+      </div>
     </HomeContainer>
   );
 };

@@ -27,17 +27,18 @@ const MainContainer = styled.div`
   border-radius: 27px;
 `;
 
-const CircleContainer = styled.div`
+export const CircleContainer = styled.div`
   position: absolute;
   right: 0;
   top: 0;
+  overflow: hidden;
   .dark {
     position: absolute;
-    transform: translate(65%, -55%);
-    z-index: 220;
+    transform: translate(70%, -40%);
+    z-index: 5;
   }
   .light {
-    transform: translate(40%, -70%);
+    transform: translate(35%, -60%);
   }
 `;
 
@@ -47,10 +48,10 @@ const NewCustomer = () => {
     <MainContainer>
       <CircleContainer>
         <div className="dark">
-          <Circle color="dark" />
+          <Circle color="dark" size="large" />
         </div>
         <div className="light">
-          <Circle color="light" />
+          <Circle color="light" size="large" />
         </div>
       </CircleContainer>
       <Text1>New client added !</Text1>
