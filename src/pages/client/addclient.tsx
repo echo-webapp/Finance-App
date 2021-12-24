@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
+import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
 
@@ -28,10 +29,12 @@ const PersonalDetails = styled.div`
   width: 50%;
   padding-left: 75px;
 `;
+
 const FinancialDetails = styled.div`
   width: 50%;
   padding-right: 75px;
 `;
+
 const PHeading = styled.div`
   margin-top: 42px;
   font-size: 28px;
@@ -77,8 +80,20 @@ const Divider = styled.div`
 
 const AddClient = () => {
   const SubmitData = () => {
-    console.log("submit data");
+    const data = {
+      firstname: firstname,
+      lastname: lastname,
+      marriage_status: marriage_status,
+      dob: dob,
+      noc: noc,
+      id_number: id_number,
+      annual_income: annual_income,
+      annual_outcome: annual_outcome,
+      additional_soi: additional_soi,
+    };
+    console.log(data);
   };
+
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [marriage_status, setmarriage_status] = useState("");
@@ -142,6 +157,7 @@ const AddClient = () => {
               />
             </InputContainerLeft>
             <SelectComponent
+              label="Marriage Status"
               value={marriage_status}
               setvalue={setmarriage_status}
             />
@@ -182,6 +198,20 @@ const AddClient = () => {
               />
             </InputContainerRight>
           </FInputFields>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: "20px",
+              width: "100%",
+            }}
+          >
+            <Multiselect
+              label="Additional Source of Income"
+              value={additional_soi}
+              setvalue={setadditional_soi}
+            />
+          </div>
         </FinancialDetails>
       </Details>
     </AddClientContainer>
