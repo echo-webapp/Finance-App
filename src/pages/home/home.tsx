@@ -7,6 +7,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import SvgSearch from "../../components/vectors/Search";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { SetCustomer } from "../../store/Reducers/client";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -88,17 +90,22 @@ const CardContainer = styled.div`
   padding: 22px;
 `;
 const Home = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const [allClients, setAllClients] = useState([]);
-  const token = useSelector((state: RootState) => {
-    return state.isAuth.isAuth;
+  const [token, customerList]: any = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.customerList.customer];
   });
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllClients(token);
       setAllClients(res);
+      dispatch(SetCustomer(res));
     };
-    genResult();
+    if (customerList?.length === 0) genResult();
+    else {
+      setAllClients(customerList);
+    }
   }, []);
   const AddClient = () => {
     history.push("/addclient");

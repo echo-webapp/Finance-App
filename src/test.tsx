@@ -4,8 +4,7 @@ import Button from "./components/atoms/button";
 import Header from "./components/molecules/header";
 import Input from "./components/atoms/input";
 import CustomerCard from "./components/molecules/customerCard";
-import { useDispatch } from "react-redux";
-import { RemoveToken } from "./store/Reducers/Auth";
+import NewCustomer from "./components/molecules/newCustomer";
 const HomeContainer = styled("div")`
   background-color: var(--black);
   height: 100vh;
@@ -13,22 +12,13 @@ const HomeContainer = styled("div")`
 
 const Test = () => {
   const [input, setinput] = useState("");
-  const dispatch = useDispatch();
+
   const somefunc = () => {
     console.log("clicked");
   };
 
   return (
     <HomeContainer>
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          dispatch(RemoveToken());
-        }}
-      >
-        Logout
-      </button>
-
       {/* <Button
         title="Add new client"
         type="secondary"
@@ -58,7 +48,7 @@ const Test = () => {
           height={30}
         />
       </div> */}
-      <CustomerCard />
+      <NewCustomer />
     </HomeContainer>
   );
 };

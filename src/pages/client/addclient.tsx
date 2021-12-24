@@ -4,7 +4,6 @@ import Input from "../../components/atoms/input";
 import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
-
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -77,7 +76,6 @@ const Divider = styled.div`
   transform: translate(-50%, -50%) rotate(90deg);
   background-color: var(--grey);
 `;
-
 const AddClient = () => {
   const SubmitData = () => {
     const data = {
