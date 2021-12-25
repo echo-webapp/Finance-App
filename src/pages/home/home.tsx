@@ -94,9 +94,16 @@ const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [allClients, setAllClients] = useState([]);
+  const [search, setSearch] = useState("");
   const [token, customerList]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
+  const AddClient = () => {
+    history.push("/addclient");
+  };
+  const changeHandler: any = (e: any) => {
+    setSearch(e.target.value);
+  };
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllClients(token);
@@ -108,9 +115,22 @@ const Home = () => {
       setAllClients(customerList);
     }
   }, []);
-  const AddClient = () => {
-    history.push("/addclient");
-  };
+  useEffect(() => {
+    if (search === "") {
+      setAllClients(customerList);
+      return;
+    }
+    let sar: any = [];
+    const search1 = search.toLowerCase();
+    for (let i = 0; i < customerList.length; i++) {
+      let str = customerList[i].firstName.toLowerCase();
+      let str1 = customerList[i].lastName.toLowerCase();
+      if (str.includes(search1) || str1.includes(search1)) {
+        sar.push(customerList[i]);
+      }
+    }
+    setAllClients(sar);
+  }, [search]);
   return (
     <AddClientContainer>
       <Header
@@ -123,7 +143,7 @@ const Home = () => {
         <SubHeader1>
           <SubHeaderT1>Active clients ({allClients.length})</SubHeaderT1>
           <InputContainer>
-            <SubHeaderInput placeholder="Search...." />
+            <SubHeaderInput placeholder="Search...." onChange={changeHandler} />
             <div>
               <SvgSearch />
             </div>
