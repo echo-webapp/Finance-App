@@ -1,6 +1,10 @@
 import { Avatar } from "antd";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { SetCustomer } from "../../store/Reducers/client";
+import { useDispatch } from "react-redux";
 const MainContainer = styled("div")`
   padding: 24px;
   width: 388.32px;
@@ -66,8 +70,30 @@ const SubJob = styled("div")`
 `;
 
 const CustomerCard = ({ data }: any) => {
+  const dispatch = useDispatch();
   const history = useHistory();
+  const allClients = useSelector((state: RootState) => {
+    return state.customerList.customer;
+  });
   const clickHandler: any = (id: any) => {
+    console.log("fgiogdfgdfhg");
+    if (data["new_Client"] === true) {
+      console.log("fgiodfhg");
+      const temp = {
+        ...data,
+      };
+      let result = [];
+      temp["new_Client"] = false;
+      const t1: any = [...allClients];
+      for (let i = 0; i < t1.length; i++) {
+        if (t1[i].ID === temp.ID) {
+          result.push(temp);
+        } else {
+          result.push(t1[i]);
+        }
+      }
+      dispatch(SetCustomer(result));
+    }
     history.push(`/source/${id}`);
   };
   return (
@@ -89,7 +115,7 @@ const CustomerCard = ({ data }: any) => {
           fontSize: "40px",
         }}
       >
-        U
+        {data.firstName[0]}
       </Avatar>
       <SubContainer>
         <SubId>{data.eMail}</SubId>
@@ -97,7 +123,7 @@ const CustomerCard = ({ data }: any) => {
           {data.firstName} {data.lastName}
         </SubName>
         <SubHeader>
-          <SubNew>New</SubNew>
+          {data["new_Client"] === true && <SubNew>New</SubNew>}
           <SubJob>{data.DOB}</SubJob>
         </SubHeader>
       </SubContainer>

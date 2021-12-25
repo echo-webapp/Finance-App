@@ -4,7 +4,15 @@ import Input from "../../components/atoms/input";
 import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
-
+import { create_Client } from "../../api/client";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import Modal from "@mui/material/Modal";
+import NewCustomer from "../../components/molecules/newCustomer";
+import Backdrop from "@mui/material/Backdrop";
+import { SetCustomer } from "../../store/Reducers/client";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -79,6 +87,14 @@ const Divider = styled.div`
 `;
 
 const AddClient = () => {
+  const dispatch = useDispatch();
+  const [token, allClients]: any = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.customerList.customer];
+  });
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   //   {"firstName":"ניסיון",
   //  "lastName":"מהשררת",
   //  "DOB":"1971-05-09",
@@ -93,7 +109,7 @@ const AddClient = () => {
   //  "processEndDate":"2021-01-01"
   //  }
 
-  const SubmitData = () => {
+  const SubmitData = async () => {
     const data = {
       firstName: firstname,
       lastName: lastname,
@@ -105,12 +121,51 @@ const AddClient = () => {
       CSN: csn,
       additionalAnnIncome: annual_income,
       netWorth: networth,
-      additionalSourceofIncome: additional_soi,
+      // additionalSourceofIncome: additional_soi,
       processStartData: "2021-01-01",
       processEndDate: "2021-01-01",
     };
-
-    console.log(data);
+    if (data.firstName === "") {
+      toast.error("🦄 Wow so easy!");
+      return;
+    }
+    if (data.lastName === "") {
+      return;
+    }
+    if (data.DOB === "") {
+      return;
+    }
+    if (data.mobile === "") {
+      return;
+    }
+    if (data.marriageStatus === "") {
+      return;
+    }
+    if (data.Children === "") {
+      return;
+    }
+    if (data.CSN === "") {
+      return;
+    }
+    if (data.additionalAnnIncome === "") {
+      return;
+    }
+    if (data.netWorth === "") {
+      return;
+    }
+    if (data.processStartData === "") {
+      return;
+    }
+    if (data.processEndDate === "") {
+      return;
+    }
+    console.log("sarthak");
+    const res = await create_Client(data, token);
+    const res1 = res[res.length - 1];
+    res1.new_Client = true;
+    const new_res = [res1, ...allClients];
+    dispatch(SetCustomer(new_res));
+    handleOpen();
   };
 
   const [firstname, setfirstname] = useState("");
@@ -128,6 +183,23 @@ const AddClient = () => {
 
   return (
     <AddClientContainer>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <NewCustomer firstname={firstname} lastname={lastname} />
+      </Modal>
       <Header
         heading="Clientele details"
         subheading="Add new"

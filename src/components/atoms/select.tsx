@@ -33,7 +33,7 @@ const SelectComponent = ({ label, value, setvalue }: SelectProps) => {
       >
         <Option value="single">Single</Option>
         <Option value="married">Married</Option>
-        <Option value="widow">Wido</Option>
+        <Option value="widow">Widow</Option>
         <Option value="divorced">Divorced</Option>
       </Select>
     </SelectContainer>

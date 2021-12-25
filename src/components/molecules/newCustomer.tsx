@@ -42,7 +42,7 @@ export const CircleContainer = styled.div`
   }
 `;
 
-const NewCustomer = () => {
+const NewCustomer = ({ firstname, lastname }: any) => {
   const history = useHistory();
   return (
     <MainContainer>
@@ -55,7 +55,9 @@ const NewCustomer = () => {
         </div>
       </CircleContainer>
       <Text1>New client added !</Text1>
-      <Text2>Username@27_#</Text2>
+      <Text2>
+        {firstname} {lastname}
+      </Text2>
       <div style={{ marginTop: "30px" }}>
         <Button
           title="Go to manager dashboard"

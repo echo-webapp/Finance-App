@@ -7,7 +7,7 @@ import { SetToken } from "./store/Reducers/Auth";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import { useHistory } from "react-router";
-
+import { ToastContainer } from "react-toastify";
 const App = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const App = () => {
   // }, [token]);
   return (
     <Fragment>
+      <ToastContainer />
       <GlobalStyle />
       <Routes />
     </Fragment>
