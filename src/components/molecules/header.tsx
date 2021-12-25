@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: var(--green);
+  background: var(--green-gradient);
   border-radius: 93px;
   margin-top: 40px;
 `;

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Circle from "../atoms/circle";
 import SvgVisa from "../vectors/Visa";
+import SvgCopy from "../vectors/Copy";
+import SvgDelete from "../vectors/Delete";
 
 interface ContainerProps {
   theme: string;
@@ -98,13 +100,159 @@ export const CircleContainer = styled.div`
     border-radius: 27px;
     z-index: 5;
   }
+  .light1 {
+    transform: translate(-30%, -30%);
+    box-shadow: 0px 4.56px 4.56px rgba(0, 0, 0, 0.25);
+    border-radius: 27px;
+    z-index: 5;
+  }
+  .dark1 {
+    position: absolute;
+    transform: translate(-40%, 50%);
+  }
+`;
+
+// styles for size == "large"
+interface LargeContainerProps {
+  theme: string;
+}
+
+const LargeContainer = styled.div<LargeContainerProps>`
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 300px;
+  background: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--black)";
+    }
+    if (props.theme == "light") {
+      return "var(--card-grey)";
+    }
+  }};
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--white)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
+  box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
+  border-radius: 24.2169px;
+  padding: 16px;
+  .card-holder-name {
+    text-align: right;
+    font-weight: 600;
+    font-size: 16px;
+  }
+`;
+
+const ImageContainer1 = styled(ImageContainer)`
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+  margin-bottom: 24px;
+  .text {
+    transform: translateY(-20%);
+  }
+`;
+
+const CardDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+  margin-top: 24px;
+  .account-balance {
+    .balance {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .number {
+      font-weight: 600;
+      font-size: 20px;
+      text-align: left;
+      transform: translateY(-10%);
+    }
+  }
+
+  .number-and-icon {
+    display: flex;
+    gap: 12px;
+    .copy-icon {
+      svg {
+        vertical-align: middle;
+      }
+    }
+  }
+  .date {
+    font-weight: 500;
+    font-size: 12px;
+  }
+`;
+
+const DeleteIcon = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 10px;
+  top: 10px;
+  /* transform: translate(-50%, -50%); */
+  z-index: 9;
 `;
 
 interface BankaccountCardProps {
   theme: string;
+  size: string;
 }
 
-const BankaccountCard = ({ theme }: BankaccountCardProps) => {
+const BankaccountCard = ({ theme, size }: BankaccountCardProps) => {
+  if (size == "large") {
+    return (
+      <LargeContainer theme={theme}>
+        <DeleteIcon>
+          <SvgDelete width={20} height={20} />
+        </DeleteIcon>
+        <CircleContainer theme={theme}>
+          <div className="dark1">
+            <Circle color="dark" size="small" />
+          </div>
+          <div className="light1">
+            <Circle color="light" size="small" />
+          </div>
+        </CircleContainer>
+        <ImageContainer1 theme={theme}>
+          <div className="image">
+            <SvgVisa
+              color={theme == "dark" ? "white" : "black"}
+              width={35}
+              height={20}
+            />
+          </div>
+          <div className="text">Credit Card</div>
+        </ImageContainer1>
+        <div className="card-holder-name">Wade Warren</div>
+        <CardDetails theme={theme}>
+          <div className="account-balance">
+            <div className="balance">Balance</div>
+            <div className="number">$1500</div>
+          </div>
+          <div className="account-number-with-date">
+            <div className="number-and-icon">
+              <div className="copy-icon">
+                <SvgCopy color={theme == "dark" ? "white" : "black"} />
+              </div>
+              <div className="account-number">xxx 652110</div>
+            </div>
+            <div className="date">06/25</div>
+          </div>
+        </CardDetails>
+      </LargeContainer>
+    );
+  }
+
   return (
     <Container theme={theme}>
       <CircleContainer>

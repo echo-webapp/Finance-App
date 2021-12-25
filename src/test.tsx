@@ -9,11 +9,13 @@ import { RemoveToken } from "./store/Reducers/Auth";
 import Circle from "./components/atoms/circle";
 import NewCustomer from "./components/molecules/newCustomer";
 import SvgAnimate from "./components/vectors/Animate";
-import Physical_card from "./components/molecules/physical_card";
+import PhysicalCard_small from "./components/molecules/physicalCard_small";
+import PhysicalCard_large from "./components/molecules/physicalCard_large";
 import BankaccountCard from "./components/molecules/bankaccount_card";
 import ClientDataGrid from "./components/molecules/clientDataGrid";
+
 const HomeContainer = styled("div")`
-  background-color: var(--black);
+  background-color: #aaa;
   min-height: 100vh;
   z-index: 100;
 `;
@@ -107,20 +109,38 @@ const Test = () => {
           height={30}
         />
       </div> */}
-      {/* <div style={{ marginTop: 100 }}></div>
+      <div style={{ marginTop: 100 }}></div>
       <div style={{ marginLeft: 100 }}>
         <NewCustomer />
       </div>
-      <div style={{ marginLeft: 300, marginTop: 300 }}>
-        <Physical_card />
+      <div
+        style={{ marginLeft: 300, marginTop: 300, display: "flex", gap: 20 }}
+      >
+        {/* <PhysicalCard_small theme="dark" /> */}
+        <PhysicalCard_large theme="light" />
       </div>
-      <div style={{ marginLeft: 300, marginTop: 300 }}>
-        <BankaccountCard theme="light" />
+
+        <PhysicalCard_small theme="dark" />
+      {/* <div style={{ marginLeft: 300, marginTop: 300 }}>
+        <BankaccountCard theme="light" size="small" />
       </div>
       <div style={{ marginLeft: 300, marginTop: 300, paddingBottom: 300 }}>
-        <BankaccountCard theme="dark" />
+        <BankaccountCard theme="dark" size="small" />
       </div> */}
       <ClientDataGrid columns={columns} rows={rows} />
+      <div
+        style={{
+          marginLeft: 300,
+          marginTop: 300,
+          paddingBottom: 300,
+          display: "flex",
+          gap: 20,
+        }}
+      >
+        {/* <BankaccountCard theme="dark" size="small" /> */}
+        <BankaccountCard theme="dark" size="large" />
+        <BankaccountCard theme="light" size="large" />
+      </div>
     </HomeContainer>
   );
 };

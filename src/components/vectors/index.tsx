@@ -11,3 +11,5 @@ export { default as Master } from "./Master";
 export { default as Search } from "./Search";
 export { default as TickMark } from "./TickMark";
 export { default as Visa } from "./Visa";
+export { default as Visa1 } from "./Visa1";
+export { default as Visa2 } from "./Visa2";

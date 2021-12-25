@@ -1,26 +1,68 @@
 import styled from "styled-components";
 import Circle from "../atoms/circle";
 
-const Container = styled.div`
+interface ContainerProps {
+  theme: string;
+}
+
+const Container = styled.div<ContainerProps>`
   position: relative;
-  background: var(--green);
+  background: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--green-gradient)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
   border-radius: 24.2169px;
   width: 300px;
 `;
 
-const DetailsContainer = styled.div`
+interface DetailsContainerProps {
+  theme: string;
+}
+
+const DetailsContainer = styled.div<DetailsContainerProps>`
   padding: 16px;
   box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
   border-radius: 24.3404px;
-  background-color: var(--black);
+  background-color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--black)";
+    }
+    if (props.theme == "light") {
+      return "var(--card-grey)";
+    }
+  }};
   text-align: right;
-  color: var(--white);
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--white)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
 `;
 
-const BalanceContainer = styled.div`
+interface BalanceContainerProps {
+  theme: string;
+}
+
+const BalanceContainer = styled.div<BalanceContainerProps>`
   padding: 16px;
   padding-top: 10px;
+  padding-bottom: 0px;
   text-align: right;
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--black)";
+    }
+    if (props.theme == "light") {
+      return "var(--white)";
+    }
+  }};
   .balance-text {
     font-weight: 500;
     font-size: 16px;
@@ -38,10 +80,21 @@ const SubContainer = styled.div`
   }
 `;
 
-const Heading = styled.div`
+interface HeadingProps {
+  theme: string;
+}
+
+const Heading = styled.div<HeadingProps>`
   font-size: 16px;
   font-weight: 500;
-  color: var(--green);
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--green)";
+    }
+    if (props.theme == "light") {
+      return "var(--white)";
+    }
+  }};
 `;
 
 const Info = styled.div`
@@ -76,9 +129,13 @@ export const CircleContainer = styled.div`
   }
 `;
 
-const Physical_card = () => {
+interface Physical_cardProps {
+  theme: string;
+}
+
+const PhysicalCard_small = ({ theme }: Physical_cardProps) => {
   return (
-    <Container>
+    <Container theme={theme}>
       <CircleContainer>
         <div className="dark">
           <Circle color="dark" size="small" />
@@ -87,7 +144,7 @@ const Physical_card = () => {
           <Circle color="light" size="small" />
         </div>
       </CircleContainer>
-      <DetailsContainer>
+      <DetailsContainer theme={theme}>
         <SubContainer>
           <Heading>Primary Account</Heading>
           <Info>
@@ -102,7 +159,7 @@ const Physical_card = () => {
           </Info>
         </SubContainer>
       </DetailsContainer>
-      <BalanceContainer>
+      <BalanceContainer theme={theme}>
         <div className="balance-text">Balance</div>
         <div className="balance-amount">$21,420</div>
       </BalanceContainer>
@@ -110,4 +167,4 @@ const Physical_card = () => {
   );
 };
 
-export default Physical_card;
+export default PhysicalCard_small;
