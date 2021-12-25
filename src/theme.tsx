@@ -22,4 +22,22 @@ export const GlobalStyle: any = createGlobalStyle`
     box-sizing: border-box;
     font-family:var(--font);
   }
+  .MuiDataGrid-root{
+    border: 2px solid #E5E5E5 !important;
+    padding: 25px !important;
+    border-radius: 93px !important;
+    color:white !important;
+  }
+  .MuiDataGrid-columnHeaders{
+    color: #CCF148 !important;
+  }
+  .MuiTablePagination-root{
+    color: #FFFFFF !important;
+  }
+  .MuiDataGrid-columnSeparator{
+    visibility: hidden;
+  }
+  /* .MuiButtonBase-root{
+    color: #FDA600 !important;
+  } */
 `;

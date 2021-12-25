@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../../components/molecules/header";
 import styled from "styled-components";
 import { Ink } from "../../components/vectors";
+import { useHistory } from "react-router";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -17,6 +18,7 @@ const AddText = styled.div`
   color: #ffffff;
 `;
 const NoSource = () => {
+  const history = useHistory();
   return (
     <AddClientContainer>
       <Header
@@ -24,7 +26,7 @@ const NoSource = () => {
         subheading="@WW24"
         buttonText="+ Add a Source"
         buttonHandler={() => {
-          console.log("Add a new income source");
+          history.push("/addsource");
         }}
       />
       <div style={{ marginTop: "20px" }}>
