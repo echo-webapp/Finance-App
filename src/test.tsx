@@ -15,7 +15,7 @@ import BankaccountCard from "./components/molecules/bankaccount_card";
 import ClientDataGrid from "./components/molecules/clientDataGrid";
 
 const HomeContainer = styled("div")`
-  background-color: #aaa;
+  background-color: var(--black);
   min-height: 100vh;
   z-index: 100;
 `;
@@ -120,7 +120,7 @@ const Test = () => {
         <PhysicalCard_large theme="light" />
       </div>
 
-        <PhysicalCard_small theme="dark" />
+      <PhysicalCard_small theme="dark" />
       {/* <div style={{ marginLeft: 300, marginTop: 300 }}>
         <BankaccountCard theme="light" size="small" />
       </div>

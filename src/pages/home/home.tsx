@@ -39,7 +39,7 @@ const SubHeaderT1 = styled.div`
   justify-content: center;
   align-items: center;
   padding: 16px 32px;
-  width: 206px;
+  width: 236px;
   height: 48px;
   background: #ffffff;
   border-radius: 106px;

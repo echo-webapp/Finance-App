@@ -11,7 +11,15 @@ const Source = ({ match }: any) => {
     };
     genResult();
   }, []);
-  return <>{sources.length === 0 ? <NoSource /> : <AllTransactions />}</>;
+  return (
+    <>
+      {sources.length === 0 ? (
+        <NoSource />
+      ) : (
+        <AllTransactions sources={sources} />
+      )}
+    </>
+  );
 };
 
 export default Source;
