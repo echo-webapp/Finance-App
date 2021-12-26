@@ -17,7 +17,7 @@ const AddText = styled.div`
   text-align: center;
   color: #ffffff;
 `;
-const NoSource = () => {
+const NoSource = ({ id }: any) => {
   const history = useHistory();
   return (
     <AddClientContainer>
@@ -26,7 +26,7 @@ const NoSource = () => {
         subheading="@WW24"
         buttonText="+ Add a Source"
         buttonHandler={() => {
-          history.push("/addsource");
+          history.push(`/addsource/${id}`);
         }}
       />
       <div style={{ marginTop: "20px" }}>

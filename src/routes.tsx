@@ -16,7 +16,7 @@ const Router = () => {
       <Route exact path="/client" component={Client} />
       <Route exact path="/addclient" component={AddClient} />
       <Route exact path="/source/:id" component={Source} />
-      <Route exact path="/addsource" component={AddSource} />
+      <Route exact path="/addsource/:id" component={AddSource} />
     </Fragment>
   );
 };

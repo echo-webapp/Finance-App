@@ -1,0 +1,52 @@
+import React from "react";
+import Logout from "../vectors/logout";
+import styled from "styled-components";
+const SubHeaderT1 = styled.div`
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* padding: 16px 32px; */
+  width: 180px;
+  height: 52px;
+  border-radius: 106px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+`;
+const Text = styled.div`
+  font-weight: 600;
+  font-size: 16px;
+  color: #ffffff;
+`;
+const Sub = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const Sub1 = styled.div`
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+`;
+const LogOutButton = () => {
+  return (
+    <SubHeaderT1
+      onClick={() => {
+        localStorage.removeItem("token");
+        window.location.reload();
+      }}
+    >
+      <Sub>
+        <Logout />
+        <Sub1>
+          <Text>Log out</Text>
+        </Sub1>
+      </Sub>
+    </SubHeaderT1>
+  );
+};
+
+export default LogOutButton;

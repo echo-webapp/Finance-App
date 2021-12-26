@@ -50,3 +50,23 @@ export const get_AllTransactions: any = async (val: any) => {
       console.error("Error:", error);
     });
 };
+
+export const create_ClientSource = async (data: any, id: any) => {
+  const url = `https://pikel-it.com/finapp/sources/get.php?clientId=${id}`;
+  return fetch(url, {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...data,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};

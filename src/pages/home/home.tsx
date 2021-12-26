@@ -9,6 +9,7 @@ import SvgSearch from "../../components/vectors/Search";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { SetCustomer } from "../../store/Reducers/client";
+import Logout from "../../components/atoms/logOutButton";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -141,7 +142,7 @@ const Home = () => {
       />
       <SubHeader>
         <SubHeader1>
-          <SubHeaderT1>Active clients ({allClients.length})</SubHeaderT1>
+          <Logout />
           <InputContainer>
             <SubHeaderInput placeholder="Search...." onChange={changeHandler} />
             <div>

@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import AddBankDetails from "./addBankDetails";
 import AddCreditCard from "./addCreditCard";
+import { create_ClientSource } from "./../../api/client";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -20,60 +21,6 @@ const MainContainer = styled.div`
   background: var(--lightgrey);
   border-radius: 93px;
   margin: 39px;
-`;
-const SubContainer1 = styled.div`
-  padding: 120px;
-  padding-top: 50px;
-  padding-bottom: 0px;
-  width: 1030px;
-  height: 537px;
-  background: var(--white);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 93px;
-`;
-const SubContainer2 = styled.div`
-  margin-top: 35px;
-  margin-left: 42px;
-`;
-const SubHeader = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  font-weight: 600;
-  font-size: 28px;
-  text-align: right;
-  color: #343a40;
-`;
-const SubContainer11 = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-`;
-const SubContainerItem = styled.div`
-  width: 100%;
-  height: 303px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-`;
-const CSVButton = styled.button`
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  width: 178px;
-  height: 48px;
-  border: 1px solid #000000;
-  box-sizing: border-box;
-  border-radius: 106px;
-  font-weight: 500;
-  font-size: 16px;
-  color: var(--black);
 `;
 const SubContainer3 = styled.div`
   width: 365px;
@@ -145,24 +92,50 @@ const SubContainerBankText = styled.div<SubContainerBankTextProps>`
   }};
 `;
 // const SubContainer11 = styled.div``;
-const AddSource = () => {
+
+const Initial_State: any = {
+  sourceType: "",
+  sourceName: "",
+  bankName: "",
+  bankBranch: "",
+  bankAccountNumber: "",
+  ACTIVE: "",
+  ccType: "",
+  ccProvider: "",
+  cc4digits: "",
+  sourceCreditLimit: "",
+  sourceFileName: "",
+  base64File: "",
+};
+const AddSource = ({ match }: any) => {
+  const [sourceData, setSouceData]: any = useState(Initial_State);
   const [selected, setSelected] = useState("bank");
+  const submitHandler = async () => {
+    console.log(sourceData);
+    const res = await create_ClientSource(sourceData, match.params.id);
+    console.log(res);
+  };
   return (
     <AddClientContainer>
       <Header
         heading="Add a new income source"
         subheading="@WW24"
         buttonText="Submit source details"
-        buttonHandler={() => {}}
+        buttonHandler={submitHandler}
       />
       <MainContainer>
-        {selected === "bank" ? <AddBankDetails /> : <AddCreditCard />}
+        {selected === "bank" ? (
+          <AddBankDetails sourceData={sourceData} setSouceData={setSouceData} />
+        ) : (
+          <AddCreditCard sourceData={sourceData} setSouceData={setSouceData} />
+        )}
         <SubContainer3>
           <SubContainer3Text>Select source type</SubContainer3Text>
           <SubContainerBankText
             name="bank"
             selected={selected}
             onClick={() => {
+              setSouceData(Initial_State);
               setSelected("bank");
             }}
           >
@@ -172,6 +145,7 @@ const AddSource = () => {
             name="card"
             selected={selected}
             onClick={() => {
+              setSouceData(Initial_State);
               setSelected("card");
             }}
           >
