@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { get_AllTransactions } from "../../api/client";
 import NoSource from "./NoSource";
 import AllTransactions from "./AllTransactions";
+
 const Source = ({ match }: any) => {
   const [sources, setAllSources] = useState([]);
   useEffect(() => {
@@ -11,12 +12,13 @@ const Source = ({ match }: any) => {
     };
     genResult();
   }, []);
+
   return (
     <>
       {sources.length === 0 ? (
         <NoSource id={match.params.id} />
       ) : (
-        <AllTransactions sources={sources} />
+        <AllTransactions id={match.params.id} />
       )}
     </>
   );

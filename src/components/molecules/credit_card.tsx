@@ -18,6 +18,11 @@ const Container = styled.div<ContainerProps>`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  border-radius: 24.2169px;
+  width: 300px;
+  height: 77px;
+  box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
+
   background: ${(props) => {
     if (props.theme == "light") {
       return "var(--card-grey)";
@@ -26,10 +31,7 @@ const Container = styled.div<ContainerProps>`
       return "var(--black)";
     }
   }};
-  border-radius: 24.2169px;
-  width: 300px;
-  height: 77px;
-  box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
+
   color: ${(props) => {
     if (props.theme == "light") {
       return "var(--black)";
@@ -38,6 +40,17 @@ const Container = styled.div<ContainerProps>`
       return "var(--white)";
     }
   }};
+
+  transform: ${(props) => {
+    if (props.theme == "light") {
+      return "scale(0.8)";
+    }
+    if (props.theme == "dark") {
+      return "none";
+    }
+  }};
+
+  transition: all 0.5s ease-in;
   .price {
     font-size: 20px;
     transform: translateX(8px);
@@ -75,6 +88,7 @@ const ImageContainer = styled.div<ImageContainerProps>`
       return "var(--white)";
     }
   }};
+  transition: all 0.5s ease-in;
   .image {
     font-weight: 500;
   }
@@ -138,6 +152,7 @@ const LargeContainer = styled.div<LargeContainerProps>`
       return "var(--black)";
     }
   }};
+  transition: all 0.5s ease-in;
   box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
   border-radius: 24.2169px;
   padding: 16px;
@@ -199,16 +214,16 @@ const DeleteIcon = styled.div`
   justify-content: center;
   left: 10px;
   top: 10px;
-  /* transform: translate(-50%, -50%); */
   z-index: 9;
 `;
 
 interface BankaccountCardProps {
   theme: string;
   size: string;
+  details: string;
 }
 
-const BankaccountCard = ({ theme, size }: BankaccountCardProps) => {
+const CreditCard = ({ theme, size, details }: BankaccountCardProps) => {
   if (size == "large") {
     return (
       <LargeContainer theme={theme}>
@@ -280,4 +295,4 @@ const BankaccountCard = ({ theme, size }: BankaccountCardProps) => {
   );
 };
 
-export default BankaccountCard;
+export default CreditCard;

@@ -75,6 +75,7 @@ const CustomerCard = ({ data }: any) => {
   const allClients = useSelector((state: RootState) => {
     return state.customerList.customer;
   });
+
   const clickHandler: any = (id: any) => {
     console.log("fgiogdfgdfhg");
     if (data["new_Client"] === true) {
@@ -96,6 +97,7 @@ const CustomerCard = ({ data }: any) => {
     }
     history.push(`/source/${id}`);
   };
+
   return (
     <MainContainer
       onClick={() => {

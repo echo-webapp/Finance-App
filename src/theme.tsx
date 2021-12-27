@@ -28,6 +28,7 @@ export const GlobalStyle: any = createGlobalStyle`
     padding: 25px !important;
     border-radius: 93px !important;
     color:white !important;
+    background-color: var(--black);
   }
   .MuiDataGrid-columnHeaders{
     color: #CCF148 !important;
@@ -38,7 +39,13 @@ export const GlobalStyle: any = createGlobalStyle`
   .MuiDataGrid-columnSeparator{
     visibility: hidden;
   }
-  /* .MuiButtonBase-root{
-    color: #FDA600 !important;
-  } */
+  .MuiDataGrid-rowSeparator{
+    visibility: hidden;
+  }
+  .MuiDataGrid-cell{
+    border:none !important;;
+  }
+  .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root{
+    color:white !important;
+  }
 `;

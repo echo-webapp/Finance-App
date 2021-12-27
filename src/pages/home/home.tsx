@@ -10,6 +10,7 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { SetCustomer } from "../../store/Reducers/client";
 import Logout from "../../components/atoms/logOutButton";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;

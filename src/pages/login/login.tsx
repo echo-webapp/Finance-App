@@ -21,7 +21,6 @@ const Login: any = () => {
     history.push("/");
   }
   const dispatch = useDispatch();
-  const [flag, setFlag] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const clickHandler: any = async () => {
@@ -41,7 +40,7 @@ const Login: any = () => {
       <div
         className="login-Container"
         style={{
-          minHeight: `${flag ? "880px" : "509px"}`,
+          minHeight: "700px",
         }}
       >
         <div className="login-circle">
@@ -56,69 +55,40 @@ const Login: any = () => {
           <div className="login-text-1">Login</div>
           <div className="login-text-2">Welcome back !</div>
         </div>
-        <div className="login-Google">
-          <button className="login-Google1" onClick={() => {}}>
-            <Google />
-            <span style={{ marginLeft: "10px" }}>Login with Google</span>
-          </button>
+        <div className="Login-email">
+          <div style={{ width: "80%" }}>
+            <Input
+              type="email"
+              placeholder="pandey27nilesh@gmail.com"
+              label="Email"
+              value={email}
+              setvalue={setEmail}
+              height={56}
+            />
+          </div>
         </div>
-        <div className="login-divider">
-          <SvgLine2 width={"172px"} />
-          <span>OR</span>
-          <SvgLine2 width={"172px"} />
+
+        <div className="Login-password">
+          <div style={{ width: "80%" }}>
+            <Input
+              type="password"
+              placeholder=""
+              label="Password"
+              value={password}
+              setvalue={setPassword}
+              height={56}
+            />
+          </div>
         </div>
-        {!flag && (
-          <div
-            className="login-Email"
-            onClick={() => {
-              setFlag(true);
-            }}
-          >
-            Using your{" "}
-            <div
-              style={{ marginLeft: "5px", display: "flex", fontWeight: 700 }}
-            >
-              Email
-            </div>
-          </div>
-        )}
-        {flag && (
-          <div className="Login-email">
-            <div style={{ width: "80%" }}>
-              <Input
-                type="email"
-                placeholder="pandey27nilesh@gmail.com"
-                label="Email"
-                value={email}
-                setvalue={setEmail}
-                height={56}
-              />
-            </div>
-          </div>
-        )}
-        {flag && (
-          <div className="Login-password">
-            <div style={{ width: "80%" }}>
-              <Input
-                type="password"
-                placeholder=""
-                label="Password"
-                value={password}
-                setvalue={setPassword}
-                height={56}
-              />
-            </div>
-          </div>
-        )}
+
         <div className="Login-button"></div>
-        {flag && (
-          <Button
-            title="Login"
-            type="secondary"
-            clickHandler={clickHandler}
-            padding="24px 170px"
-          ></Button>
-        )}
+
+        <Button
+          title="Login"
+          type="secondary"
+          clickHandler={clickHandler}
+          padding="24px 170px"
+        ></Button>
       </div>
     </div>
   );

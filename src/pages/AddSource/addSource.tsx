@@ -5,6 +5,7 @@ import AddBankDetails from "./addBankDetails";
 import AddCreditCard from "./addCreditCard";
 import { create_ClientSource } from "./../../api/client";
 import { useHistory } from "react-router";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -22,14 +23,15 @@ const MainContainer = styled.div`
   border-radius: 93px;
   margin: 39px;
 `;
-const SubContainer3 = styled.div`
+
+const SubContainer = styled.div`
   width: 365px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 `;
-const SubContainer3Text = styled.div`
+const SubContainerText = styled.div`
   font-weight: 600;
   font-size: 28px;
   color: var(--black);
@@ -40,6 +42,7 @@ interface SubContainerBankTextProps {
   name: string;
   selected: string;
 }
+
 const SubContainerBankText = styled.div<SubContainerBankTextProps>`
   font-weight: 500;
   font-size: 18px;
@@ -110,13 +113,21 @@ const Initial_State: any = {
 const AddSource = ({ match }: any) => {
   const history = useHistory();
   const [sourceData, setSouceData]: any = useState(Initial_State);
-  const [selected, setSelected] = useState("bank");
+  const [selected, setSelected]: any = useState("bank");
+  useEffect(() => {
+    console.log(history.location.state);
+    if (history.location.state) {
+      setSelected(history.location.state);
+    }
+  }, []);
+
   const submitHandler = async () => {
     const res = await create_ClientSource(sourceData, match.params.id);
     if (Array.isArray(res)) {
       history.push(`/source/${match.params.id}`);
     }
   };
+
   return (
     <AddClientContainer>
       <Header
@@ -131,8 +142,8 @@ const AddSource = ({ match }: any) => {
         ) : (
           <AddCreditCard sourceData={sourceData} setSouceData={setSouceData} />
         )}
-        <SubContainer3>
-          <SubContainer3Text>Select source type</SubContainer3Text>
+        <SubContainer>
+          <SubContainerText>Select source type</SubContainerText>
           <SubContainerBankText
             name="bank"
             selected={selected}
@@ -153,7 +164,7 @@ const AddSource = ({ match }: any) => {
           >
             Credit Card
           </SubContainerBankText>
-        </SubContainer3>
+        </SubContainer>
       </MainContainer>
     </AddClientContainer>
   );

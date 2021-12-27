@@ -10,6 +10,7 @@ interface HeaderProps {
 
 const HeaderContainer = styled.div`
   width: 80%;
+  max-width: 1500px;
   height: 280px;
   display: flex;
   justify-content: space-around;
@@ -17,6 +18,15 @@ const HeaderContainer = styled.div`
   background: var(--green-gradient);
   border-radius: 93px;
   margin-top: 40px;
+  @media only screen and (max-width: 1700px) {
+    width: 100%;
+    transform: scale(0.9);
+  }
+
+  @media only screen and (max-width: 1600px) {
+    width: 100%;
+    transform: scale(0.9);
+  }
 `;
 
 const Details = styled.div``;

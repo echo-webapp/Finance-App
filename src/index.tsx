@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "./store/store";
 import { Provider } from "react-redux";
 import "antd/dist/antd.css";
+import "react-toastify/dist/ReactToastify.css";
+
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>

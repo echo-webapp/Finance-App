@@ -13,6 +13,7 @@ import Backdrop from "@mui/material/Backdrop";
 import { SetCustomer } from "../../store/Reducers/client";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -28,6 +29,7 @@ const Details = styled.div`
   gap: 65px;
   background-color: var(--white);
   width: 80%;
+  max-width: 1500px;
   position: relative;
   border-radius: 93px;
   padding-bottom: 120px;
@@ -95,19 +97,6 @@ const AddClient = () => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  //   {"firstName":"ניסיון",
-  //  "lastName":"מהשררת",
-  //  "DOB":"1971-05-09",
-  //  "mobile":"0543451311",
-  //  "eMail":"test1.pikel@gmail.com",
-  //  "Children":"12",
-  //  "CSN":"031734399",
-  //  "marriageStatus":"רווק",
-  //  "additionalAnnIncome":"5000",
-  //  "netWorth":"13000",
-  //  "processStartDate":"2021-01-01",
-  //  "processEndDate":"2021-01-01"
-  //  }
 
   const SubmitData = async () => {
     const data = {
@@ -125,38 +114,49 @@ const AddClient = () => {
       processStartData: "2021-01-01",
       processEndDate: "2021-01-01",
     };
+
     if (data.firstName === "") {
-      toast.error("🦄 Wow so easy!");
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.lastName === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.DOB === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.mobile === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.marriageStatus === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.Children === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.CSN === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.additionalAnnIncome === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.netWorth === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.processStartData === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     if (data.processEndDate === "") {
+      toast.warning("Please Fill all the Details");
       return;
     }
     console.log("sarthak");

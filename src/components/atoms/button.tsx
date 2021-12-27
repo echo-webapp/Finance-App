@@ -23,7 +23,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 106px;
   padding: ${(props) => props.padding};
-  font-size: 24px;
+  font-size: 16px;
   outline: none;
   text-decoration: none;
   border: none;

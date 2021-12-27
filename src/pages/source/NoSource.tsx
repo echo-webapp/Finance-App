@@ -1,8 +1,8 @@
-import React from "react";
 import Header from "../../components/molecules/header";
 import styled from "styled-components";
 import { Ink } from "../../components/vectors";
 import { useHistory } from "react-router";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -11,12 +11,14 @@ const AddClientContainer = styled.div`
   width: 100%;
   min-height: 100vh;
 `;
+
 const AddText = styled.div`
   font-weight: 500;
   font-size: 35.102px;
   text-align: center;
   color: #ffffff;
 `;
+
 const NoSource = ({ id }: any) => {
   const history = useHistory();
   return (
