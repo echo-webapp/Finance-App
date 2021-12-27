@@ -52,7 +52,7 @@ export const get_AllTransactions: any = async (val: any) => {
 };
 
 export const create_ClientSource = async (data: any, id: any) => {
-  const url = `https://pikel-it.com/finapp/sources/get.php?clientId=${id}`;
+  const url = `https://pikel-it.com/finapp/sources/create.php?clientId=${id}`;
   return fetch(url, {
     method: "POST", // or 'PUT'
     headers: {

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../../components/molecules/header";
 import styled from "styled-components";
-import Input from "../../components/atoms/input";
 import AddBankDetails from "./addBankDetails";
 import AddCreditCard from "./addCreditCard";
 import { create_ClientSource } from "./../../api/client";
+import { useHistory } from "react-router";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: 1395px;
-  height: 537px;
+  min-height: 537px;
   background: var(--lightgrey);
   border-radius: 93px;
   margin: 39px;
@@ -104,16 +104,18 @@ const Initial_State: any = {
   ccProvider: "",
   cc4digits: "",
   sourceCreditLimit: "",
-  sourceFileName: "",
-  base64File: "",
+  sourceFileName: [],
+  base64File: [{}],
 };
 const AddSource = ({ match }: any) => {
+  const history = useHistory();
   const [sourceData, setSouceData]: any = useState(Initial_State);
   const [selected, setSelected] = useState("bank");
   const submitHandler = async () => {
-    console.log(sourceData);
     const res = await create_ClientSource(sourceData, match.params.id);
-    console.log(res);
+    if (Array.isArray(res)) {
+      history.push(`/source/${match.params.id}`);
+    }
   };
   return (
     <AddClientContainer>
