@@ -9,6 +9,7 @@ import { get_AllTransactions } from "../../api/client";
 import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -141,6 +142,7 @@ const AllTransactions = ({ id }: any) => {
   const [selected_transaction, setselected_transaction] = useState("bank");
   const [source_details, setsource_details]: any = useState(null);
   const [flag, setFlag] = useState(true);
+
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllTransactions(id);
@@ -175,9 +177,9 @@ const AllTransactions = ({ id }: any) => {
           <Header
             heading="Transaction details"
             subheading="@WW24"
-            buttonText="Submit source details"
+            buttonText="View all sources"
             buttonHandler={() => {
-              history.push("/addsource");
+              history.push(`/allsources/${id}`);
             }}
           />
           <SubContainer>

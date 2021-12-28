@@ -8,6 +8,7 @@ import Source from "./pages/source/source";
 import AddSource from "./pages/AddSource/addSource";
 import NotFound from "./pages/PageNotFound/notFound";
 import Transaction from "./pages/allTransactions/transaction";
+import Allsources from "./pages/source/allsources";
 
 const Router = () => {
   return (
@@ -20,6 +21,7 @@ const Router = () => {
         <Route exact path="/source/:id" component={Source} />
         <Route exact path="/addsource/:id" component={AddSource} />
         <Route exact path="/transactions" component={Transaction} />
+        <Route exact path="/allsources/:id" component={Allsources} />
         <Route component={NotFound} />
       </Switch>
     </Fragment>

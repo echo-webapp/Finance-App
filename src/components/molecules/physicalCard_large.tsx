@@ -2,36 +2,54 @@ import styled from "styled-components";
 import Circle from "../atoms/circle";
 import SvgDelete from "../vectors/Delete";
 
-const Container = styled.div`
+interface ContainerProps {
+  theme: string;
+}
+
+const Container = styled.div<ContainerProps>`
   position: relative;
-  background: var(--green-gradient);
-  border-radius: 24.2169px;
+
+  color: ${(props) => {
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+    if (props.theme == "dark") {
+      return "var(--white)";
+    }
+  }};
+  background: ${(props) => {
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+    if (props.theme == "dark") {
+      return "var(--green-gradient)";
+    }
+  }};
+  border-radius: 42px;
   width: 500px;
 `;
 
-const BankListContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  gap: 16px;
-  div {
-    background-color: var(--white);
-    color: var(--black);
-    padding: 12px 24px;
-    border-radius: 106px;
-    font-weight: 500;
-    font-size: 16px;
-  }
-`;
+interface DetailsContainerProps {
+  theme: string;
+}
 
-const DetailsContainer = styled.div`
+const DetailsContainer = styled.div<DetailsContainerProps>`
   display: flex;
   flex-direction: column;
   gap: 18px;
   box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
-  border-radius: 24.3404px;
-  padding: 32px;
+  border-radius: 42px;
+  padding: 60px;
   padding-top: 22px;
-  background: var(--black);
+  padding-bottom: 22px;
+  background: ${(props) => {
+    if (props.theme == "light") {
+      return "var(--card-grey)";
+    }
+    if (props.theme == "dark") {
+      return "var(--black)";
+    }
+  }};
   text-align: right;
 `;
 
@@ -41,25 +59,69 @@ const SubContainer = styled.div`
   gap: 16px;
 `;
 
-const Heading = styled.div`
+interface HeadingProps {
+  theme: string;
+}
+
+const Heading = styled.div<HeadingProps>`
   font-size: 16px;
   font-weight: 400;
-  color: var(--green);
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--white)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
 `;
 
-const Info = styled.div`
+interface InfoProps {
+  theme: string;
+}
+
+const Info = styled.div<InfoProps>`
   font-size: 16px;
   font-weight: 600;
-  color: var(--white);
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--white)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
 `;
 
-const BalanceContainer = styled.div`
+interface BalanceContainerProps {
+  theme: string;
+}
+
+const BalanceContainer = styled.div<BalanceContainerProps>`
   padding: 32px;
   padding-top: 10px;
-  padding-bottom: 0px;
+  padding-bottom: 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom-left-radius: 42px;
+  border-bottom-right-radius: 42px;
+  background: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--green-gradient)";
+    }
+    if (props.theme == "light") {
+      return "var(--black)";
+    }
+  }};
+  color: ${(props) => {
+    if (props.theme == "dark") {
+      return "var(--black)";
+    }
+    if (props.theme == "light") {
+      return "var(--white)";
+    }
+  }};
   .balance-text {
     font-weight: 500;
     font-size: 16px;
@@ -101,9 +163,10 @@ const DeleteIcon = styled.div`
 
 interface Physical_cardProps {
   theme: string;
+  details: string;
 }
 
-const PhysicalCard_large = ({ theme }: any) => {
+const PhysicalCard_large = ({ theme, details }: Physical_cardProps) => {
   return (
     <Container theme={theme}>
       <CircleContainer>
@@ -119,10 +182,6 @@ const PhysicalCard_large = ({ theme }: any) => {
       </DeleteIcon>
 
       <DetailsContainer theme={theme}>
-        <BankListContainer>
-          <div>Primary</div>
-          <div>Secondary</div>
-        </BankListContainer>
         <SubContainer>
           <Info>Wade Warren</Info>
           <Heading>Account holder name</Heading>

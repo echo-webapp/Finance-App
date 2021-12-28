@@ -28,6 +28,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
   const [flag, setFlag] = useState(true);
+
   useEffect(() => {
     const genResults = async () => {
       const res = await getTransactionDetails(source_id);
@@ -43,6 +44,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             field: key,
             headerName: key,
             width: 150,
+            editable: true,
           };
           columns_arr.push(col);
         });
@@ -66,6 +68,19 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       setFlag(false);
     }
   }, [source_id]);
+
+  const handleChangeRow = (obj: any, event: any) => {
+    //https://pikel-it.com/finapp/transactions/update.php?recId=61c4571f6f046
+    const row = obj.row;
+    const value = obj.value;
+    const field = obj.field;
+    console.log("row", row);
+    const new_obj = {
+      ...row,
+      [field]: event.target.value,
+    };
+    console.log(new_obj, "new_obj");
+  };
 
   return (
     <div
@@ -91,6 +106,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
           rowsPerPageOptions={[5]}
           checkboxSelection
           disableSelectionOnClick
+          onCellEditStop={(v, e) => {
+            handleChangeRow(v, e);
+          }}
         />
       ) : (
         <NoTransactions>
