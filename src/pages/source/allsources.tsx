@@ -6,7 +6,9 @@ import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { useHistory } from "react-router";
 import PhysicalCard_large from "../../components/molecules/physicalCard_large";
 import CreditCard from "../../components/molecules/credit_card";
-
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import DeleteObject from "../../components/molecules/deleteObjects";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -102,6 +104,9 @@ const MultipleCards = styled.div`
 
 const Allsources = ({ match }: any) => {
   const history = useHistory();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [allbankaccounts, setallbankaccounts] = useState([]);
   const [allcreditcards, setallcreditcards] = useState([]);
   const [current_cc, setcurrent_cc] = useState(0);
@@ -109,6 +114,7 @@ const Allsources = ({ match }: any) => {
   const [source_details, setsource_details]: any = useState(null);
   const [selected_source, setselected_source] = useState("bank");
   const [flag, setFlag] = useState(true);
+  const [deleteId, setDeleteId] = useState("");
   console.log("all sources", match.params.id);
 
   useEffect(() => {
@@ -145,6 +151,30 @@ const Allsources = ({ match }: any) => {
         </LoaderContainer>
       ) : (
         <Container>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={handleClose}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <DeleteObject
+              id={deleteId}
+              parid={match.params.id}
+              text={"Delete this source ?"}
+              type={"source"}
+              handleClose={handleClose}
+            />
+          </Modal>
           <Header
             heading="Client Name"
             subheading="@WW24"
@@ -176,6 +206,8 @@ const Allsources = ({ match }: any) => {
                                 ? "dark"
                                 : "light"
                             }
+                            setDeleteId={setDeleteId}
+                            handleOpen={handleOpen}
                           />
                         </div>
                       );
@@ -206,6 +238,8 @@ const Allsources = ({ match }: any) => {
                                 ? "dark"
                                 : "light"
                             }
+                            setDeleteId={setDeleteId}
+                            handleOpen={handleOpen}
                           />
                         </div>
                       );

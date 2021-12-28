@@ -163,10 +163,17 @@ const DeleteIcon = styled.div`
 
 interface Physical_cardProps {
   theme: string;
-  details: string;
+  details: any;
+  setDeleteId?: any;
+  handleOpen?: any;
 }
 
-const PhysicalCard_large = ({ theme, details }: Physical_cardProps) => {
+const PhysicalCard_large = ({
+  theme,
+  details,
+  setDeleteId,
+  handleOpen,
+}: Physical_cardProps) => {
   return (
     <Container theme={theme}>
       <CircleContainer>
@@ -177,7 +184,12 @@ const PhysicalCard_large = ({ theme, details }: Physical_cardProps) => {
           <Circle color="light" size="small" />
         </div>
       </CircleContainer>
-      <DeleteIcon>
+      <DeleteIcon
+        onClick={() => {
+          setDeleteId(details.ID);
+          handleOpen();
+        }}
+      >
         <SvgDelete width={20} height={20} />
       </DeleteIcon>
 

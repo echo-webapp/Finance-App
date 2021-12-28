@@ -73,8 +73,24 @@ export const create_ClientSource = async (data: any, id: any) => {
 };
 
 export const getTransactionDetails = async (id: any) => {
-  // const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=61c44bc73b434`;
-  const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=${id}`;
+  const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=61c9cb36ebfac`;
+  // const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=${id}`;
+  return fetch(url, {
+    method: "GET", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+export const delete_Source = async (client_id: any, source_Id: any) => {
+  const url = `https://pikel-it.com/finapp/sources/delete.php?recId=${source_Id}&clientId=${client_id}`;
   return fetch(url, {
     method: "GET", // or 'PUT'
     headers: {

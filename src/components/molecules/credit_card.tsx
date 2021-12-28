@@ -220,14 +220,27 @@ const DeleteIcon = styled.div`
 interface BankaccountCardProps {
   theme: string;
   size: string;
-  details: string;
+  details: any;
+  setDeleteId?: any;
+  handleOpen?: any;
 }
 
-const CreditCard = ({ theme, size, details }: BankaccountCardProps) => {
+const CreditCard = ({
+  theme,
+  size,
+  details,
+  setDeleteId,
+  handleOpen,
+}: BankaccountCardProps) => {
   if (size == "large") {
     return (
       <LargeContainer theme={theme}>
-        <DeleteIcon>
+        <DeleteIcon
+          onClick={() => {
+            setDeleteId(details.ID);
+            handleOpen();
+          }}
+        >
           <SvgDelete width={20} height={20} />
         </DeleteIcon>
         <CircleContainer theme={theme}>

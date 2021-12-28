@@ -6,7 +6,7 @@ import AddCreditCard from "./addCreditCard";
 import { create_ClientSource } from "./../../api/client";
 import { create_CSV } from "../../api/csv";
 import { useHistory } from "react-router";
-
+import LoaderScreen from "../../components/molecules/LoaderScreen";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -115,6 +115,7 @@ const AddSource = ({ match }: any) => {
   const history = useHistory();
   const [sourceData, setSouceData]: any = useState(Initial_State);
   const [selected, setSelected]: any = useState("bank");
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     console.log(history.location.state);
     if (history.location.state) {
@@ -123,59 +124,74 @@ const AddSource = ({ match }: any) => {
   }, []);
 
   const submitHandler = async () => {
+    setFlag(true);
     let res1 = {
       ...sourceData,
     };
     delete res1.sourceFileName;
     delete res1.base64File;
-    for (let i = 0; i < sourceData.base64File.length; i++) {
-      const res = await create_CSV(sourceData.base64File[i], match.params.id);
-    }
     const res2 = await create_ClientSource(res1, match.params.id);
+    let result = res2[res2.length - 1];
+    for (let i = 0; i < sourceData.base64File.length; i++) {
+      const res = await create_CSV(sourceData.base64File[i], result.ID);
+    }
+    setFlag(false);
     if (Array.isArray(res2)) {
       history.push(`/source/${match.params.id}`);
     }
   };
 
   return (
-    <AddClientContainer>
-      <Header
-        heading="Add a new income source"
-        subheading="@WW24"
-        buttonText="Submit source details"
-        buttonHandler={submitHandler}
-      />
-      <MainContainer>
-        {selected === "bank" ? (
-          <AddBankDetails sourceData={sourceData} setSouceData={setSouceData} />
-        ) : (
-          <AddCreditCard sourceData={sourceData} setSouceData={setSouceData} />
-        )}
-        <SubContainer>
-          <SubContainerText>Select source type</SubContainerText>
-          <SubContainerBankText
-            name="bank"
-            selected={selected}
-            onClick={() => {
-              setSouceData(Initial_State);
-              setSelected("bank");
-            }}
-          >
-            Bank Account
-          </SubContainerBankText>
-          <SubContainerBankText
-            name="card"
-            selected={selected}
-            onClick={() => {
-              setSouceData(Initial_State);
-              setSelected("card");
-            }}
-          >
-            Credit Card
-          </SubContainerBankText>
-        </SubContainer>
-      </MainContainer>
-    </AddClientContainer>
+    <>
+      {flag ? (
+        <LoaderScreen />
+      ) : (
+        <AddClientContainer>
+          <Header
+            heading="Add a new income source"
+            subheading="@WW24"
+            buttonText="Submit source details"
+            buttonHandler={submitHandler}
+          />
+          <MainContainer>
+            {selected === "bank" ? (
+              <AddBankDetails
+                sourceData={sourceData}
+                setSouceData={setSouceData}
+              />
+            ) : (
+              <AddCreditCard
+                sourceData={sourceData}
+                setSouceData={setSouceData}
+              />
+            )}
+            <SubContainer>
+              <SubContainerText>Select source type</SubContainerText>
+              <SubContainerBankText
+                name="bank"
+                selected={selected}
+                onClick={() => {
+                  setSouceData(Initial_State);
+                  setSelected("bank");
+                }}
+              >
+                Bank Account
+              </SubContainerBankText>
+              <SubContainerBankText
+                name="card"
+                selected={selected}
+                onClick={() => {
+                  setSouceData(Initial_State);
+                  setSelected("card");
+                }}
+              >
+                Credit Card
+              </SubContainerBankText>
+            </SubContainer>
+          </MainContainer>
+        </AddClientContainer>
+      )}
+    </>
   );
 };
 
