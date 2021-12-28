@@ -11,6 +11,7 @@ import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import Header from "../../components/molecules/header";
 import { json2csvAsync } from "json-2-csv";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -73,8 +74,6 @@ const Transaction = () => {
         const new_obj = { id: index, ...obj };
         rows_arr.push(new_obj);
       });
-      //   console.log(columns_arr);
-      //   console.log(rows_arr);
       setcolumns(columns_arr);
       setrows(rows_arr);
       setallTransactions(temp);
@@ -82,6 +81,7 @@ const Transaction = () => {
     };
     getAll();
   }, []);
+
   return (
     <>
       {flag ? (

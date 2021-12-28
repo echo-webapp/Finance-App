@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../../components/molecules/header";
-import { get_AllTransactions } from "../../api/client";
+import { get_AllSources } from "../../api/client";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { useHistory } from "react-router";
 import PhysicalCard_large from "../../components/molecules/physicalCard_large";
@@ -113,7 +113,7 @@ const Allsources = ({ match }: any) => {
 
   useEffect(() => {
     const genResult = async () => {
-      const res = await get_AllTransactions(match.params.id);
+      const res = await get_AllSources(match.params.id);
       const bank: any = [];
       const cc: any = [];
       res.map((obj: any) => {

@@ -5,7 +5,7 @@ import Header from "../../components/molecules/header";
 import ClientDataGrid from "../../components/molecules/clientDataGrid";
 import CreditCard from "../../components/molecules/credit_card";
 import SvgPlusIcon from "../../components/vectors/PlusIcon";
-import { get_AllTransactions } from "../../api/client";
+import { get_AllSources } from "../../api/client";
 import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
@@ -145,7 +145,7 @@ const AllTransactions = ({ id }: any) => {
 
   useEffect(() => {
     const genResult = async () => {
-      const res = await get_AllTransactions(id);
+      const res = await get_AllSources(id);
       const bank: any = [];
       const cc: any = [];
       res.map((obj: any) => {

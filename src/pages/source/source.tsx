@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { get_AllTransactions } from "../../api/client";
+import { get_AllSources } from "../../api/client";
 import NoSource from "./NoSource";
 import AllTransactions from "./AllTransactions";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
@@ -8,7 +8,7 @@ const Source = ({ match }: any) => {
   const [flag, setFlag] = useState(true);
   useEffect(() => {
     const genResult = async () => {
-      const res = await get_AllTransactions(match.params.id);
+      const res = await get_AllSources(match.params.id);
       console.log(res);
       setAllSources(res);
       setFlag(false);
