@@ -11,9 +11,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useHistory } from "react-router";
 import Circle from "../../components/atoms/circle";
-
+import { toast } from "react-toastify";
+import CircularProgress from "@mui/material/CircularProgress";
 const Login: any = () => {
   const history = useHistory();
+  const [flag, setFlag] = useState(false);
   const token = useSelector((state: RootState) => {
     return state.isAuth.isAuth;
   });
@@ -24,13 +26,25 @@ const Login: any = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const clickHandler: any = async () => {
-    if (email === "") return;
-    if (password === "") return;
+    if (email === "") {
+      toast.warning("Please Fill Your Email");
+      return;
+    }
+    if (password === "") {
+      toast.warning("Please Fill Your Password");
+      return;
+    }
+    setFlag(true);
     const data = await login(email, password);
     if (Array.isArray(data)) {
       console.log(data[0].Token);
       localStorage.setItem("token", data[0].Token);
       dispatch(SetToken(data[0].Token));
+      setFlag(false);
+      return;
+    } else {
+      toast.error("Invalid Credentials");
+      setFlag(false);
       return;
     }
   };
@@ -84,7 +98,17 @@ const Login: any = () => {
         <div className="Login-button"></div>
 
         <Button
-          title="Login"
+          title={
+            flag ? (
+              <CircularProgress
+                color="inherit"
+                style={{ color: "white" }}
+                size={28}
+              />
+            ) : (
+              "Login"
+            )
+          }
           type="secondary"
           clickHandler={clickHandler}
           padding="24px 170px"

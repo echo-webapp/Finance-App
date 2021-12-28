@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { getTransactionDetails } from "../../api/client";
 import styled from "styled-components";
-
+import CircularProgress from "@mui/material/CircularProgress";
 interface ClientDataGridProps {
   source_id: any;
 }
@@ -27,7 +27,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
-
+  const [flag, setFlag] = useState(true);
   useEffect(() => {
     const genResults = async () => {
       const res = await getTransactionDetails(source_id);
@@ -55,12 +55,15 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         console.log("row", rows_arr);
         setcolumns(columns_arr);
         setrows(rows_arr);
+        setFlag(false);
       }
     };
 
     if (source_id) {
       console.log("source id", source_id);
       genResults();
+    } else {
+      setFlag(false);
     }
   }, [source_id]);
 
@@ -72,7 +75,15 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         borderRadius: 93,
       }}
     >
-      {transactions ? (
+      {flag ? (
+        <NoTransactions>
+          <CircularProgress
+            color="inherit"
+            style={{ color: "white" }}
+            size={70}
+          />
+        </NoTransactions>
+      ) : transactions ? (
         <DataGrid
           rows={rows}
           columns={columns}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface ButtonTypes {
-  title: string;
+  title: any;
   type: string;
   padding: string;
   clickHandler: any;

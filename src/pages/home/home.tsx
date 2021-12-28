@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { SetCustomer } from "../../store/Reducers/client";
 import Logout from "../../components/atoms/logOutButton";
-
+import CircularProgress from "@mui/material/CircularProgress";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -91,12 +91,20 @@ const CardContainer = styled.div`
   width: 70%;
   padding: 22px;
 `;
-
+const LoadContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 40vh;
+`;
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [allClients, setAllClients] = useState([]);
   const [search, setSearch] = useState("");
+  const [flag, setFlag] = useState(true);
   const [token, customerList]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
@@ -111,10 +119,12 @@ const Home = () => {
       const res = await get_AllClients(token);
       setAllClients(res);
       dispatch(SetCustomer(res));
+      setFlag(false);
     };
     if (customerList?.length === 0) genResult();
     else {
       setAllClients(customerList);
+      setFlag(false);
     }
   }, []);
   useEffect(() => {
@@ -152,11 +162,21 @@ const Home = () => {
           </InputContainer>
         </SubHeader1>
       </SubHeader>
-      <CardContainer>
-        {allClients?.map((data: any) => {
-          return <CustomerCard data={data} />;
-        })}
-      </CardContainer>
+      {flag ? (
+        <LoadContainer>
+          <CircularProgress
+            color="inherit"
+            style={{ color: "white" }}
+            size={50}
+          />
+        </LoadContainer>
+      ) : (
+        <CardContainer>
+          {allClients?.map((data: any) => {
+            return <CustomerCard data={data} />;
+          })}
+        </CardContainer>
+      )}
     </AddClientContainer>
   );
 };
