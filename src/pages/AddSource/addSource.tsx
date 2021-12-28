@@ -4,6 +4,7 @@ import styled from "styled-components";
 import AddBankDetails from "./addBankDetails";
 import AddCreditCard from "./addCreditCard";
 import { create_ClientSource } from "./../../api/client";
+import { create_CSV } from "../../api/csv";
 import { useHistory } from "react-router";
 
 const AddClientContainer = styled.div`
@@ -122,8 +123,16 @@ const AddSource = ({ match }: any) => {
   }, []);
 
   const submitHandler = async () => {
-    const res = await create_ClientSource(sourceData, match.params.id);
-    if (Array.isArray(res)) {
+    let res1 = {
+      ...sourceData,
+    };
+    delete res1.sourceFileName;
+    delete res1.base64File;
+    for (let i = 0; i < sourceData.base64File.length; i++) {
+      const res = await create_CSV(sourceData.base64File[i], match.params.id);
+    }
+    const res2 = await create_ClientSource(res1, match.params.id);
+    if (Array.isArray(res2)) {
       history.push(`/source/${match.params.id}`);
     }
   };

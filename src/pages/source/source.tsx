@@ -9,6 +9,7 @@ const Source = ({ match }: any) => {
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllTransactions(match.params.id);
+      console.log(res);
       setAllSources(res);
       setFlag(false);
     };

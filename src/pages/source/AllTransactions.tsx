@@ -272,6 +272,16 @@ const AllTransactions = ({ id }: any) => {
               </MultipleCreditCards>
             </CardsComponents>
           </SubContainer>
+          <button
+            onClick={() => {
+              history.push({
+                pathname: "/transactions",
+                state: { sources_list: sources },
+              });
+            }}
+          >
+            Click
+          </button>
         </Container>
       )}
     </>

@@ -164,7 +164,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
     let res1: any = [];
     for (let i = 0; i < e.target.files.length; i++) {
       let sar1: any = {};
-      sar1.fileName = e.target.files[i].name;
+      sar1.name = e.target.files[i].name;
       sar1.base64File = await getBase641(e.target.files[i]);
       res.push(sar1);
       res1.push(e.target.files[i].name);
