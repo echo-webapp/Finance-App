@@ -48,4 +48,8 @@ export const GlobalStyle: any = createGlobalStyle`
   .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root{
     color:white !important;
   }
+  .css-1knaqv7-MuiButtonBase-root-MuiButton-root{
+  color: #fff !important; 
+  transform: translateX(10px) !important;
+  }
 `;

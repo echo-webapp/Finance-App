@@ -4,7 +4,7 @@ import Input from "../../components/atoms/input";
 import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
-import { create_Client } from "../../api/client";
+import { create_Client } from "../../api/create";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import Modal from "@mui/material/Modal";

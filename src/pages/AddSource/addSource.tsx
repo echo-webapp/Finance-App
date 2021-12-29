@@ -3,10 +3,11 @@ import Header from "../../components/molecules/header";
 import styled from "styled-components";
 import AddBankDetails from "./addBankDetails";
 import AddCreditCard from "./addCreditCard";
-import { create_ClientSource } from "./../../api/client";
-import { create_CSV } from "../../api/csv";
+import { create_ClientSource } from "./../../api/create";
+import { create_CSV } from "../../api/create";
 import { useHistory } from "react-router";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -95,7 +96,6 @@ const SubContainerBankText = styled.div<SubContainerBankTextProps>`
     }
   }};
 `;
-// const SubContainer11 = styled.div``;
 
 const Initial_State: any = {
   sourceType: "",

@@ -232,6 +232,7 @@ const CreditCard = ({
   setDeleteId,
   handleOpen,
 }: BankaccountCardProps) => {
+  console.log(details);
   if (size == "large") {
     return (
       <LargeContainer theme={theme}>

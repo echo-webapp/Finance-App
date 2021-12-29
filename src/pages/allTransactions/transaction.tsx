@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { getTransactionDetails } from "./../../api/client";
+import { getTransactionDetails } from "./../../api/get";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -41,16 +41,26 @@ const DataGrid1 = styled.div`
   height: 637px;
   width: 1301px;
   width: 70%;
-  /* background: var(--white); */
   border-bottom-left-radius: 800px;
   border-top-left-radius: 800px;
 `;
+
 const Transaction = () => {
   const history: any = useHistory();
   const [allTransactions, setallTransactions] = useState([]);
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [flag, setFlag] = useState(true);
+  const [ref, setref]: any = useState(null);
+
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer>
+        <GridToolbarExport  />
+      </GridToolbarContainer>
+    );
+  }
+
   useEffect(() => {
     const getAll: any = async () => {
       const res = history.location.state.sources_list;
@@ -92,7 +102,11 @@ const Transaction = () => {
             heading="Unified transactions"
             subheading="@WW24"
             buttonText="Export csv"
-            buttonHandler={() => {}}
+            buttonHandler={() => {
+              if (ref) {
+                ref.click();
+              }
+            }}
           />
           <DataGrid1>
             <div
@@ -113,6 +127,9 @@ const Transaction = () => {
                   rowsPerPageOptions={[5]}
                   checkboxSelection
                   disableSelectionOnClick
+                  components={{
+                    Toolbar: CustomToolbar,
+                  }}
                 />
               ) : (
                 <NoTransactions>

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { get_AllSources } from "../../api/client";
+import { useEffect, useState } from "react";
+import { get_AllSources } from "../../api/get";
 import NoSource from "./NoSource";
 import AllTransactions from "./AllTransactions";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
+
 const Source = ({ match }: any) => {
   const [sources, setAllSources] = useState([]);
   const [flag, setFlag] = useState(true);

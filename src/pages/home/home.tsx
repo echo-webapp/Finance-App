@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../../components/molecules/header";
 import CustomerCard from "../../components/molecules/customerCard";
-import { get_AllClients } from "../../api/client";
+import { get_AllClients } from "../../api/get";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import SvgSearch from "../../components/vectors/Search";
@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { SetCustomer } from "../../store/Reducers/client";
 import Logout from "../../components/atoms/logOutButton";
 import CircularProgress from "@mui/material/CircularProgress";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -99,6 +100,7 @@ const LoadContainer = styled.div`
   width: 100%;
   height: 40vh;
 `;
+
 const Home = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -108,12 +110,13 @@ const Home = () => {
   const [token, customerList]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
-  const AddClient = () => {
-    history.push("/addclient");
-  };
-  const changeHandler: any = (e: any) => {
-    setSearch(e.target.value);
-  };
+
+  useEffect(() => {
+    if (!token) {
+      history.push("/login");
+    }
+  }, [token]);
+
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllClients(token);
@@ -127,6 +130,7 @@ const Home = () => {
       setFlag(false);
     }
   }, []);
+
   useEffect(() => {
     if (search === "") {
       setAllClients(customerList);
@@ -143,19 +147,23 @@ const Home = () => {
     }
     setAllClients(sar);
   }, [search]);
+
   return (
     <AddClientContainer>
       <Header
         heading="Your clientele"
         subheading={`${allClients.length} active clients`}
         buttonText="+ Add New Client"
-        buttonHandler={AddClient}
+        buttonHandler={() => history.push("/addclient")}
       />
       <SubHeader>
         <SubHeader1>
           <Logout />
           <InputContainer>
-            <SubHeaderInput placeholder="Search...." onChange={changeHandler} />
+            <SubHeaderInput
+              placeholder="Search...."
+              onChange={(e) => setSearch(e.target.value)}
+            />
             <div>
               <SvgSearch />
             </div>

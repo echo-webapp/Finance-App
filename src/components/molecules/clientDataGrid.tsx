@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { getTransactionDetails } from "../../api/client";
+import { getTransactionDetails } from "../../api/get";
 import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 interface ClientDataGridProps {
@@ -75,6 +75,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const value = obj.value;
     const field = obj.field;
     console.log("row", row);
+    // delete row.CREATED_AT;
     const new_obj = {
       ...row,
       [field]: event.target.value,

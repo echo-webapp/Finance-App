@@ -9,6 +9,7 @@ import AddSource from "./pages/AddSource/addSource";
 import NotFound from "./pages/PageNotFound/notFound";
 import Transaction from "./pages/allTransactions/transaction";
 import Allsources from "./pages/source/allsources";
+import EditSource from "./pages/editSource/editsource";
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
         <Route exact path="/addsource/:id" component={AddSource} />
         <Route exact path="/transactions" component={Transaction} />
         <Route exact path="/allsources/:id" component={Allsources} />
+        <Route exact path="/editsource/:id" component={EditSource} />
         <Route component={NotFound} />
       </Switch>
     </Fragment>

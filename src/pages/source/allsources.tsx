@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "../../components/molecules/header";
-import { get_AllSources } from "../../api/client";
+import { get_AllSources } from "../../api/get";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { useHistory } from "react-router";
 import PhysicalCard_large from "../../components/molecules/physicalCard_large";
@@ -180,7 +180,13 @@ const Allsources = ({ match }: any) => {
             subheading="@WW24"
             buttonText="Edit source details"
             buttonHandler={() => {
-              history.push(`/editsource/${source_details.ID}`);
+              history.push({
+                pathname: `/editsource/${source_details.ID}`,
+                state: {
+                  source_details: source_details,
+                  selected_source: selected_source,
+                },
+              });
             }}
           />
           <SubContainer>

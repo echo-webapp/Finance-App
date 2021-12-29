@@ -43,7 +43,8 @@ interface InputProps {
   type: string;
   height: number;
   value: any;
-  setvalue: any;
+  setvalue?: any;
+  name?: any;
 }
 
 const Input = ({
@@ -53,9 +54,35 @@ const Input = ({
   height,
   value,
   setvalue,
+  name,
 }: InputProps) => {
   const [focus, setFocus] = useState(false);
-
+  if (name) {
+    const ChangeHandler = (e: any) => {
+      setvalue((prev: any) => {
+        console.log("repv", prev);
+        return {
+          ...prev,
+          [name]: e.target.value,
+        };
+      });
+    };
+    return (
+      <InputContainer>
+        <Label>{label}</Label>
+        <InputBase
+          onFocus={(e) => setFocus(true)}
+          onBlur={(e) => setFocus(false)}
+          focus={focus}
+          type={type}
+          value={value}
+          height={height}
+          placeholder={placeholder}
+          onChange={ChangeHandler}
+        />
+      </InputContainer>
+    );
+  }
   return (
     <InputContainer>
       <Label>{label}</Label>

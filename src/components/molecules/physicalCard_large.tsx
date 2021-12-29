@@ -9,14 +9,6 @@ interface ContainerProps {
 const Container = styled.div<ContainerProps>`
   position: relative;
 
-  color: ${(props) => {
-    if (props.theme == "light") {
-      return "var(--black)";
-    }
-    if (props.theme == "dark") {
-      return "var(--white)";
-    }
-  }};
   background: ${(props) => {
     if (props.theme == "light") {
       return "var(--black)";
@@ -68,7 +60,7 @@ const Heading = styled.div<HeadingProps>`
   font-weight: 400;
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--white)";
+      return "var(--green)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -195,24 +187,24 @@ const PhysicalCard_large = ({
 
       <DetailsContainer theme={theme}>
         <SubContainer>
-          <Info>Wade Warren</Info>
-          <Heading>Account holder name</Heading>
+          <Info theme={theme}>Wade Warren</Info>
+          <Heading theme={theme}>Account holder name</Heading>
         </SubContainer>
         <SubContainer>
-          <Info>0000090722422</Info>
-          <Heading>Account number</Heading>
+          <Info theme={theme}>{details.bankAccountNumber}</Info>
+          <Heading theme={theme}>Bank Account Number</Heading>
         </SubContainer>
         <SubContainer>
-          <Info>Israel B.M</Info>
-          <Heading>Branch name</Heading>
+          <Info theme={theme}>{details.bankName}</Info>
+          <Heading theme={theme}>Bank name</Heading>
         </SubContainer>
         <SubContainer>
-          <Info>010800</Info>
-          <Heading>Bank code </Heading>
+          <Info theme={theme}>{details.bankBranch}</Info>
+          <Heading theme={theme}>Branch name</Heading>
         </SubContainer>
         <SubContainer>
-          <Info>010800</Info>
-          <Heading>Bank code </Heading>
+          <Info theme={theme}>010800</Info>
+          <Heading theme={theme}>Bank code </Heading>
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>

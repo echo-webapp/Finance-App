@@ -1,9 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./login.css";
-import { login } from "../../api/login";
-import { Google } from "../../components/vectors";
+import { login } from "../../api/post";
 import Input from "../../components/atoms/input";
-import SvgLine2 from "../../components/vectors/Line2";
 import Button from "../../components/atoms/button";
 import { useDispatch } from "react-redux";
 import { SetToken } from "../../store/Reducers/Auth";
@@ -13,24 +11,47 @@ import { useHistory } from "react-router";
 import Circle from "../../components/atoms/circle";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+
 const Login: any = () => {
   const history = useHistory();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(false);
   const token = useSelector((state: RootState) => {
     return state.isAuth.isAuth;
   });
-  if (token) {
-    history.push("/");
-  }
+
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    if (token) {
+      history.push("/");
+    }
+  }, [token]);
+
+  useEffect(() => {
+    window.addEventListener("keypress", onKeyPress);
+    return () => {
+      console.log("removing eventlistner");
+      window.removeEventListener("keypress", clickHandler);
+    };
+  }, []);
+
+  const onKeyPress = (e: any) => {
+    if (e.key == "Enter") {
+      clickHandler();
+    }
+  };
+  useEffect(() => {
+    console.log(email);
+  }, [email]);
+
   const clickHandler: any = async () => {
-    if (email === "") {
+    if (email == "") {
       toast.warning("Please Fill Your Email");
       return;
     }
-    if (password === "") {
+    if (password == "") {
       toast.warning("Please Fill Your Password");
       return;
     }

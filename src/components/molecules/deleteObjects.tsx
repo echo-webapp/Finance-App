@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router";
 import Button from "../atoms/button";
 import Circle from "../atoms/circle";
-import { delete_Source } from "../../api/client";
+import { delete_Source } from "../../api/delete";
 import { toast } from "react-toastify";
 const Text1 = styled.div`
   margin-top: 5px;
