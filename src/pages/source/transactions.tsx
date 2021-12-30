@@ -9,6 +9,7 @@ import { get_AllSources } from "../../api/get";
 import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
+import SvgArrowleft from "../../components/vectors/Arrowleft";
 
 const Container = styled.div`
   display: flex;
@@ -131,6 +132,44 @@ const CreditCardsHeading = styled.div`
   }
 `;
 
+const SubHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+  width: 70%;
+  max-width: 1500px;
+  height: 70px;
+  border-bottom: 1px solid #adb5bd;
+`;
+
+const SubHeader1 = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .arrow-left {
+    margin-left: 20px;
+    position: relative;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 50px;
+    color: white;
+    svg {
+      vertical-align: middle;
+      height: 100%;
+      width: 100%;
+    }
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+      color: var(--black);
+    }
+  }
+`;
+
 const AllTransactions = ({ id }: any) => {
   const history = useHistory();
   const pathname = history.location.pathname;
@@ -181,7 +220,21 @@ const AllTransactions = ({ id }: any) => {
             buttonHandler={() => {
               history.push(`/allsources/${id}`);
             }}
+            extraButton="View all transactions"
+            extraButtonHandler={() => {
+              history.push({
+                pathname: "/transactions",
+                state: { sources_list: sources },
+              });
+            }}
           />
+          <SubHeader>
+            <SubHeader1>
+              <div onClick={() => history.push("/")} className="arrow-left">
+                <SvgArrowleft color="white" />
+              </div>
+            </SubHeader1>
+          </SubHeader>
           <SubContainer>
             <DataGrid>
               <ClientDataGrid source_id={source_details?.ID} />
@@ -274,16 +327,6 @@ const AllTransactions = ({ id }: any) => {
               </MultipleCreditCards>
             </CardsComponents>
           </SubContainer>
-          <button
-            onClick={() => {
-              history.push({
-                pathname: "/transactions",
-                state: { sources_list: sources },
-              });
-            }}
-          >
-            Click
-          </button>
         </Container>
       )}
     </>

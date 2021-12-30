@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
+import { toast } from "react-toastify";
+
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;
@@ -56,6 +58,24 @@ const CSVButton = styled.button`
   font-size: 16px;
   color: var(--black);
 `;
+const CSVUploadButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--black);
+  width: 30px;
+  height: 30px;
+  /* border: 1px solid #000000; */
+  padding: 20px;
+  border-radius: 20px;
+  &:hover {
+    cursor: pointer;
+    background: #eee;
+    /* opacity: 0.7; */
+  }
+`;
 const CSVButtonFile = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,23 +119,7 @@ const CSVButtonContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
-const CSVButtonShowMore = styled.button`
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  height: 38px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  margin-left: 4px;
-  &:hover {
-    font-weight: 600;
-    font-size: 15px;
-  }
-`;
+
 const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
@@ -126,7 +130,6 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const [active, setActive] = useState("");
   const [fileName, setFileName] = useState([]);
   const [base64File, setbase64File]: any = useState([{}]);
-  const [flag, setFlag]: any = useState(false);
   const onButtonClick = () => {
     inputFile.current.click();
   };
@@ -138,6 +141,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
       reader.onerror = (error) => reject(error);
     });
   }
+
   useEffect(() => {
     let res = {
       ...sourceData,
@@ -162,19 +166,31 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
     fileName,
     base64File,
   ]);
+
   const fileHandler: any = async (e: any) => {
-    let res: any = [];
-    let res1: any = [];
+    let res: any = [...base64File];
+    let res1: any = [...fileName];
+    let flag = true;
     for (let i = 0; i < e.target.files.length; i++) {
-      let sar1: any = {};
-      sar1.name = e.target.files[i].name;
-      sar1.base64File = await getBase641(e.target.files[i]);
-      res.push(sar1);
-      res1.push(e.target.files[i].name);
+      if (res1.includes(e.target.files[i].name)) {
+        flag = false;
+      }
     }
-    setFileName(res1);
-    setbase64File(res);
+    if (flag) {
+      for (let i = 0; i < e.target.files.length; i++) {
+        let sar1: any = {};
+        sar1.name = e.target.files[i].name;
+        sar1.base64File = await getBase641(e.target.files[i]);
+        res.push(sar1);
+        res1.push(e.target.files[i].name);
+      }
+      setFileName(res1);
+      setbase64File(res);
+    } else {
+      toast.warning("Cannot Upload Same File Again");
+    }
   };
+
   const crossFileHandler: any = (file: any) => {
     let res: any = [];
     let res1: any = [];
@@ -195,6 +211,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
     setFileName(res1);
     setbase64File(res);
   };
+
   return (
     <SubContainer1>
       <SubHeader>Enter Credit Card Details</SubHeader>
@@ -276,53 +293,11 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
         />
         {fileName.length === 0 ? (
           <CSVButton onClick={onButtonClick}>+ Import CSV</CSVButton>
-        ) : fileName.length <= 3 ? (
-          <CSVButtonContainer>
-            {fileName.map((data: any) => {
-              return (
-                <CSVButtonFile>
-                  <CSVButtonFileFlex>
-                    <CSVButtonFileText>{data}</CSVButtonFileText>
-                    <CSVButtonFileSvg
-                      onClick={() => {
-                        crossFileHandler(data);
-                      }}
-                    >
-                      <CloseIcon />
-                    </CSVButtonFileSvg>
-                  </CSVButtonFileFlex>
-                </CSVButtonFile>
-              );
-            })}
-          </CSVButtonContainer>
-        ) : !flag ? (
-          <CSVButtonContainer>
-            {[0, 1, 2].map((data: any) => {
-              return (
-                <CSVButtonFile>
-                  <CSVButtonFileFlex>
-                    <CSVButtonFileText>{fileName[data]}</CSVButtonFileText>
-                    <CSVButtonFileSvg
-                      onClick={() => {
-                        crossFileHandler(fileName[data]);
-                      }}
-                    >
-                      <CloseIcon />
-                    </CSVButtonFileSvg>
-                  </CSVButtonFileFlex>
-                </CSVButtonFile>
-              );
-            })}
-            <CSVButtonShowMore
-              onClick={() => {
-                setFlag(true);
-              }}
-            >
-              Show More...
-            </CSVButtonShowMore>
-          </CSVButtonContainer>
         ) : (
           <CSVButtonContainer>
+            <CSVUploadButton onClick={onButtonClick}>
+              <span>+</span>
+            </CSVUploadButton>
             {fileName.map((data: any) => {
               return (
                 <CSVButtonFile>

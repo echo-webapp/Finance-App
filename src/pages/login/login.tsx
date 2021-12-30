@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./login.css";
 import { login } from "../../api/post";
 import Input from "../../components/atoms/input";
@@ -29,22 +29,21 @@ const Login: any = () => {
     }
   }, [token]);
 
-  useEffect(() => {
-    window.addEventListener("keypress", onKeyPress);
-    return () => {
-      console.log("removing eventlistner");
-      window.removeEventListener("keypress", clickHandler);
-    };
-  }, []);
-
-  const onKeyPress = (e: any) => {
-    if (e.key == "Enter") {
-      clickHandler();
-    }
-  };
-  useEffect(() => {
-    console.log(email);
-  }, [email]);
+  // useEffect(() => {
+  //   // ref.addEventListener("keypress", onKeyPress);
+  //   const all_input = document.getElementsByTagName("input");
+  //   all_input[1].onkeyup = (e) => {
+  //     var keyCode = e.key;
+  //     if (keyCode == "Enter") {
+  //       clickHandler();
+  //       return false;
+  //     }
+  //   };
+  //   // return () => {
+  //   //   console.log("removing eventlistner");
+  //   //   window.removeEventListener("keypress", clickHandler);
+  //   // };
+  // }, []);
 
   const clickHandler: any = async () => {
     if (email == "") {

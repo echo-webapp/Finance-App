@@ -56,7 +56,7 @@ const Transaction = () => {
   function CustomToolbar() {
     return (
       <GridToolbarContainer>
-        <GridToolbarExport  />
+        <GridToolbarExport />
       </GridToolbarContainer>
     );
   }
@@ -66,7 +66,7 @@ const Transaction = () => {
       const res = history.location.state.sources_list;
       let temp: any = [];
       for (let i = 0; i < res.length; i++) {
-        let res1 = await getTransactionDetails(res[i].id);
+        let res1 = await getTransactionDetails(res[i].ID);
         temp = [...temp, ...res1];
       }
       const obj = temp[0];

@@ -49,7 +49,13 @@ export const GlobalStyle: any = createGlobalStyle`
     color:white !important;
   }
   .css-1knaqv7-MuiButtonBase-root-MuiButton-root{
-  color: #fff !important; 
+  color: var(--white) !important; 
   transform: translateX(10px) !important;
+  }
+  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
+    color:var(--white) !important;
+  }
+  .css-de9k3v-MuiDataGrid-selectedRowCount{
+    visibility: hidden !important;
   }
 `;

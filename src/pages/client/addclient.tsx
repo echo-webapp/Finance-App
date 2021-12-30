@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
-import Multiselect from "../../components/atoms/multiselect";
 import SelectComponent from "../../components/atoms/select";
 import Header from "../../components/molecules/header";
 import { create_Client } from "../../api/create";
@@ -13,6 +12,8 @@ import Backdrop from "@mui/material/Backdrop";
 import { SetCustomer } from "../../store/Reducers/client";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import SvgArrowleft from "../../components/vectors/Arrowleft";
+import { useHistory } from "react-router";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -28,7 +29,7 @@ const Details = styled.div`
   display: flex;
   gap: 65px;
   background-color: var(--white);
-  width: 80%;
+  width: 1400px;
   max-width: 1500px;
   position: relative;
   border-radius: 93px;
@@ -88,18 +89,56 @@ const Divider = styled.div`
   background-color: var(--grey);
 `;
 
+const SubHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+  width: 80%;
+  max-width: 1500px;
+  height: 70px;
+  border-bottom: 1px solid #adb5bd;
+`;
+const SubHeader1 = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .arrow-left {
+    margin-left: 20px;
+    position: relative;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 50px;
+    color: white;
+    svg {
+      vertical-align: middle;
+      height: 100%;
+      width: 100%;
+    }
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+      color: black;
+    }
+  }
+`;
+
 const AddClient = () => {
   const dispatch = useDispatch();
   const [token, allClients]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
+  const history = useHistory();
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const SubmitData = async () => {
-    const data = {
+    const data: any = {
       firstName: firstname,
       lastName: lastname,
       DOB: dob,
@@ -110,58 +149,21 @@ const AddClient = () => {
       CSN: csn,
       additionalAnnIncome: annual_income,
       netWorth: networth,
-      // additionalSourceofIncome: additional_soi,
       processStartData: "2021-01-01",
       processEndDate: "2021-01-01",
     };
 
-    if (data.firstName === "") {
-      toast.warning("Please Fill all the Details");
-      return;
+    const arr = Object.keys(data);
+    for (let i = 0; i < arr.length; i++) {
+      if (data[arr[i]] === "") {
+        toast.warning("Please Fill all the Details");
+        return;
+      }
     }
-    if (data.lastName === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.DOB === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.mobile === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.marriageStatus === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.Children === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.CSN === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.additionalAnnIncome === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.netWorth === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.processStartData === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    if (data.processEndDate === "") {
-      toast.warning("Please Fill all the Details");
-      return;
-    }
-    console.log("sarthak");
+
     const res = await create_Client(data, token);
     const res1 = res[res.length - 1];
+    console.log(res1, allClients);
     res1.new_Client = true;
     const new_res = [res1, ...allClients];
     dispatch(SetCustomer(new_res));
@@ -179,7 +181,6 @@ const AddClient = () => {
   const [annual_income, setannual_income] = useState("");
   const [networth, setnetworth] = useState("");
   const [csn, setcsn] = useState("");
-  const [additional_soi, setadditional_soi] = useState([]);
 
   return (
     <AddClientContainer>
@@ -206,6 +207,13 @@ const AddClient = () => {
         buttonText="Submit data"
         buttonHandler={SubmitData}
       />
+      <SubHeader>
+        <SubHeader1>
+          <div onClick={() => history.push("/")} className="arrow-left">
+            <SvgArrowleft color="white" />
+          </div>
+        </SubHeader1>
+      </SubHeader>
       <Details>
         <PersonalDetails>
           <PHeading>Personal Details</PHeading>
@@ -324,20 +332,6 @@ const AddClient = () => {
               />
             </InputContainerRight>
           </FInputFields>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              marginTop: "20px",
-              width: "100%",
-            }}
-          >
-            <Multiselect
-              label="Additional Source of Income"
-              value={additional_soi}
-              setvalue={setadditional_soi}
-            />
-          </div>
         </FinancialDetails>
       </Details>
     </AddClientContainer>

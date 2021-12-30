@@ -1,15 +1,18 @@
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 interface ButtonTypes {
   title: any;
   type: string;
   padding: string;
   clickHandler: any;
+  hidden?: boolean;
 }
 
 interface ButtonSubContainerProps {
   color: string;
   padding: string;
+  hidden?: boolean;
 }
 
 const ButtonContainer = styled.div`
@@ -17,6 +20,11 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 2px;
+`;
+
+const animate = keyframes`
+  50%{transform:scale(0.95);}
+  100%{transform:scale(1)}
 `;
 
 const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
@@ -45,12 +53,29 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
       return "var(--white)";
     }
   }};
+  visibility: ${(props) => (props.hidden == true ? "hidden" : "visible")};
+  &:focus {
+    animation: ${animate} 0.3s ease-in forwards;
+  }
 `;
 
-const Button = ({ title, type, padding, clickHandler }: ButtonTypes) => {
+const Button = ({
+  title,
+  type,
+  padding,
+  clickHandler,
+  hidden,
+}: ButtonTypes) => {
   return (
     <ButtonContainer>
-      <ButtonSubContainer color={type} onClick={clickHandler} padding={padding}>
+      <ButtonSubContainer
+        hidden={hidden}
+        color={type}
+        onClick={() => {
+          setTimeout(clickHandler, 300);
+        }}
+        padding={padding}
+      >
         {title}
       </ButtonSubContainer>
     </ButtonContainer>

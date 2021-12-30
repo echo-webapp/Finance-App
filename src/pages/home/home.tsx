@@ -20,13 +20,15 @@ const AddClientContainer = styled.div`
   width: 100%;
   min-height: 100vh;
 `;
+
 const SubHeader = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: var(--black);
-  width: 70%;
+  width: 80%;
+  max-width: 1500px;
   height: 110px;
   border-bottom: 1px solid #adb5bd;
 `;
@@ -36,21 +38,7 @@ const SubHeader1 = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const SubHeaderT1 = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 16px 32px;
-  width: 236px;
-  height: 48px;
-  background: #ffffff;
-  border-radius: 106px;
-  font-weight: 500;
-  font-size: 16px;
-  color: #343a40;
-  margin-left: 40px;
-`;
+
 const SubHeaderInput = styled.input`
   border: none;
   background-image: none;
@@ -70,10 +58,12 @@ const SubHeaderInput = styled.input`
   text-align: right;
   padding: 16px;
   padding-right: 65px;
+  outline: none;
   ::placeholder {
     color: var(--white);
   }
 `;
+
 const InputContainer = styled.div`
   position: relative;
   div {
@@ -84,14 +74,17 @@ const InputContainer = styled.div`
     padding-right: 40px;
   }
 `;
+
 const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 70%;
+  width: 80%;
+  max-width: 1500px;
   padding: 22px;
 `;
+
 const LoadContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -152,7 +145,7 @@ const Home = () => {
     <AddClientContainer>
       <Header
         heading="Your clientele"
-        subheading={`${allClients.length} active clients`}
+        subheading={`${allClients ? allClients.length : 0} active clients`}
         buttonText="+ Add New Client"
         buttonHandler={() => history.push("/addclient")}
       />

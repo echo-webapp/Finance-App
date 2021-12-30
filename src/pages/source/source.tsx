@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { get_AllSources } from "../../api/get";
 import NoSource from "./NoSource";
-import AllTransactions from "./AllTransactions";
+import AllTransactions from "./transactions";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 
 const Source = ({ match }: any) => {

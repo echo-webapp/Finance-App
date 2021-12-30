@@ -7,7 +7,7 @@ import AddClient from "./pages/client/addclient";
 import Source from "./pages/source/source";
 import AddSource from "./pages/AddSource/addSource";
 import NotFound from "./pages/PageNotFound/notFound";
-import Transaction from "./pages/allTransactions/transaction";
+import Transaction from "./pages/allTransactions/alltransactions";
 import Allsources from "./pages/source/allsources";
 import EditSource from "./pages/editSource/editsource";
 

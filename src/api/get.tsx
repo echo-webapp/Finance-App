@@ -33,8 +33,8 @@ export const get_AllSources: any = async (val: any) => {
 };
 
 export const getTransactionDetails = async (id: any) => {
-  const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=61c9cb36ebfac`;
-  // const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=${id}`;
+  // const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=61c9cb36ebfac`;
+  const url = `https://pikel-it.com/finapp/transactions/get.php?sourceId=${id}`;
 
   return fetch(url, {
     method: "GET", // or 'PUT'

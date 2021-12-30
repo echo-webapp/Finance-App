@@ -9,6 +9,8 @@ import CreditCard from "../../components/molecules/credit_card";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import DeleteObject from "../../components/molecules/deleteObjects";
+import SvgArrowleft from "../../components/vectors/Arrowleft";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,7 +56,6 @@ const AllBankAccountsCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-
   .heading {
     font-weight: 600;
     font-size: 28px;
@@ -79,13 +80,15 @@ const MultipleCardsCarousel = styled.div`
   align-items: center;
   margin-top: 40px;
   gap: 30px;
-  height: 600px;
-  overflow-y: scroll;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px;
   .hover {
     cursor: pointer;
   }
 `;
+
 const MultipleCards = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,12 +96,50 @@ const MultipleCards = styled.div`
   align-items: center;
   margin-top: 40px;
   gap: 30px;
-  height: 600px;
-  /* overflow-y: auto; */
-  /* width: 360px; */
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 20px;
   .hover {
     cursor: pointer;
+  }
+`;
+
+const SubHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black);
+  width: 70%;
+  max-width: 1500px;
+  height: 70px;
+  border-bottom: 1px solid #adb5bd;
+`;
+
+const SubHeader1 = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  .arrow-left {
+    margin-left: 20px;
+    position: relative;
+    height: 50px;
+    width: 50px;
+    padding: 10px;
+    border-radius: 50px;
+    color: white;
+    svg {
+      vertical-align: middle;
+      height: 100%;
+      width: 100%;
+    }
+    &:hover {
+      background-color: #eee;
+      cursor: pointer;
+      color: var(--black);
+    }
   }
 `;
 
@@ -115,7 +156,6 @@ const Allsources = ({ match }: any) => {
   const [selected_source, setselected_source] = useState("bank");
   const [flag, setFlag] = useState(true);
   const [deleteId, setDeleteId] = useState("");
-  console.log("all sources", match.params.id);
 
   useEffect(() => {
     const genResult = async () => {
@@ -137,11 +177,7 @@ const Allsources = ({ match }: any) => {
     };
 
     genResult();
-  }, []);
-
-  useEffect(() => {
-    console.log(allbankaccounts, allcreditcards);
-  }, [allbankaccounts, allcreditcards]);
+  }, [open]);
 
   return (
     <>
@@ -188,7 +224,21 @@ const Allsources = ({ match }: any) => {
                 },
               });
             }}
+            extraButton="Add a Source"
+            extraButtonHandler={() =>
+              history.push(`/addsource/${match.params.id}`)
+            }
           />
+          <SubHeader>
+            <SubHeader1>
+              <div
+                onClick={() => history.push(`/source/${match.params.id}`)}
+                className="arrow-left"
+              >
+                <SvgArrowleft color="white" />
+              </div>
+            </SubHeader1>
+          </SubHeader>
           <SubContainer>
             <AllBankAccountsCards>
               <div className="heading">Bank account details</div>

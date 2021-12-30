@@ -57,3 +57,23 @@ export const create_CSV = async (data: any, id: any) => {
       console.error("Error:", error);
     });
 };
+
+export const create_Transaction = async (data: any, id: any) => {
+  const url = `https://pikel-it.com/finapp/transactions/create.php?sourceId=${id}`;
+  return fetch(url, {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...data,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
