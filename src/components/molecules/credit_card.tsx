@@ -50,7 +50,7 @@ const Container = styled.div<ContainerProps>`
     }
   }};
 
-  transition: all 0.5s ease-in;
+  transition: all 0.3s ease-in;
   .price {
     font-size: 20px;
     transform: translateX(8px);
@@ -70,6 +70,14 @@ const Container = styled.div<ContainerProps>`
     }};
   }
   .account-number {
+    color: ${(props) => {
+      if (props.theme == "light") {
+        return "var(--black)";
+      }
+      if (props.theme == "dark") {
+        return "var(--green)";
+      }
+    }};
     font-size: 16px;
     transform: translateX(-8px);
   }
@@ -88,7 +96,7 @@ const ImageContainer = styled.div<ImageContainerProps>`
       return "var(--white)";
     }
   }};
-  transition: all 0.5s ease-in;
+  transition: all 0.3s ease-in;
   .image {
     font-weight: 500;
   }
@@ -152,7 +160,7 @@ const LargeContainer = styled.div<LargeContainerProps>`
       return "var(--black)";
     }
   }};
-  transition: all 0.5s ease-in;
+  transition: all 0.3s ease-in;
   box-shadow: inset 3.01531px 5.02551px 4.02041px rgba(0, 0, 0, 0.25);
   border-radius: 24.2169px;
   padding: 16px;
@@ -232,7 +240,6 @@ const CreditCard = ({
   setDeleteId,
   handleOpen,
 }: BankaccountCardProps) => {
-  console.log(details);
   if (size == "large") {
     return (
       <LargeContainer theme={theme}>
@@ -266,14 +273,14 @@ const CreditCard = ({
         <CardDetails theme={theme}>
           <div className="account-balance">
             <div className="balance">Balance</div>
-            <div className="number">$1500</div>
+            <div className="number">xxx</div>
           </div>
           <div className="account-number-with-date">
             <div className="number-and-icon">
               <div className="copy-icon">
                 <SvgCopy color={theme == "dark" ? "white" : "black"} />
               </div>
-              <div className="account-number">xxx 652110</div>
+              <div className="account-number">{details.cc4digits}</div>
             </div>
             <div className="date">06/25</div>
           </div>
@@ -292,9 +299,9 @@ const CreditCard = ({
           <Circle color="light" size="verysmall" />
         </div>
       </CircleContainer>
-      <div className="price">$1500</div>
+      <div className="price">xxx</div>
       <div className="divider"></div>
-      <div className="account-number">652110......</div>
+      <div className="account-number">{details.cc4digits}</div>
       <ImageContainer>
         <div className="image">
           <SvgVisa

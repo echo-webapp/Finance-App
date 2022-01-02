@@ -9,7 +9,6 @@ import CreditCard from "../../components/molecules/credit_card";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import DeleteObject from "../../components/molecules/deleteObjects";
-import SvgArrowleft from "../../components/vectors/Arrowleft";
 
 const Container = styled.div`
   display: flex;
@@ -221,6 +220,7 @@ const Allsources = ({ match }: any) => {
                 state: {
                   source_details: source_details,
                   selected_source: selected_source,
+                  clientId: match.params.id,
                 },
               });
             }}
@@ -229,7 +229,7 @@ const Allsources = ({ match }: any) => {
               history.push(`/addsource/${match.params.id}`)
             }
           />
-          <SubHeader>
+          {/* <SubHeader>
             <SubHeader1>
               <div
                 onClick={() => history.push(`/source/${match.params.id}`)}
@@ -238,7 +238,7 @@ const Allsources = ({ match }: any) => {
                 <SvgArrowleft color="white" />
               </div>
             </SubHeader1>
-          </SubHeader>
+          </SubHeader> */}
           <SubContainer>
             <AllBankAccountsCards>
               <div className="heading">Bank account details</div>

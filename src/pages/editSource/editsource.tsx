@@ -1,14 +1,17 @@
 import { useState } from "react";
 import Header from "../../components/molecules/header";
 import styled from "styled-components";
-import AddBankDetails from "./editBankDetails";
-import AddCreditCard from "./editCreditCard";
+import EditBankDetails from "./editBankDetails";
+import EditCreditCard from "./editCreditCard";
 import { create_CSV } from "../../api/create";
 import { useHistory } from "react-router";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { toast } from "react-toastify";
 import SvgArrowleft from "../../components/vectors/Arrowleft";
 import { updateSource } from "../../api/update";
+import Modal from "@mui/material/Modal";
+import DeleteObject from "../../components/molecules/deleteObjects";
+import Backdrop from "@mui/material/Backdrop";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -125,6 +128,8 @@ const EditSource = ({ match }: any) => {
   const [sourceData, setSourceData]: any = useState(
     history.location.state.source_details
   );
+  const [open, setopen] = useState(false);
+  const [clientId, setclientId] = useState(history.location.state.clientId);
   const [fileName, setfileName] = useState([]);
   const [base64File, setbase64File]: any = useState([]);
 
@@ -132,12 +137,14 @@ const EditSource = ({ match }: any) => {
     history.location.state.selected_source
   );
   const [flag, setFlag] = useState(false);
+  const [deleteId, setdeleteId] = useState("");
 
   const submitHandler = async () => {
     setFlag(true);
     let res1 = {
       ...sourceData,
     };
+    console.log("selected", selected);
     if (selected == "bank") {
       console.log("inside");
       if (
@@ -152,15 +159,15 @@ const EditSource = ({ match }: any) => {
       } else {
         delete res1.sourceFileName;
         delete res1.base64File;
+        delete res1.CREATED;
         console.log("updatesource", res1);
         const res2 = await updateSource(res1);
-        let result = res2[res2.length - 1];
         for (let i = 0; i < base64File.length; i++) {
-          const res = await create_CSV(base64File[i], result.ID);
+          const res = await create_CSV(base64File[i], match.params.id);
         }
         setFlag(false);
         if (Array.isArray(res2)) {
-          history.push(`/allsources/${match.params.id}`);
+          history.push(`/allsources/${clientId}`);
         }
       }
       setFlag(false);
@@ -183,12 +190,11 @@ const EditSource = ({ match }: any) => {
         delete res1.CREATED;
         console.log("updatesource", res1);
         const res2 = await updateSource(res1);
-        let result = res2[res2.length - 1];
         for (let i = 0; i < base64File.length; i++) {
-          const res = await create_CSV(base64File[i], result.ID);
+          const res = await create_CSV(base64File[i], match.params.id);
         }
         if (Array.isArray(res2)) {
-          history.push(`/allsources/${match.params.id}`);
+          history.push(`/allsources/${clientId}`);
         }
       }
       setFlag(false);
@@ -207,7 +213,31 @@ const EditSource = ({ match }: any) => {
             buttonText="Submit source details"
             buttonHandler={submitHandler}
           />
-          <SubHeader>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            onClose={() => setopen(false)}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <DeleteObject
+              id={deleteId}
+              parid={match.params.id}
+              text={"Delete this CSV?"}
+              type={"csv"}
+              handleClose={() => setopen(false)}
+            />
+          </Modal>
+          {/* <SubHeader>
             <SubHeader1>
               <div
                 onClick={() =>
@@ -218,25 +248,31 @@ const EditSource = ({ match }: any) => {
                 <SvgArrowleft color="white" />
               </div>
             </SubHeader1>
-          </SubHeader>
+          </SubHeader> */}
           <MainContainer>
             {selected === "bank" ? (
-              <AddBankDetails
+              <EditBankDetails
+                open={open}
+                setopen={setopen}
                 sourceData={sourceData}
-                setSouceData={setSourceData}
+                setSourceData={setSourceData}
                 fileName={fileName}
                 setfileName={setfileName}
                 base64File={base64File}
                 setbase64File={setbase64File}
+                setdeleteId={setdeleteId}
               />
             ) : (
-              <AddCreditCard
+              <EditCreditCard
+                open={open}
+                setopen={setopen}
                 sourceData={sourceData}
                 setSouceData={setSourceData}
                 fileName={fileName}
                 setfileName={setfileName}
                 base64File={base64File}
                 setbase64File={setbase64File}
+                setdeleteId={setdeleteId}
               />
             )}
             <SubContainer>

@@ -1,5 +1,6 @@
 import Button from "../atoms/button";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   heading: string;
@@ -32,7 +33,11 @@ const HeaderContainer = styled.div`
   }
 `;
 
-const Details = styled.div``;
+const Details = styled.div`
+  a {
+    color: var(--black);
+  }
+`;
 
 const Flex = styled.div`
   display: flex;
@@ -51,6 +56,11 @@ const SubHeading = styled.div`
   text-align: right;
   font-family: var(--oswald);
   transform: translateY(40%);
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Header = ({
@@ -80,7 +90,9 @@ const Header = ({
           />
         </Flex>
         <Details>
-          <SubHeading>{subheading}</SubHeading>
+          <Link to="/">
+            <SubHeading>[logo] Check_App</SubHeading>
+          </Link>
           <MainHeading>{heading}</MainHeading>
         </Details>
       </HeaderContainer>
@@ -97,7 +109,11 @@ const Header = ({
         hidden={hidden}
       />
       <Details>
-        <SubHeading>{subheading}</SubHeading>
+        <SubHeading>
+          <Link to="/">
+            <SubHeading>[logo] Check_App</SubHeading>
+          </Link>
+        </SubHeading>
         <MainHeading>{heading}</MainHeading>
       </Details>
     </HeaderContainer>

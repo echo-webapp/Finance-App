@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import Test from "./test";
@@ -10,10 +10,14 @@ import NotFound from "./pages/PageNotFound/notFound";
 import Transaction from "./pages/allTransactions/alltransactions";
 import Allsources from "./pages/source/allsources";
 import EditSource from "./pages/editSource/editsource";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
 
 const Router = () => {
-  return (
-    <Fragment>
+  const user: any = useSelector((state: RootState) => state.isAuth?.isAuth);
+  const token = localStorage.getItem("token");
+  if (token) {
+    return (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
@@ -26,7 +30,14 @@ const Router = () => {
         <Route exact path="/editsource/:id" component={EditSource} />
         <Route component={NotFound} />
       </Switch>
-    </Fragment>
+    );
+  }
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/login" component={Login} />
+      <Redirect to="/login" />
+    </Switch>
   );
 };
 

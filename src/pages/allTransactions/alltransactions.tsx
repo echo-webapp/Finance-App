@@ -10,7 +10,6 @@ import {
 import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import Header from "../../components/molecules/header";
-import { json2csvAsync } from "json-2-csv";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -69,26 +68,31 @@ const Transaction = () => {
         let res1 = await getTransactionDetails(res[i].ID);
         temp = [...temp, ...res1];
       }
-      const obj = temp[0];
-      const columns_arr: any = [];
-      Object.keys(obj).map((key) => {
-        const col = {
-          field: key,
-          headerName: key,
-          width: 150,
-        };
-        columns_arr.push(col);
-      });
-      const rows_arr: any = [];
-      temp.map((obj: any, index: any) => {
-        const new_obj = { id: index, ...obj };
-        rows_arr.push(new_obj);
-      });
-      setcolumns(columns_arr);
-      setrows(rows_arr);
-      setallTransactions(temp);
-      setFlag(false);
+      if (temp.length == 0) {
+        setFlag(false);
+      } else {
+        const obj = temp[0];
+        const columns_arr: any = [];
+        Object.keys(obj).map((key) => {
+          const col = {
+            field: key,
+            headerName: key,
+            width: 150,
+          };
+          columns_arr.push(col);
+        });
+        const rows_arr: any = [];
+        temp.map((obj: any, index: any) => {
+          const new_obj = { id: index, ...obj };
+          rows_arr.push(new_obj);
+        });
+        setcolumns(columns_arr);
+        setrows(rows_arr);
+        setallTransactions(temp);
+        setFlag(false);
+      }
     };
+
     getAll();
   }, []);
 
@@ -107,6 +111,7 @@ const Transaction = () => {
                 ref.click();
               }
             }}
+            hidden={true}
           />
           <DataGrid1>
             <div

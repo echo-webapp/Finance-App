@@ -168,7 +168,12 @@ const PhysicalCard_large = ({
 }: Physical_cardProps) => {
   return (
     <Container theme={theme}>
-      <CircleContainer>
+      <CircleContainer
+        onClick={() => {
+          setDeleteId(details.ID);
+          handleOpen();
+        }}
+      >
         <div className="dark">
           <Circle color="dark" size="small" />
         </div>
@@ -208,7 +213,7 @@ const PhysicalCard_large = ({
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
-        <div className="balance-amount">$21,420</div>
+        <div className="balance-amount">xx xxx</div>
         <div className="balance-text">Balance</div>
       </BalanceContainer>
     </Container>

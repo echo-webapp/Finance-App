@@ -216,7 +216,7 @@ const AddSource = ({ match }: any) => {
             buttonText="Submit source details"
             buttonHandler={submitHandler}
           />
-          <SubHeader>
+          {/* <SubHeader>
             <SubHeader1>
               <div
                 onClick={() => history.push(`/source/${match.params.id}`)}
@@ -225,7 +225,7 @@ const AddSource = ({ match }: any) => {
                 <SvgArrowleft color="white" />
               </div>
             </SubHeader1>
-          </SubHeader>
+          </SubHeader> */}
           <MainContainer>
             {selected === "bank" ? (
               <AddBankDetails

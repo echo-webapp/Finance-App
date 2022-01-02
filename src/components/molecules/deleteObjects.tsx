@@ -4,6 +4,8 @@ import Button from "../atoms/button";
 import Circle from "../atoms/circle";
 import { delete_Source } from "../../api/delete";
 import { toast } from "react-toastify";
+import { delete_CSV } from "../../api/delete";
+
 const Text1 = styled.div`
   margin-top: 5px;
   font-weight: 600;
@@ -56,7 +58,13 @@ const DeleteObject = ({ id, parid, text, type, handleClose }: any) => {
       toast.success("Source Deleted Successfully!");
       handleClose();
     }
+    if (type == "csv") {
+      const res = await delete_CSV(id, parid);
+      toast.success("CSV Deleted Successfully");
+      handleClose();
+    }
   };
+
   return (
     <MainContainer>
       <CircleContainer>

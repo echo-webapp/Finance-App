@@ -5,6 +5,8 @@ import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 import { updateTransaction } from "../../api/update";
 import { create_Transaction } from "../../api/create";
+import SvgPlusIcon from "../../components/vectors/PlusIcon";
+import { Tooltip } from "@mui/material";
 
 interface ClientDataGridProps {
   source_id: any;
@@ -26,23 +28,24 @@ const NoTransactions = styled.div`
   }
 `;
 
-const AddTransactionButton = styled.button`
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  font-size: 26px;
-  outline: none;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
+const AddTransactionButton = styled.div`
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 40px;
-  width: 40px;
-  height: 40px;
   z-index: 2;
-  background-color: var(--white);
-  color: var(--black);
+  &:hover {
+    cursor: pointer;
+  }
+  svg {
+    &:hover {
+      circle {
+        fill: #aaa;
+      }
+      line {
+        /* stroke: var(--white); */
+      }
+    }
+  }
 `;
 
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
@@ -54,30 +57,35 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
 
   useEffect(() => {
     const genResults = async () => {
-      const res = await getTransactionDetails(source_id);
-      if (res.length == 0) {
-        setFlag(false);
-        settransactions(null);
-      } else {
-        settransactions(true);
-        const obj = res[0];
-        const columns_arr: any = [];
-        Object.keys(obj).map((key) => {
-          const col = {
-            field: key,
-            headerName: key,
-            width: 150,
-            editable: true,
-          };
-          columns_arr.push(col);
-        });
-        const rows_arr: any = [];
-        res.map((obj: any, index: any) => {
-          const new_obj = { id: index, ...obj };
-          rows_arr.push(new_obj);
-        });
-        setcolumns(columns_arr);
-        setrows(rows_arr);
+      try {
+        const res = await getTransactionDetails(source_id);
+        if (res.length == 0) {
+          setFlag(false);
+          settransactions(null);
+        } else {
+          settransactions(true);
+          const obj = res[0];
+          const columns_arr: any = [];
+          Object.keys(obj).map((key) => {
+            const col = {
+              field: key,
+              headerName: key,
+              width: 150,
+              editable: true,
+            };
+            columns_arr.push(col);
+          });
+          const rows_arr: any = [];
+          res.map((obj: any, index: any) => {
+            const new_obj = { id: index, ...obj };
+            rows_arr.push(new_obj);
+          });
+          setcolumns(columns_arr);
+          setrows(rows_arr);
+          setFlag(false);
+        }
+      } catch (err) {
+        console.log(err);
         setFlag(false);
       }
     };
@@ -107,7 +115,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const date = new Date();
     const mod_data = {
       ...data,
-      date: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
+      date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
     };
     console.log("moddata", mod_data);
     const res = await create_Transaction(mod_data, source_id);
@@ -119,12 +127,25 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const row = obj.row;
     const value = obj.value;
     const field = obj.field;
-    console.log("row", row);
     const new_obj = {
       ...row,
-      [field]: event.target.value,
+      [field]: value,
     };
     delete new_obj.CREATED;
+    console.log(new_obj, "new_obj");
+    const res = await updateTransaction(new_obj);
+    console.log("response", res);
+  };
+
+  const handleChangeRow1 = async (row: any) => {
+    const id = row.id;
+    const value = row.value;
+    const row_data: any = rows[id];
+    delete row_data.CREATED;
+    const new_obj = {
+      ...row_data,
+      [row.field]: value,
+    };
     console.log(new_obj, "new_obj");
     const res = await updateTransaction(new_obj);
     console.log("response", res);
@@ -148,24 +169,37 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         </NoTransactions>
       ) : transactions ? (
         <Fragment>
-          <AddTransactionButton onClick={generateTransaction}>
-            +
-          </AddTransactionButton>
+          <Tooltip title="Add Transaction">
+            <AddTransactionButton onClick={generateTransaction}>
+              <SvgPlusIcon />
+            </AddTransactionButton>
+          </Tooltip>
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={8}
+            pageSize={7}
             rowsPerPageOptions={[5]}
             checkboxSelection
             disableSelectionOnClick
             onCellEditStop={(v, e) => {
-              handleChangeRow(v, e);
+              // console.log("triggered");
+              // handleChangeRow(v, e);
+            }}
+            onCellEditCommit={(v, e: any) => {
+              if (e.key == "Enter") {
+                handleChangeRow1(v);
+              } else {
+                handleChangeRow(v, e);
+              }
             }}
           />
         </Fragment>
       ) : (
         <NoTransactions>
           <div className="text">No transactions available</div>
+          <AddTransactionButton onClick={generateTransaction}>
+            <SvgPlusIcon />
+          </AddTransactionButton>
         </NoTransactions>
       )}
     </div>

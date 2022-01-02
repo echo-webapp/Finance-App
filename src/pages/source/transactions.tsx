@@ -10,6 +10,7 @@ import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import SvgArrowleft from "../../components/vectors/Arrowleft";
+import { Tooltip } from "@mui/material";
 
 const Container = styled.div`
   display: flex;
@@ -77,8 +78,18 @@ const BankAccountCardsHeading = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
   width: 100%;
+  .heading {
+    .plus-icon {
+      svg {
+        &:hover {
+          circle {
+            fill: #aaa;
+          }
+        }
+      }
+    }
+  }
   .heading-text {
     font-weight: 600;
     font-size: 20px;
@@ -95,7 +106,7 @@ const MultipleBankAccounts = styled.div<MultipleCardProps>`
   align-items: center;
   overflow: hidden;
   transform: ${(props) => `translateX(-${300 * props.selected - 15}px)`};
-  transition: all 0.5s ease-out;
+  transition: all 0.3s ease-out;
   .hover {
     &:hover {
       cursor: pointer;
@@ -112,7 +123,7 @@ const MultipleCreditCards = styled.div<MultipleCreditCards>`
   align-items: center;
   overflow: hidden;
   transform: ${(props) => `translateX(-${300 * props.selected - 20}px)`};
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
   .hover {
     &:hover {
       cursor: pointer;
@@ -126,6 +137,17 @@ const CreditCardsHeading = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  .heading {
+    .plus-icon {
+      svg {
+        &:hover {
+          circle {
+            fill: #aaa;
+          }
+        }
+      }
+    }
+  }
   .heading-text {
     font-weight: 600;
     font-size: 20px;
@@ -170,7 +192,7 @@ const SubHeader1 = styled.div`
   }
 `;
 
-const AllTransactions = ({ id }: any) => {
+const Transactions = ({ id }: any) => {
   const history = useHistory();
   const pathname = history.location.pathname;
   const [sources, setsources] = useState([]);
@@ -228,31 +250,33 @@ const AllTransactions = ({ id }: any) => {
               });
             }}
           />
-          <SubHeader>
+          {/* <SubHeader>
             <SubHeader1>
               <div onClick={() => history.push("/")} className="arrow-left">
                 <SvgArrowleft color="white" />
               </div>
             </SubHeader1>
-          </SubHeader>
+          </SubHeader> */}
           <SubContainer>
             <DataGrid>
               <ClientDataGrid source_id={source_details?.ID} />
             </DataGrid>
             <CardsComponents>
               <BankAccountCardsHeading>
-                <div className="heading">
-                  <Link
-                    to={{
-                      pathname: `/addsource/${id}`,
-                      state: "bank",
-                    }}
-                  >
-                    <div className="plus-icon">
-                      <SvgPlusIcon />
-                    </div>
-                  </Link>
-                </div>
+                <Tooltip title="Add a Bank Source">
+                  <div className="heading">
+                    <Link
+                      to={{
+                        pathname: `/addsource/${id}`,
+                        state: "bank",
+                      }}
+                    >
+                      <div className="plus-icon">
+                        <SvgPlusIcon />
+                      </div>
+                    </Link>
+                  </div>
+                </Tooltip>
                 <div className="heading-text">Bank Accounts</div>
               </BankAccountCardsHeading>
               <MultipleBankAccounts selected={selected_bank}>
@@ -276,6 +300,7 @@ const AllTransactions = ({ id }: any) => {
                                 : "light"
                             }
                             details={bank}
+                            name={"hello"}
                           />
                         </div>
                       );
@@ -284,18 +309,20 @@ const AllTransactions = ({ id }: any) => {
               </MultipleBankAccounts>
 
               <CreditCardsHeading>
-                <div className="heading">
-                  <Link
-                    to={{
-                      pathname: `/addsource/${id}`,
-                      state: "card",
-                    }}
-                  >
-                    <div className="plus-icon">
-                      <SvgPlusIcon />
-                    </div>
-                  </Link>
-                </div>
+                <Tooltip title="Add a Card Source">
+                  <div className="heading">
+                    <Link
+                      to={{
+                        pathname: `/addsource/${id}`,
+                        state: "cc",
+                      }}
+                    >
+                      <div className="plus-icon">
+                        <SvgPlusIcon />
+                      </div>
+                    </Link>
+                  </div>
+                </Tooltip>
                 <div className="heading-text">Cards</div>
               </CreditCardsHeading>
               <MultipleCreditCards selected={selected_cc}>
@@ -333,4 +360,4 @@ const AllTransactions = ({ id }: any) => {
   );
 };
 
-export default AllTransactions;
+export default Transactions;

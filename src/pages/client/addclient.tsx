@@ -135,7 +135,6 @@ const AddClient = () => {
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const SubmitData = async () => {
     const data: any = {
@@ -149,8 +148,8 @@ const AddClient = () => {
       CSN: csn,
       additionalAnnIncome: annual_income,
       netWorth: networth,
-      processStartData: "2021-01-01",
-      processEndDate: "2021-01-01",
+      processStartData: psd,
+      processEndDate: ped,
     };
 
     const arr = Object.keys(data);
@@ -177,10 +176,11 @@ const AddClient = () => {
   const [marriage_status, setmarriage_status] = useState("single");
   const [dob, setdob] = useState("");
   const [noc, setnoc] = useState("");
-  const [id_number, setid_number] = useState("");
   const [annual_income, setannual_income] = useState("");
   const [networth, setnetworth] = useState("");
   const [csn, setcsn] = useState("");
+  const [psd, setpsd] = useState("");
+  const [ped, setped] = useState("");
 
   return (
     <AddClientContainer>
@@ -207,13 +207,13 @@ const AddClient = () => {
         buttonText="Submit data"
         buttonHandler={SubmitData}
       />
-      <SubHeader>
+      {/* <SubHeader>
         <SubHeader1>
-          <div onClick={() => history.push("/")} className="arrow-left">
+          <div onClick={() => history.goBack()} className="arrow-left">
             <SvgArrowleft color="white" />
           </div>
         </SubHeader1>
-      </SubHeader>
+      </SubHeader> */}
       <Details>
         <PersonalDetails>
           <PHeading>Personal Details</PHeading>
@@ -265,16 +265,6 @@ const AddClient = () => {
             />
             <InputContainerLeft>
               <Input
-                type="text"
-                label="Id Number"
-                placeholder="SLA220154653"
-                height={56}
-                value={id_number}
-                setvalue={setid_number}
-              />
-            </InputContainerLeft>
-            <InputContainerLeft>
-              <Input
                 type="email"
                 label="Email"
                 placeholder="test1.pikel@gmail.com"
@@ -283,6 +273,7 @@ const AddClient = () => {
                 setvalue={setemail}
               />
             </InputContainerLeft>
+            <InputContainerLeft></InputContainerLeft>
             <InputContainerLeft>
               <Input
                 type="text"
@@ -320,7 +311,6 @@ const AddClient = () => {
                 setvalue={setcsn}
               />
             </InputContainerRight>
-            <InputContainerRight></InputContainerRight>
             <InputContainerRight>
               <Input
                 type="text"
@@ -329,6 +319,26 @@ const AddClient = () => {
                 height={56}
                 value={annual_income}
                 setvalue={setannual_income}
+              />
+            </InputContainerRight>
+            <InputContainerRight>
+              <Input
+                type="date"
+                label="Process Start Date"
+                placeholder="04/12/1989"
+                height={56}
+                value={psd}
+                setvalue={setpsd}
+              />
+            </InputContainerRight>
+            <InputContainerRight>
+              <Input
+                type="date"
+                label="Process End Date"
+                placeholder="04/12/1989"
+                height={56}
+                value={ped}
+                setvalue={setped}
               />
             </InputContainerRight>
           </FInputFields>

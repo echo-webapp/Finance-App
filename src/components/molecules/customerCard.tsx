@@ -20,12 +20,14 @@ const MainContainer = styled("div")`
     transform: scale(1.05);
   }
 `;
+
 const SubContainer = styled("div")`
   display: flex;
   flex-direction: column;
   width: 76%;
   padding-left: 5px;
 `;
+
 const SubId = styled("div")`
   width: 100%;
   display: flex;
@@ -34,6 +36,7 @@ const SubId = styled("div")`
   font-size: 12.6222px;
   color: var(--black);
 `;
+
 const SubName = styled("div")`
   width: 100%;
   display: flex;
@@ -42,11 +45,13 @@ const SubName = styled("div")`
   font-weight: 500;
   font-size: 25.2444px;
 `;
+
 const SubHeader = styled("div")`
   width: 100%;
   display: flex;
   justify-content: flex-end;
 `;
+
 const SubNew = styled("div")`
   width: 56px;
   height: 22px;
@@ -57,6 +62,7 @@ const SubNew = styled("div")`
   align-items: center;
   justify-content: center;
 `;
+
 const SubJob = styled("div")`
   height: 22px;
   font-weight: 500;
@@ -106,8 +112,8 @@ const CustomerCard = ({ data }: any) => {
     >
       <Avatar
         style={{
-          color: "#f56a00",
-          backgroundColor: "#fde3cf",
+          color: "var(--black)",
+          backgroundColor: "var(--green)",
           height: "83px",
           width: "83px",
           display: "flex",

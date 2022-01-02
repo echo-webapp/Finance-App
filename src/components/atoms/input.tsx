@@ -8,12 +8,15 @@ const InputContainer = styled.div`
   justify-content: center;
   align-items: left;
 `;
+interface LabelProps {
+  focus: boolean;
+}
 
-const Label = styled.div`
+const Label = styled.div<LabelProps>`
   color: var(--black);
   text-align: right;
-  font-weight: 500;
   font-size: 18px;
+  font-weight: ${(props) => (props.focus === true ? 700 : 500)};
 `;
 
 const InputBase = styled.input<InputBaseProps>`
@@ -30,6 +33,10 @@ const InputBase = styled.input<InputBaseProps>`
   border-radius: 8px;
   font-weight: 500;
   font-size: 16px;
+  &::placeholder {
+    color: var(--black);
+    opacity: 0.2;
+  }
 `;
 
 interface InputBaseProps {
@@ -69,7 +76,7 @@ const Input = ({
     };
     return (
       <InputContainer>
-        <Label>{label}</Label>
+        <Label focus={focus}>{label}</Label>
         <InputBase
           onFocus={(e) => setFocus(true)}
           onBlur={(e) => setFocus(false)}
@@ -85,7 +92,7 @@ const Input = ({
   }
   return (
     <InputContainer>
-      <Label>{label}</Label>
+      <Label focus={focus}>{label}</Label>
       <InputBase
         onFocus={(e) => setFocus(true)}
         onBlur={(e) => setFocus(false)}

@@ -163,6 +163,8 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   ]);
 
   const onButtonClick = () => {
+    console.log("button");
+    console.log(inputFile.current);
     inputFile.current.click();
   };
 

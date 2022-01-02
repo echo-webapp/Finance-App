@@ -25,7 +25,7 @@ const Container = styled.div<ContainerProps>`
       return "none";
     }
   }};
-  transition: all 0.5s ease-in;
+  transition: all 0.3s ease-in;
 `;
 
 interface DetailsContainerProps {
@@ -44,7 +44,7 @@ const DetailsContainer = styled.div<DetailsContainerProps>`
       return "var(--card-grey)";
     }
   }};
-  transition: all 0.3s ease-in;
+  transition: all 0.2s ease-in;
   text-align: right;
   color: ${(props) => {
     if (props.theme == "dark") {
@@ -73,7 +73,7 @@ const BalanceContainer = styled.div<BalanceContainerProps>`
       return "var(--white)";
     }
   }};
-  transition: all 0.3s ease-in;
+  transition: all 0.2s ease-in;
   .balance-text {
     font-weight: 500;
     font-size: 16px;
@@ -106,7 +106,7 @@ const Heading = styled.div<HeadingProps>`
       return "var(--white)";
     }
   }};
-  transition: all 0.3s ease-in;
+  transition: all 0.2s ease-in;
 `;
 
 const Info = styled.div`
@@ -144,11 +144,10 @@ export const CircleContainer = styled.div`
 interface Physical_cardProps {
   theme: string;
   details: any;
+  name?: string;
 }
 
-const PhysicalCard_small = ({ theme, details }: Physical_cardProps) => {
-  // console.log("details", details);
-
+const PhysicalCard_small = ({ theme, details, name }: Physical_cardProps) => {
   return (
     <Container theme={theme}>
       <CircleContainer>
@@ -161,15 +160,17 @@ const PhysicalCard_small = ({ theme, details }: Physical_cardProps) => {
       </CircleContainer>
       <DetailsContainer theme={theme}>
         <SubContainer>
-          <Heading>{details.sourceName}</Heading>
+          <Heading theme={theme}>{details.sourceName}</Heading>
           <Info>
             <div>{details.bankName}</div>
           </Info>
         </SubContainer>
         <SubContainer>
-          <Heading className="mt">Account info</Heading>
+          <Heading className="mt" theme={theme}>
+            Account info
+          </Heading>
           <Info>
-            <div className="account-holder-name">Jenny Wilson</div>
+            <div className="account-holder-name">{name}</div>
             <div className="account-number">
               xxx{" "}
               {details.bankAccountNumber.substr(
@@ -181,7 +182,7 @@ const PhysicalCard_small = ({ theme, details }: Physical_cardProps) => {
       </DetailsContainer>
       <BalanceContainer theme={theme}>
         <div className="balance-text">Balance</div>
-        <div className="balance-amount">$21,420</div>
+        <div className="balance-amount">xx xxx</div>
       </BalanceContainer>
     </Container>
   );

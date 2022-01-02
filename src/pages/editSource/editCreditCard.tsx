@@ -5,6 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 import { get_CSV } from "../../api/get";
 import { delete_CSV } from "../../api/delete";
+import { create_CSV } from "../../api/create";
 
 const SubContainer1 = styled.div`
   padding: 120px;
@@ -122,12 +123,15 @@ const CSVUploadButton = styled.div`
 `;
 
 const EditCreditCard = ({
+  open,
+  setopen,
   sourceData,
   setSouceData,
   fileName,
   setfileName,
   base64File,
   setbase64File,
+  setdeleteId,
 }: any) => {
   const inputFile: any = useRef(null);
   const [allcsv, setallcsv] = useState([]);
@@ -135,6 +139,7 @@ const EditCreditCard = ({
   const onButtonClick = () => {
     inputFile.current.click();
   };
+
   function getBase641(file: any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -173,26 +178,6 @@ const EditCreditCard = ({
       toast.warning("Cannot Upload Same File Again");
     }
   };
-  const crossFileHandler: any = (file: any) => {
-    let res: any = [];
-    let res1: any = [];
-    for (let i = 0; i < base64File.length; i++) {
-      if (base64File[i].fileName === file) {
-        continue;
-      } else {
-        res.push(base64File[i]);
-      }
-    }
-    for (let i = 0; i < fileName.length; i++) {
-      if (fileName[i] === file) {
-        continue;
-      } else {
-        res1.push(fileName[i]);
-      }
-    }
-    setfileName(res1);
-    setbase64File(res);
-  };
 
   useEffect(() => {
     const getAllcsv = async () => {
@@ -201,7 +186,7 @@ const EditCreditCard = ({
       setallcsv(res);
     };
     getAllcsv();
-  }, []);
+  }, [open]);
 
   return (
     <SubContainer1>
@@ -301,12 +286,9 @@ const EditCreditCard = ({
                       <CSVButtonFileFlex>
                         <CSVButtonFileText>{data.name}</CSVButtonFileText>
                         <CSVButtonFileSvg
-                          onClick={async () => {
-                            const res = await delete_CSV(
-                              data.ID,
-                              data.sourceId
-                            );
-                            setallcsv(res);
+                          onClick={() => {
+                            setopen(true);
+                            setdeleteId(data.ID);
                           }}
                         >
                           <CloseIcon />
@@ -332,7 +314,8 @@ const EditCreditCard = ({
                     <CSVButtonFileText>{data}</CSVButtonFileText>
                     <CSVButtonFileSvg
                       onClick={() => {
-                        crossFileHandler(data);
+                        setopen(true);
+                        setdeleteId(data.ID);
                       }}
                     >
                       <CloseIcon />

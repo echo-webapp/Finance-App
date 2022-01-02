@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { get_AllSources } from "../../api/get";
 import NoSource from "./NoSource";
-import AllTransactions from "./transactions";
+import Transactions from "./transactions";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 
 const Source = ({ match }: any) => {
@@ -24,7 +24,7 @@ const Source = ({ match }: any) => {
       ) : sources.length === 0 ? (
         <NoSource id={match.params.id} />
       ) : (
-        <AllTransactions id={match.params.id} />
+        <Transactions id={match.params.id} />
       )}
     </>
   );

@@ -122,11 +122,14 @@ const CSVUploadButton = styled.div`
 `;
 
 const EditBankDetails = ({
+  open,
+  setopen,
   sourceData,
-  setSouceData,
+  setSourceData,
   fileName,
   setfileName,
   base64File,
+  setdeleteId,
   setbase64File,
 }: any) => {
   const inputFile: any = useRef(null);
@@ -181,28 +184,7 @@ const EditBankDetails = ({
       setallcsv(res);
     };
     getAllcsv();
-  }, []);
-
-  const crossFileHandler: any = (file: any) => {
-    let res: any = [];
-    let res1: any = [];
-    for (let i = 0; i < base64File.length; i++) {
-      if (base64File[i].fileName === file) {
-        continue;
-      } else {
-        res.push(base64File[i]);
-      }
-    }
-    for (let i = 0; i < fileName.length; i++) {
-      if (fileName[i] === file) {
-        continue;
-      } else {
-        res1.push(fileName[i]);
-      }
-    }
-    setfileName(res1);
-    setbase64File(res);
-  };
+  }, [open]);
 
   return (
     <SubContainer1>
@@ -216,7 +198,7 @@ const EditBankDetails = ({
               placeholder="Yes"
               height={50}
               value={sourceData.ACTIVE}
-              setvalue={setSouceData}
+              setvalue={setSourceData}
               name="ACTIVE"
             />
           </div>
@@ -227,7 +209,7 @@ const EditBankDetails = ({
               placeholder="SLA220154653"
               height={50}
               value={sourceData.bankAccountNumber}
-              setvalue={setSouceData}
+              setvalue={setSourceData}
               name="bankAccountNumber"
             />
           </div>
@@ -240,7 +222,7 @@ const EditBankDetails = ({
               placeholder="My Main Bank"
               height={50}
               value={sourceData.sourceName}
-              setvalue={setSouceData}
+              setvalue={setSourceData}
               name="sourceName"
             />
           </div>
@@ -251,7 +233,7 @@ const EditBankDetails = ({
               placeholder="Bank Leumi Le-Israel B.M"
               height={50}
               value={sourceData.bankName}
-              setvalue={setSouceData}
+              setvalue={setSourceData}
               name="bankName"
             />
           </div>
@@ -262,7 +244,7 @@ const EditBankDetails = ({
               placeholder="IL950108000000090722422"
               height={50}
               value={sourceData.bankBranch}
-              setvalue={setSouceData}
+              setvalue={setSourceData}
               name="bankBranch"
             />
           </div>
@@ -292,11 +274,8 @@ const EditBankDetails = ({
                         <CSVButtonFileText>{data.name}</CSVButtonFileText>
                         <CSVButtonFileSvg
                           onClick={async () => {
-                            const res = await delete_CSV(
-                              data.ID,
-                              data.sourceId
-                            );
-                            setallcsv(res);
+                            setopen(true);
+                            setdeleteId(data.ID);
                           }}
                         >
                           <CloseIcon />
@@ -322,8 +301,8 @@ const EditBankDetails = ({
                     <CSVButtonFileText>{data.name}</CSVButtonFileText>
                     <CSVButtonFileSvg
                       onClick={async () => {
-                        const res = await delete_CSV(data.ID, data.sourceId);
-                        setallcsv(res);
+                        setopen(true);
+                        setdeleteId(data.ID);
                       }}
                     >
                       <CloseIcon />
@@ -339,7 +318,8 @@ const EditBankDetails = ({
                     <CSVButtonFileText>{data}</CSVButtonFileText>
                     <CSVButtonFileSvg
                       onClick={() => {
-                        crossFileHandler(data);
+                        setopen(true);
+                        setdeleteId(data.ID);
                       }}
                     >
                       <CloseIcon />
