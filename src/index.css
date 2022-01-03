@@ -30,7 +30,7 @@
 .MuiDataGrid-sortIcon {
   color: white !important;
 }
-/* .css-1knaqv7-MuiButtonBase-root-MuiButton-root {
+.css-1knaqv7-MuiButtonBase-root-MuiButton-root {
   color: var(--white) !important;
   transform: translateX(10px) !important;
 }
@@ -39,7 +39,7 @@
 }
 .css-de9k3v-MuiDataGrid-selectedRowCount {
   visibility: hidden !important;
-} */
+}
 .MuiDataGrid-menuIcon button {
   color: white;
 }
