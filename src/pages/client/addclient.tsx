@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import SvgArrowleft from "../../components/vectors/Arrowleft";
 import { useHistory } from "react-router";
+import validator from "validator";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -27,6 +28,7 @@ const AddClientContainer = styled.div`
 
 const Details = styled.div`
   display: flex;
+  flex-direction: row-reverse;
   gap: 65px;
   background-color: var(--white);
   width: 1400px;
@@ -38,12 +40,12 @@ const Details = styled.div`
 
 const PersonalDetails = styled.div`
   width: 50%;
-  padding-left: 75px;
+  padding-right: 75px;
 `;
 
 const FinancialDetails = styled.div`
   width: 50%;
-  padding-right: 75px;
+  padding-left: 75px;
 `;
 
 const PHeading = styled.div`
@@ -158,6 +160,11 @@ const AddClient = () => {
         toast.warning("Please Fill all the Details");
         return;
       }
+    }
+
+    if (!validator.isEmail(data.email)) {
+      toast.warning("Please Fill Correct Email");
+      return;
     }
 
     const res = await create_Client(data, token);
@@ -311,16 +318,7 @@ const AddClient = () => {
                 setvalue={setcsn}
               />
             </InputContainerRight>
-            <InputContainerRight>
-              <Input
-                type="text"
-                label="Additional Annual Income"
-                placeholder="5000"
-                height={56}
-                value={annual_income}
-                setvalue={setannual_income}
-              />
-            </InputContainerRight>
+
             <InputContainerRight>
               <Input
                 type="date"
@@ -339,6 +337,16 @@ const AddClient = () => {
                 height={56}
                 value={ped}
                 setvalue={setped}
+              />
+            </InputContainerRight>
+            <InputContainerRight>
+              <Input
+                type="text"
+                label="Additional Annual Income"
+                placeholder="5000"
+                height={56}
+                value={annual_income}
+                setvalue={setannual_income}
               />
             </InputContainerRight>
           </FInputFields>

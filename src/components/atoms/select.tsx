@@ -24,7 +24,7 @@ const SelectLabel = styled.div`
 const SelectComponent = ({ label, value, setvalue }: SelectProps) => {
   return (
     <SelectContainer>
-      <SelectLabel>{label}</SelectLabel>
+      <SelectLabel>{label}*</SelectLabel>
       <Select
         style={{ width: "100%" }}
         value={value}

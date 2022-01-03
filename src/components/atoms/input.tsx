@@ -78,6 +78,7 @@ const Input = ({
       <InputContainer>
         <Label focus={focus}>{label}</Label>
         <InputBase
+          tabIndex={-1}
           onFocus={(e) => setFocus(true)}
           onBlur={(e) => setFocus(false)}
           focus={focus}
@@ -92,7 +93,7 @@ const Input = ({
   }
   return (
     <InputContainer>
-      <Label focus={focus}>{label}</Label>
+      <Label focus={focus}>{label}*</Label>
       <InputBase
         onFocus={(e) => setFocus(true)}
         onBlur={(e) => setFocus(false)}

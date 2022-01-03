@@ -115,7 +115,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const date = new Date();
     const mod_data = {
       ...data,
-      date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+      date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
     };
     console.log("moddata", mod_data);
     const res = await create_Transaction(mod_data, source_id);

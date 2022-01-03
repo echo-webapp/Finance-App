@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font);
+}
+
+.MuiDataGrid-root {
+  border: 2px solid #e5e5e5 !important;
+  padding: 25px !important;
+  border-radius: 93px !important;
+  color: white !important;
+  background-color: var(--black);
+}
+.MuiDataGrid-columnHeaders {
+  color: #ccf148 !important;
+}
+.MuiTablePagination-root {
+  color: #ffffff !important;
+}
+.MuiDataGrid-columnSeparator {
+  visibility: hidden !important;
+}
+.MuiDataGrid-rowSeparator {
+  visibility: hidden !important;
+}
+.MuiDataGrid-cell {
+  border: none !important;
+}
+.MuiDataGrid-sortIcon {
+  color: white !important;
+}
+/* .css-1knaqv7-MuiButtonBase-root-MuiButton-root {
+  color: var(--white) !important;
+  transform: translateX(10px) !important;
+}
+.css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked {
+  color: var(--white) !important;
+}
+.css-de9k3v-MuiDataGrid-selectedRowCount {
+  visibility: hidden !important;
+} */
+.MuiDataGrid-menuIcon button {
+  color: white;
+}

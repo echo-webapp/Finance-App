@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle: any = createGlobalStyle`
-
   :root{
     --black:#343A40;
     --lightgrey:#E5E5E5;
@@ -15,47 +14,5 @@ export const GlobalStyle: any = createGlobalStyle`
     --card-grey:#C4C4C4;
     --oswald:"Oswald";
     --font:"Poppins";
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family:var(--font);
-  }
-  .MuiDataGrid-root{
-    border: 2px solid #E5E5E5 !important;
-    padding: 25px !important;
-    border-radius: 93px !important;
-    color:white !important;
-    background-color: var(--black);
-  }
-  .MuiDataGrid-columnHeaders{
-    color: #CCF148 !important;
-  }
-  .MuiTablePagination-root{
-    color: #FFFFFF !important;
-  }
-  .MuiDataGrid-columnSeparator{
-    visibility: hidden;
-  }
-  .MuiDataGrid-rowSeparator{
-    visibility: hidden;
-  }
-  .MuiDataGrid-cell{
-    border:none !important;;
-  }
-  .css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root{
-    color:white !important;
-  }
-  .css-1knaqv7-MuiButtonBase-root-MuiButton-root{
-  color: var(--white) !important; 
-  transform: translateX(10px) !important;
-  }
-  .css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root.Mui-checked{
-    color:var(--white) !important;
-  }
-  .css-de9k3v-MuiDataGrid-selectedRowCount{
-    visibility: hidden !important;
   }
 `;

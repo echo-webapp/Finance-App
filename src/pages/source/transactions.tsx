@@ -194,7 +194,6 @@ const SubHeader1 = styled.div`
 
 const Transactions = ({ id }: any) => {
   const history = useHistory();
-  const pathname = history.location.pathname;
   const [sources, setsources] = useState([]);
   const [allbankaccounts, setallbankaccounts] = useState([]);
   const [allcreditcards, setallcreditcards] = useState([]);
