@@ -179,6 +179,27 @@ const EditCreditCard = ({
     }
   };
 
+  const crossFileHandler: any = (file: any) => {
+    let res: any = [];
+    let res1: any = [];
+    for (let i = 0; i < base64File.length; i++) {
+      if (base64File[i].fileName === file) {
+        continue;
+      } else {
+        res.push(base64File[i]);
+      }
+    }
+    for (let i = 0; i < fileName.length; i++) {
+      if (fileName[i] === file) {
+        continue;
+      } else {
+        res1.push(fileName[i]);
+      }
+    }
+    setfileName(res1);
+    setbase64File(res);
+  };
+
   useEffect(() => {
     const getAllcsv = async () => {
       const res = await get_CSV(sourceData.ID);
@@ -307,6 +328,23 @@ const EditCreditCard = ({
             <CSVUploadButton onClick={onButtonClick}>
               <span>+</span>
             </CSVUploadButton>
+            {allcsv.map((data: any) => {
+              return (
+                <CSVButtonFile>
+                  <CSVButtonFileFlex>
+                    <CSVButtonFileText>{data.name}</CSVButtonFileText>
+                    <CSVButtonFileSvg
+                      onClick={() => {
+                        setopen(true);
+                        setdeleteId(data.ID);
+                      }}
+                    >
+                      <CloseIcon />
+                    </CSVButtonFileSvg>
+                  </CSVButtonFileFlex>
+                </CSVButtonFile>
+              );
+            })}
             {fileName.map((data: any) => {
               return (
                 <CSVButtonFile>
@@ -314,8 +352,7 @@ const EditCreditCard = ({
                     <CSVButtonFileText>{data}</CSVButtonFileText>
                     <CSVButtonFileSvg
                       onClick={() => {
-                        setopen(true);
-                        setdeleteId(data.ID);
+                        crossFileHandler();
                       }}
                     >
                       <CloseIcon />

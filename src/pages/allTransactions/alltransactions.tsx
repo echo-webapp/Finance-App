@@ -63,6 +63,7 @@ const Transaction = () => {
   useEffect(() => {
     const getAll: any = async () => {
       const res = history.location.state.sources_list;
+      console.log("res", res);
       let temp: any = [];
       for (let i = 0; i < res.length; i++) {
         let res1 = await getTransactionDetails(res[i].ID);
