@@ -5,13 +5,20 @@ import styled from "styled-components";
 const { Option } = Select;
 
 interface SelectProps {
-  label: string;
+  label?: string;
   value: any;
   setvalue: any;
+  options: any;
 }
 
 const SelectContainer = styled.div`
   width: 258px;
+`;
+
+const SelectContainer1 = styled.div`
+  width: 100%;
+  height: 40px;
+  padding: 20px;
 `;
 
 const SelectLabel = styled.div`
@@ -21,7 +28,24 @@ const SelectLabel = styled.div`
   font-size: 18px;
 `;
 
-const SelectComponent = ({ label, value, setvalue }: SelectProps) => {
+const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
+  if (!label) {
+    return (
+      <SelectContainer1>
+        <Select
+          style={{ width: "100%" }}
+          value={value}
+          placeholder="In"
+          onChange={(e) => setvalue(e)}
+        >
+          {options.map((opt: any) => {
+            return <Option value={opt.value}>{opt.name}</Option>;
+          })}
+        </Select>
+      </SelectContainer1>
+    );
+  }
+  console.log("inside lable");
   return (
     <SelectContainer>
       <SelectLabel>{label}*</SelectLabel>
@@ -31,10 +55,9 @@ const SelectComponent = ({ label, value, setvalue }: SelectProps) => {
         placeholder="Select"
         onChange={(e) => setvalue(e)}
       >
-        <Option value="single">Single</Option>
-        <Option value="married">Married</Option>
-        <Option value="widow">Widow</Option>
-        <Option value="divorced">Divorced</Option>
+        {options.map((opt: any) => {
+          return <Option value={opt.value}>{opt.name}</Option>;
+        })}
       </Select>
     </SelectContainer>
   );

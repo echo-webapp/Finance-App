@@ -9,7 +9,6 @@ import { get_AllSources } from "../../api/get";
 import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
-import SvgArrowleft from "../../components/vectors/Arrowleft";
 import { Tooltip } from "@mui/material";
 
 const Container = styled.div`
@@ -36,6 +35,7 @@ const SubContainer = styled.div`
   position: relative;
   width: 80%;
   max-width: 1500px;
+  min-height: 700px;
   margin-top: 20px;
   background: var(--white);
   border-radius: 93px;
@@ -107,6 +107,7 @@ const MultipleBankAccounts = styled.div<MultipleCardProps>`
   overflow: hidden;
   transform: ${(props) => `translateX(-${300 * props.selected - 15}px)`};
   transition: all 0.3s ease-out;
+  min-height: 300px;
   .hover {
     &:hover {
       cursor: pointer;
@@ -219,7 +220,12 @@ const Transactions = ({ id }: any) => {
       setsources(res);
       setallbankaccounts(bank);
       setallcreditcards(cc);
-      setsource_details(bank[0]);
+      if (bank.length != 0) {
+        setsource_details(bank[0]);
+      } else {
+        setselected_transaction("cc");
+        setsource_details(cc[0]);
+      }
       setFlag(false);
     };
 

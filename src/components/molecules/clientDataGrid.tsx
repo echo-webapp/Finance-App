@@ -7,6 +7,7 @@ import { updateTransaction } from "../../api/update";
 import { create_Transaction } from "../../api/create";
 import SvgPlusIcon from "../../components/vectors/PlusIcon";
 import { Tooltip } from "@mui/material";
+import Select from "../atoms/select";
 
 interface ClientDataGridProps {
   source_id: any;
@@ -48,12 +49,23 @@ const AddTransactionButton = styled.div`
   }
 `;
 
+const InOut_Options = [
+  { value: "in", name: "In" },
+  { value: "out", name: "Out" },
+];
+
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
   const [flag, setFlag] = useState(true);
   const [data, setdata]: any = useState(null);
+
+  const onChangeHandler = (e: any) => {
+    console.log("value", e);
+  };
+
+  const update_transaction = async (id: any, value: any) => {};
 
   useEffect(() => {
     const genResults = async () => {
@@ -67,13 +79,33 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
           const obj = res[0];
           const columns_arr: any = [];
           Object.keys(obj).map((key) => {
+            let f = true;
             const col = {
               field: key,
               headerName: key,
               width: 150,
               editable: true,
             };
-            columns_arr.push(col);
+            if (key == "inOut") {
+              const new_col = {
+                field: key,
+                headerName: key,
+                width: 150,
+                editable: true,
+                renderCell: (params: any) => (
+                  <Select
+                    value={params.value}
+                    setvalue={onChangeHandler}
+                    options={InOut_Options}
+                  />
+                ),
+              };
+              columns_arr.push(new_col);
+              console.log("inside");
+              f = false;
+            }
+            if (key == "CREATED" || key == "ID" || key == "sourceId") f = false;
+            if (f) columns_arr.push(col);
           });
           const rows_arr: any = [];
           res.map((obj: any, index: any) => {
@@ -177,14 +209,10 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
           <DataGrid
             rows={rows}
             columns={columns}
-            pageSize={7}
+            pageSize={10}
             rowsPerPageOptions={[5]}
             checkboxSelection
             disableSelectionOnClick
-            onCellEditStop={(v, e) => {
-              // console.log("triggered");
-              // handleChangeRow(v, e);
-            }}
             onCellEditCommit={(v, e: any) => {
               if (e.key == "Enter") {
                 handleChangeRow1(v);

@@ -128,6 +128,12 @@ const SubHeader1 = styled.div`
   }
 `;
 
+const Marriage_Option = [
+  { value: "single", name: "Single" },
+  { value: "married", name: "Married" },
+  { value: "widow", name: "Widow" },
+  { value: "divorced", name: "Divorced" },
+];
 const AddClient = () => {
   const dispatch = useDispatch();
   const [token, allClients]: any = useSelector((state: RootState) => {
@@ -269,6 +275,7 @@ const AddClient = () => {
               label="Marriage Status"
               value={marriage_status}
               setvalue={setmarriage_status}
+              options={Marriage_Option}
             />
             <InputContainerLeft>
               <Input

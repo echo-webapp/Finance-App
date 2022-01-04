@@ -171,7 +171,11 @@ const Allsources = ({ match }: any) => {
       });
       setallbankaccounts(bank);
       setallcreditcards(cc);
-      setsource_details(bank[0]);
+      if (bank.length != 0) {
+        setsource_details(bank[0]);
+      } else {
+        setsource_details(cc[0]);
+      }
       setFlag(false);
     };
 
