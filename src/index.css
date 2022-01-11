@@ -62,3 +62,7 @@
   height: 50% !important;
   border-color: #e5e5e5 !important;
 }
+
+.MuiButton-root {
+  color: var(--export-button) !important;
+}

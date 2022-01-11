@@ -25,6 +25,8 @@ const GlobalStyle: any = createGlobalStyle`
 
     --subheader-color:#343A40;
 
+    --export-button:#343A40
+
     --oswald:"Oswald";
     --font:"Poppins";
   }

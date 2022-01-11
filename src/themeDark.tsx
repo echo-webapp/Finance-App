@@ -25,6 +25,8 @@ const GlobalStyle: any = createGlobalStyle`
 
     --logout-icon:#FFFFFF;
 
+    --export-button:#FFFFFF
+
     --oswald:"Oswald";
     --font:"Poppins";
   }
