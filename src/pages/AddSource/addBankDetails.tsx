@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
@@ -79,13 +79,11 @@ const CSVUploadButton = styled.div`
   color: var(--black);
   width: 30px;
   height: 30px;
-  /* border: 1px solid #000000; */
   padding: 20px;
   border-radius: 20px;
   &:hover {
     cursor: pointer;
     background: #eee;
-    /* opacity: 0.7; */
   }
 `;
 const CSVButtonFile = styled.div`
@@ -158,10 +156,6 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
     };
     getAllBanks();
   }, []);
-
-  useEffect(() => {
-    console.log(bank_list);
-  }, [bank_list]);
 
   useEffect(() => {
     let res = {

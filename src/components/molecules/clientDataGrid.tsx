@@ -166,7 +166,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                       }}
                     >
                       {params.value}
-                      {/* <select
+                      <select
                         style={{ border: "none", background: "none" }}
                         value={params.value}
                         onChange={(e) => {
@@ -187,7 +187,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                             </option>
                           );
                         })}
-                      </select> */}
+                      </select>
                     </div>
                   );
                 },

@@ -6,7 +6,7 @@ const GlobalStyle: any = createGlobalStyle`
     --header-text:#FFFFFF;
     --header-bg:#2196F3;
     --card-text:#343A40;
-    --lightgrey:#070606;
+    --lightgrey:#E5E5E5;
     --grey: #ADB5BD;
     --green:#CCF148;
     --green-gradient:radial-gradient(130.1% 4211.09% at -31.8% 124.29%, #7D8C0B 0%, #CCF148 100%); // light -#2196F3

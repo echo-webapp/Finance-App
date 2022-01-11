@@ -146,8 +146,6 @@ const AddSource = ({ match }: any) => {
   }, []);
 
   const submitHandler = async (e: any) => {
-    // e.preventDefault();
-    setFlag(true);
     let res1 = {
       ...sourceData,
     };
@@ -163,6 +161,7 @@ const AddSource = ({ match }: any) => {
         console.log("inside1");
         toast.warning("Please Fill All Required Field");
       } else {
+        setFlag(true);
         delete res1.sourceFileName;
         delete res1.base64File;
         const res2 = await create_ClientSource(res1, match.params.id);
@@ -175,7 +174,6 @@ const AddSource = ({ match }: any) => {
           history.push(`/source/${match.params.id}`);
         }
       }
-      setFlag(false);
     }
     if (selected == "cc") {
       if (
@@ -189,6 +187,7 @@ const AddSource = ({ match }: any) => {
         console.log("inside3");
         toast.warning("Please Fill All Required Field");
       } else {
+        setFlag(true);
         console.log("inside4");
         delete res1.sourceFileName;
         delete res1.base64File;
@@ -197,16 +196,14 @@ const AddSource = ({ match }: any) => {
         for (let i = 0; i < sourceData.base64File.length; i++) {
           const res = await create_CSV(sourceData.base64File[i], result.ID);
         }
+        setFlag(false);
         if (Array.isArray(res2)) {
           history.push(`/source/${match.params.id}`);
         }
       }
-      setFlag(false);
     }
   };
-  useEffect(() => {
-    console.log(sourceData);
-  }, [sourceData]);
+
   return (
     <>
       {flag ? (
