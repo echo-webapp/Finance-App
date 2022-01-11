@@ -23,6 +23,8 @@ const GlobalStyle: any = createGlobalStyle`
     --grid-border:#FFFFFF;
     --grid-text:#FFFFFF;
 
+    --ink-icon:#E5E5E5;
+
     --logout-icon:#FFFFFF;
 
     --export-button:#FFFFFF

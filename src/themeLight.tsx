@@ -19,6 +19,8 @@ const GlobalStyle: any = createGlobalStyle`
 
     --logout-icon:#343A40;
 
+    --ink-icon:#343A40;
+
     --grid-header:#343A40;
     --grid-border:#343A40;
     --grid-text:#343A40;

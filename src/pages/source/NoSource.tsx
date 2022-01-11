@@ -16,7 +16,7 @@ const AddText = styled.div`
   font-weight: 500;
   font-size: 35.102px;
   text-align: center;
-  color: #ffffff;
+  color: var(--grid-text);
 `;
 
 const NoSource = ({ id }: any) => {
@@ -32,9 +32,9 @@ const NoSource = ({ id }: any) => {
         }}
       />
       <div style={{ marginTop: "20px" }}>
-        <Ink width="272px" height="342px" />
+        <Ink color="var(--ink-icon)" width="272px" height="342px" />
       </div>
-      <AddText>You have’nt added any income source, add a source </AddText>
+      <AddText>You haven't added any income source, add a source </AddText>
     </AddClientContainer>
   );
 };
