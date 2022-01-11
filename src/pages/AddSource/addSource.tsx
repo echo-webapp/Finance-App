@@ -145,7 +145,8 @@ const AddSource = ({ match }: any) => {
     }
   }, []);
 
-  const submitHandler = async () => {
+  const submitHandler = async (e: any) => {
+    // e.preventDefault();
     setFlag(true);
     let res1 = {
       ...sourceData,
@@ -203,7 +204,9 @@ const AddSource = ({ match }: any) => {
       setFlag(false);
     }
   };
-
+  useEffect(() => {
+    console.log(sourceData);
+  }, [sourceData]);
   return (
     <>
       {flag ? (

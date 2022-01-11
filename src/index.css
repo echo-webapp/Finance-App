@@ -57,4 +57,7 @@
     height: 60px;
     font-size: 30px;
   }
+.MuiDivider-root {
+  height: 50% !important;
+  border-color: #e5e5e5 !important;
 }

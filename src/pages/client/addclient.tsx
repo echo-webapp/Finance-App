@@ -220,7 +220,11 @@ const AddClient = () => {
       toast.warning("Please Fill Correct Email");
       return;
     }
-
+    const temp1 = String(mobile);
+    if (temp1.length != 10 || temp1[0] != "0" || temp1[1] != "5") {
+      toast.warning("Please Fill Correct Mobile Number");
+      return;
+    }
     const res = await create_Client(data, token);
     const res1 = res[res.length - 1];
     console.log(res1, allClients);

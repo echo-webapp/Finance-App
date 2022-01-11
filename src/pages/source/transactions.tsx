@@ -10,7 +10,11 @@ import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { Tooltip } from "@mui/material";
-
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import ClientDetails from "../../components/molecules/clientDetails";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -172,6 +176,10 @@ const CreditCardsHeading = styled.div`
 
 const Transactions = ({ id }: any) => {
   const history = useHistory();
+  const allClients: any = useSelector((state: RootState) => {
+    return state.customerList.customer;
+  });
+
   const [sources, setsources] = useState([]);
   const [allbankaccounts, setallbankaccounts]: any = useState([]);
   const [allcreditcards, setallcreditcards]: any = useState([]);
@@ -180,7 +188,10 @@ const Transactions = ({ id }: any) => {
   const [selected_transaction, setselected_transaction] = useState("bank");
   const [source_details, setsource_details]: any = useState(null);
   const [flag, setFlag] = useState(true);
-
+  const [clientDetails, setClientDetails] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllSources(id);
@@ -203,6 +214,11 @@ const Transactions = ({ id }: any) => {
         setselected_transaction("cc");
         setsource_details(cc[0]);
       }
+      for (let i = 0; i < allClients.length; i++) {
+        if (allClients[i].ID === id) {
+          setClientDetails(allClients[i]);
+        }
+      }
       setFlag(false);
     };
 
@@ -217,6 +233,24 @@ const Transactions = ({ id }: any) => {
         </Container1>
       ) : (
         <Container>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClose={handleClose}
+          >
+            <ClientDetails clientDetails={clientDetails} />
+          </Modal>
           <Header
             heading="Transaction details"
             subheading="@WW24"
@@ -329,6 +363,13 @@ const Transactions = ({ id }: any) => {
               </MultipleCreditCards>
             </CardsComponents>
           </SubContainer>
+          <button
+            onClick={() => {
+              handleOpen();
+            }}
+          >
+            Click
+          </button>
         </Container>
       )}
     </>
