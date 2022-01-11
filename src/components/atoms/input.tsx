@@ -4,12 +4,14 @@ import { useState } from "react";
 const InputContainer = styled.div`
   width: 100%;
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: left;
 `;
 interface LabelProps {
   focus: boolean;
+  label: string;
 }
 
 const Label = styled.div<LabelProps>`
@@ -17,6 +19,17 @@ const Label = styled.div<LabelProps>`
   text-align: right;
   font-size: 18px;
   font-weight: ${(props) => (props.focus === true ? 700 : 500)};
+  &::before {
+    content: "₪";
+    position: absolute;
+    left: 0;
+    top: 55%;
+    padding-left: 20px;
+    display: ${(props) =>
+      props.label == "Net Worth" || props.label == "Additional Annual Income"
+        ? "block"
+        : "none"};
+  }
 `;
 
 const InputBase = styled.input<InputBaseProps>`
@@ -76,7 +89,9 @@ const Input = ({
     };
     return (
       <InputContainer>
-        <Label focus={focus}>{label}</Label>
+        <Label focus={focus} label={label}>
+          {label}
+        </Label>
         <InputBase
           tabIndex={-1}
           onFocus={(e) => setFocus(true)}
@@ -93,7 +108,9 @@ const Input = ({
   }
   return (
     <InputContainer>
-      <Label focus={focus}>{label}*</Label>
+      <Label focus={focus} label={label}>
+        {label}*
+      </Label>
       <InputBase
         onFocus={(e) => setFocus(true)}
         onBlur={(e) => setFocus(false)}
@@ -102,8 +119,12 @@ const Input = ({
         value={value}
         height={height}
         placeholder={placeholder}
-        onChange={(e) => setvalue(e.target.value)}
-      />
+        onChange={(e) => {
+          setvalue(e.target.value);
+        }}
+      >
+        {/* <Currency></Currency> */}
+      </InputBase>
     </InputContainer>
   );
 };

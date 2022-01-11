@@ -111,14 +111,53 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
               width: 150,
               editable: true,
             };
+            if (key == "amount") {
+              const new_col = {
+                field: key,
+                width: 150,
+                editable: true,
+                renderCell: (params: any) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <span>₪</span> <span>{params.value}</span>
+                    </div>
+                  );
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
             if (key == "finalAmount") {
               const new_col = {
                 field: key,
                 width: 150,
-                editable: false,
+                editable: true,
                 renderCell: (params: any) => {
                   const row = params.row;
-                  return parseFloat(row.amount) / parseFloat(row.multiPlyer);
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        gap: 4,
+                      }}
+                    >
+                      <span>₪ </span>
+                      <span>
+                        {(
+                          parseFloat(row.amount) / parseFloat(row.multiPlyer)
+                        ).toFixed(1)}
+                      </span>
+                    </div>
+                  );
                 },
               };
               columns_arr.push(new_col);
@@ -171,7 +210,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                         value={params.value}
                         onChange={(e) => {
                           handleOptionChange(
-                              params.id,
+                            params.id,
                             params.field,
                             e.target.value
                           );
