@@ -3,6 +3,9 @@ import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
+import SelectComponent from "../../components/atoms/select";
+import { get_Dropdown } from "../../api/get";
+
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;
@@ -137,7 +140,28 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const [bankAccountNumber, setBankAccountNumber] = useState("");
   const [active, setActive] = useState("");
   const [fileName, setFileName] = useState([]);
+  const [bank_list, setbank_list] = useState([]);
   const [base64File, setbase64File]: any = useState([]);
+
+  useEffect(() => {
+    const getAllBanks = async () => {
+      const res = await get_Dropdown("BANK");
+      const arr: any = [];
+      res.forEach((lov: any) => {
+        const obj = {
+          value: lov.LOV_CODE,
+          name: lov.LOV_VAL,
+        };
+        arr.push(obj);
+      });
+      setbank_list(arr);
+    };
+    getAllBanks();
+  }, []);
+
+  useEffect(() => {
+    console.log(bank_list);
+  }, [bank_list]);
 
   useEffect(() => {
     let res = {
@@ -259,14 +283,12 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
               setvalue={setSouceName}
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
+          <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
+            <SelectComponent
               label="Bank Name"
-              placeholder="Bank Leumi Le-Israel B.M"
-              height={50}
               value={bankName}
               setvalue={setBankName}
+              options={bank_list}
             />
           </div>
           <div style={{ marginTop: "15px" }}>
@@ -302,7 +324,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
             </CSVUploadButton>
             {fileName.map((data: any) => {
               return (
-                <CSVButtonFile>
+                <CSVButtonFile key={data.ID}>
                   <CSVButtonFileFlex>
                     <CSVButtonFileText>{data}</CSVButtonFileText>
                     <CSVButtonFileSvg

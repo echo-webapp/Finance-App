@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import SelectComponent from "../../components/atoms/select";
@@ -15,13 +15,14 @@ import { toast } from "react-toastify";
 import SvgArrowleft from "../../components/vectors/Arrowleft";
 import { useHistory } from "react-router";
 import validator from "validator";
+import { get_Dropdown } from "../../api/get";
 
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
   gap: 40px;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;
@@ -134,15 +135,59 @@ const Marriage_Option = [
   { value: "widow", name: "Widow" },
   { value: "divorced", name: "Divorced" },
 ];
+
+const dropdown_name_arr = ["GENDER", "CITY", "STATUS"];
+
 const AddClient = () => {
   const dispatch = useDispatch();
   const [token, allClients]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
-  const history = useHistory();
-
+  const [firstname, setfirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [email, setemail] = useState("");
+  const [mobile, setmobile] = useState("");
+  const [marriage_status, setmarriage_status] = useState("single");
+  const [dob, setdob] = useState("");
+  const [noc, setnoc] = useState("");
+  const [annual_income, setannual_income] = useState("");
+  const [networth, setnetworth] = useState("");
+  const [csn, setcsn] = useState("");
+  const [psd, setpsd] = useState("");
+  const [ped, setped] = useState("");
+  const [gender, setgender] = useState("");
+  const [city, setcity] = useState("");
+  const [status, setstatus] = useState("");
+  const [dropdown_options, setdropdown_options] = useState({
+    city: [],
+    gender: [],
+    status: [],
+  });
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+
+  useEffect(() => {
+    const getDropdownValues = async () => {
+      dropdown_name_arr.forEach(async (name) => {
+        const res = await get_Dropdown(name);
+        const arr: any = [];
+        res.forEach((lov: any) => {
+          const obj = {
+            value: lov.LOV_CODE,
+            name: lov.LOV_VAL,
+          };
+          arr.push(obj);
+        });
+        setdropdown_options((prev) => {
+          return {
+            ...prev,
+            [name.toLowerCase()]: arr,
+          };
+        });
+      });
+    };
+    getDropdownValues();
+  }, []);
 
   const SubmitData = async () => {
     const data: any = {
@@ -155,6 +200,9 @@ const AddClient = () => {
       Children: noc,
       CSN: csn,
       additionalAnnIncome: annual_income,
+      city: city,
+      status: status,
+      gender: gender,
       netWorth: networth,
       processStartData: psd,
       processEndDate: ped,
@@ -182,19 +230,6 @@ const AddClient = () => {
     handleOpen();
   };
 
-  const [firstname, setfirstname] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [email, setemail] = useState("");
-  const [mobile, setmobile] = useState("");
-  const [marriage_status, setmarriage_status] = useState("single");
-  const [dob, setdob] = useState("");
-  const [noc, setnoc] = useState("");
-  const [annual_income, setannual_income] = useState("");
-  const [networth, setnetworth] = useState("");
-  const [csn, setcsn] = useState("");
-  const [psd, setpsd] = useState("");
-  const [ped, setped] = useState("");
-
   return (
     <AddClientContainer>
       <Modal
@@ -220,13 +255,7 @@ const AddClient = () => {
         buttonText="Submit data"
         buttonHandler={SubmitData}
       />
-      {/* <SubHeader>
-        <SubHeader1>
-          <div onClick={() => history.goBack()} className="arrow-left">
-            <SvgArrowleft color="white" />
-          </div>
-        </SubHeader1>
-      </SubHeader> */}
+
       <Details>
         <PersonalDetails>
           <PHeading>Personal Details</PHeading>
@@ -251,16 +280,12 @@ const AddClient = () => {
                 setvalue={setlastname}
               />
             </InputContainerLeft>
-            <InputContainerLeft>
-              <Input
-                type="text"
-                label="Number of children"
-                placeholder="03"
-                height={56}
-                value={noc}
-                setvalue={setnoc}
-              />
-            </InputContainerLeft>
+            <SelectComponent
+              label="Gender"
+              value={gender}
+              setvalue={setgender}
+              options={dropdown_options.gender}
+            />
             <InputContainerLeft>
               <Input
                 type="date"
@@ -271,12 +296,6 @@ const AddClient = () => {
                 setvalue={setdob}
               />
             </InputContainerLeft>
-            <SelectComponent
-              label="Marriage Status"
-              value={marriage_status}
-              setvalue={setmarriage_status}
-              options={Marriage_Option}
-            />
             <InputContainerLeft>
               <Input
                 type="email"
@@ -287,7 +306,6 @@ const AddClient = () => {
                 setvalue={setemail}
               />
             </InputContainerLeft>
-            <InputContainerLeft></InputContainerLeft>
             <InputContainerLeft>
               <Input
                 type="text"
@@ -296,6 +314,34 @@ const AddClient = () => {
                 height={56}
                 value={mobile}
                 setvalue={setmobile}
+              />
+            </InputContainerLeft>
+            <SelectComponent
+              label="City"
+              value={city}
+              setvalue={setcity}
+              options={dropdown_options.city}
+            />
+            <SelectComponent
+              label="Status"
+              value={status}
+              setvalue={setstatus}
+              options={dropdown_options.status}
+            />
+            <SelectComponent
+              label="Marriage Status"
+              value={marriage_status}
+              setvalue={setmarriage_status}
+              options={Marriage_Option}
+            />
+            <InputContainerLeft>
+              <Input
+                type="text"
+                label="Number of children"
+                placeholder="03"
+                height={56}
+                value={noc}
+                setvalue={setnoc}
               />
             </InputContainerLeft>
           </PInputFields>

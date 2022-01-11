@@ -7,22 +7,24 @@ const SubHeaderT1 = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* padding: 16px 32px; */
   width: 180px;
   height: 52px;
   border-radius: 106px;
-  border: 1px solid #ffffff;
+  border: 2px solid var(--subheader-color);
   cursor: pointer;
 `;
+
 const Text = styled.div`
   font-weight: 600;
   font-size: 16px;
-  color: #ffffff;
+  color: var(--subheader-color);
 `;
+
 const Sub = styled.div`
   display: flex;
   flex-direction: row;
 `;
+
 const Sub1 = styled.div`
   height: 30px;
   display: flex;
@@ -31,6 +33,7 @@ const Sub1 = styled.div`
   align-items: center;
   margin-left: 10px;
 `;
+
 const LogOutButton = () => {
   return (
     <SubHeaderT1
@@ -40,7 +43,7 @@ const LogOutButton = () => {
       }}
     >
       <Sub>
-        <Logout />
+        <Logout color="var(--logout-icon)" />
         <Sub1>
           <Text>Log out</Text>
         </Sub1>

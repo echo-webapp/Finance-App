@@ -10,15 +10,26 @@ interface SelectProps {
   setvalue: any;
   options: any;
 }
+interface SelectContainerProps {
+  label: string;
+}
 
-const SelectContainer = styled.div`
-  width: 258px;
+const SelectContainer = styled.div<SelectContainerProps>`
+  width: ${(props) => {
+    if (
+      props.label == "Bank Name" ||
+      props.label == "Credit Card Type" ||
+      props.label == "Credit Card Provider"
+    ) {
+      return "100%";
+    }
+    return "258px";
+  }};
 `;
 
 const SelectContainer1 = styled.div`
   width: 100%;
-  height: 40px;
-  padding: 20px;
+  height: 20px;
 `;
 
 const SelectLabel = styled.div`
@@ -39,15 +50,19 @@ const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
           onChange={(e) => setvalue(e)}
         >
           {options.map((opt: any) => {
-            return <Option value={opt.value}>{opt.name}</Option>;
+            return (
+              <Option key={opt.value} value={opt.value}>
+                {opt.name}
+              </Option>
+            );
           })}
         </Select>
       </SelectContainer1>
     );
   }
-  console.log("inside lable");
+
   return (
-    <SelectContainer>
+    <SelectContainer label={label}>
       <SelectLabel>{label}*</SelectLabel>
       <Select
         style={{ width: "100%" }}
@@ -56,7 +71,11 @@ const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
         onChange={(e) => setvalue(e)}
       >
         {options.map((opt: any) => {
-          return <Option value={opt.value}>{opt.name}</Option>;
+          return (
+            <Option key={opt.value} value={opt.value}>
+              {opt.name}
+            </Option>
+          );
         })}
       </Select>
     </SelectContainer>

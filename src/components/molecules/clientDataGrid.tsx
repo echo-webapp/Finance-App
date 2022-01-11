@@ -8,6 +8,11 @@ import { create_Transaction } from "../../api/create";
 import SvgPlusIcon from "../../components/vectors/PlusIcon";
 import { Tooltip } from "@mui/material";
 import Select from "../atoms/select";
+import { delete_Transaction } from "../../api/delete";
+import { toast } from "react-toastify";
+import { Checkbox } from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ClientDataGridProps {
   source_id: any;
@@ -32,19 +37,40 @@ const NoTransactions = styled.div`
 const AddTransactionButton = styled.div`
   position: absolute;
   bottom: 20px;
-  left: 40px;
+  left: 50px;
   z-index: 2;
+  color: var(--grid-text);
+  height: 40px;
+  width: 40px;
   &:hover {
     cursor: pointer;
   }
   svg {
+    font-size: 40px;
     &:hover {
-      circle {
-        fill: #aaa;
-      }
-      line {
-        /* stroke: var(--white); */
-      }
+      opacity: 0.8;
+    }
+  }
+`;
+
+const DeleteTransactionButton = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 110px;
+  z-index: 2;
+  color: var(--grid-text);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  &:hover {
+    cursor: pointer;
+  }
+  svg {
+    font-size: 40px;
+    &:hover {
+      opacity: 0.8;
     }
   }
 `;
@@ -58,23 +84,23 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
-  const [flag, setFlag] = useState(true);
-  const [data, setdata]: any = useState(null);
+  const [loader, setloader] = useState(true);
+  const [selected, setselected]: any = useState(null);
+  const [flag, setflag] = useState(false);
 
   const onChangeHandler = (e: any) => {
     console.log("value", e);
   };
-
-  const update_transaction = async (id: any, value: any) => {};
 
   useEffect(() => {
     const genResults = async () => {
       try {
         const res = await getTransactionDetails(source_id);
         if (res.length == 0) {
-          setFlag(false);
+          setloader(false);
           settransactions(null);
         } else {
+          console.log("arr", res);
           settransactions(true);
           const obj = res[0];
           const columns_arr: any = [];
@@ -82,26 +108,91 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             let f = true;
             const col = {
               field: key,
-              headerName: key,
               width: 150,
               editable: true,
             };
+            if (key == "finalAmount") {
+              const new_col = {
+                field: key,
+                width: 150,
+                editable: false,
+                renderCell: (params: any) => {
+                  const row = params.row;
+                  return parseFloat(row.amount) / parseFloat(row.multiPlyer);
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
+            if (key == "excludeFlg") {
+              const new_col = {
+                field: key,
+                headerName: key,
+                width: 150,
+                editable: false,
+                renderCell: (params: any) => {
+                  return (
+                    <Checkbox
+                      checked={params.value == "N" ? false : true}
+                      onChange={(e) => {
+                        handleCheckboxChange(
+                          params.id,
+                          params.field,
+                          e.target.checked
+                        );
+                      }}
+                    />
+                  );
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
             if (key == "inOut") {
               const new_col = {
                 field: key,
                 headerName: key,
                 width: 150,
-                editable: true,
-                renderCell: (params: any) => (
-                  <Select
-                    value={params.value}
-                    setvalue={onChangeHandler}
-                    options={InOut_Options}
-                  />
-                ),
+                editable: false,
+                renderCell: (params: any) => {
+                  // console.log("params", params);
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "start",
+                        alignItems: "center",
+                        width: "100%",
+                      }}
+                    >
+                      {params.value}
+                      {/* <select
+                        style={{ border: "none", background: "none" }}
+                        value={params.value}
+                        onChange={(e) => {
+                          handleOptionChange(
+                              params.id,
+                            params.field,
+                            e.target.value
+                          );
+                        }}
+                      >
+                        {InOut_Options.map((opt: any) => {
+                          return (
+                            <option
+                              style={{ background: "white", color: "black" }}
+                              value={opt.value}
+                            >
+                              {opt.name}
+                            </option>
+                          );
+                        })}
+                      </select> */}
+                    </div>
+                  );
+                },
               };
               columns_arr.push(new_col);
-              console.log("inside");
               f = false;
             }
             if (key == "CREATED" || key == "ID" || key == "sourceId") f = false;
@@ -112,22 +203,23 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             const new_obj = { id: index, ...obj };
             rows_arr.push(new_obj);
           });
+          console.log("rows-arrary", rows_arr);
           setcolumns(columns_arr);
           setrows(rows_arr);
-          setFlag(false);
+          setloader(false);
         }
       } catch (err) {
         console.log(err);
-        setFlag(false);
+        setloader(false);
       }
     };
 
     if (source_id) {
       genResults();
     } else {
-      setFlag(false);
+      setloader(false);
     }
-  }, [source_id, data]);
+  }, [source_id, flag]);
 
   const generateTransaction = async () => {
     const data = {
@@ -140,7 +232,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       notes: "",
       exludeFlg: "N",
       descOverride: "",
-      multiplyer: "",
+      multiplyer: "1",
       amount: "",
       finalAmount: "",
     };
@@ -151,8 +243,38 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     };
     console.log("moddata", mod_data);
     const res = await create_Transaction(mod_data, source_id);
-    setdata(mod_data);
     console.log("response", res);
+    setflag((prev) => !prev);
+  };
+
+  const handleCheckboxChange = async (
+    id: any,
+    field: any,
+    checked: boolean
+  ) => {
+    let val;
+    if (checked) {
+      val = "Y";
+    } else val = "N";
+    console.log("id", id);
+    const row_data: any = rows.filter((x: any) => x.ID == id);
+    const new_obj = {
+      ...row_data[0],
+      [field]: val,
+    };
+    console.log("changed", new_obj);
+  };
+
+  const handleOptionChange = (id: any, field: any, val: any) => {
+    console.log("id", id);
+    console.log("rows", rows);
+    const row_data: any = rows.filter((x: any) => x.ID == id);
+    console.log("rwo_data", row_data);
+    const new_obj = {
+      ...row_data[0],
+      [field]: val,
+    };
+    console.log("changed", new_obj);
   };
 
   const handleChangeRow = async (obj: any, event: any) => {
@@ -163,25 +285,44 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ...row,
       [field]: value,
     };
-    delete new_obj.CREATED;
     console.log(new_obj, "new_obj");
+    delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
     console.log("response", res);
   };
 
   const handleChangeRow1 = async (row: any) => {
+    console.log("inside");
     const id = row.id;
     const value = row.value;
-    const row_data: any = rows[id];
-    delete row_data.CREATED;
+    const row_data: any = rows.filter((x: any) => x.ID == id);
+    console.log("row_dat", row_data);
     const new_obj = {
-      ...row_data,
+      ...row_data[0],
       [row.field]: value,
     };
     console.log(new_obj, "new_obj");
+    delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
     console.log("response", res);
   };
+
+  const deleteSelected = async () => {
+    if (selected) {
+      selected.forEach(async (id: any) => {
+        console.log("id", id, source_id);
+        const res = await delete_Transaction(id, source_id);
+        console.log(res);
+        setflag((prev) => !prev);
+      });
+    } else {
+      toast.warning("Please Select the Transaction to Delete");
+    }
+  };
+
+  useEffect(() => {
+    console.log("selected", selected);
+  }, [selected]);
 
   return (
     <div
@@ -191,7 +332,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         borderRadius: 93,
       }}
     >
-      {flag ? (
+      {loader ? (
         <NoTransactions>
           <CircularProgress
             color="inherit"
@@ -201,13 +342,17 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         </NoTransactions>
       ) : transactions ? (
         <Fragment>
-          <Tooltip title="Add Transaction">
+          <Fragment>
             <AddTransactionButton onClick={generateTransaction}>
-              <SvgPlusIcon />
+              <AddCircleIcon />
             </AddTransactionButton>
-          </Tooltip>
+            <DeleteTransactionButton onClick={deleteSelected}>
+              <DeleteIcon />
+            </DeleteTransactionButton>
+          </Fragment>
           <DataGrid
             rows={rows}
+            getRowId={(row) => row.ID}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5]}
@@ -220,13 +365,14 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 handleChangeRow(v, e);
               }
             }}
+            onSelectionModelChange={(e) => setselected(e)}
           />
         </Fragment>
       ) : (
         <NoTransactions>
           <div className="text">No transactions available</div>
           <AddTransactionButton onClick={generateTransaction}>
-            <SvgPlusIcon />
+            <AddCircleIcon />
           </AddTransactionButton>
         </NoTransactions>
       )}

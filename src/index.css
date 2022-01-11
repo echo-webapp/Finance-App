@@ -6,17 +6,17 @@
 }
 
 .MuiDataGrid-root {
-  border: 2px solid #e5e5e5 !important;
+  border: 2px solid var(--grid-border) !important;
   padding: 25px !important;
   border-radius: 93px !important;
-  color: white !important;
-  background-color: var(--black);
+  color: var(--subheader-color) !important;
+  background-color: var(--background) !important;
 }
 .MuiDataGrid-columnHeaders {
-  color: #ccf148 !important;
+  color: var(--grid-header) !important;
 }
 .MuiTablePagination-root {
-  color: #ffffff !important;
+  color: var(--grid-text) !important;
 }
 .MuiDataGrid-columnSeparator {
   visibility: hidden !important;
@@ -28,14 +28,33 @@
   border: none !important;
 }
 .MuiCheckbox-root {
-  color: white !important;
+  color: var(--grid-text) !important;
 }
 .MuiDataGrid-sortIcon {
-  color: white !important;
+  color: var(--grid-text) !important;
 }
 .MuiDataGrid-menuIcon button {
-  color: white;
+  color: var(--grid-text);
 }
 .MuiDataGrid-selectedRowCount {
   visibility: hidden !important;
+}
+
+.ant-avatar {
+  color: var(--header-text);
+  background: var(--header-bg);
+  height: 83px;
+  width: 83px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+@media only screen and (max-width: 1500px) {
+  .ant-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 30px;
+  }
 }

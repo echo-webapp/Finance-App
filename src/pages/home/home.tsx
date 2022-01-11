@@ -16,7 +16,7 @@ const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;
@@ -26,7 +26,7 @@ const SubHeader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 80%;
   max-width: 1500px;
   height: 110px;
@@ -49,18 +49,18 @@ const SubHeaderInput = styled.input`
   width: 483px;
   height: 67px;
   margin-left: 40px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--subheader-color);
   box-sizing: border-box;
   border-radius: 51px;
   font-weight: 500;
   font-size: 18px;
-  color: var(--white);
+  color: var(--subheader-color);
   text-align: right;
   padding: 16px;
   padding-right: 65px;
   outline: none;
   ::placeholder {
-    color: var(--white);
+    color: var(--subheader-color);
   }
 `;
 
@@ -149,6 +149,7 @@ const Home = () => {
         buttonText="+ Add New Client"
         buttonHandler={() => history.push("/addclient")}
       />
+
       <SubHeader>
         <SubHeader1>
           <Logout />
@@ -158,7 +159,7 @@ const Home = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
             <div>
-              <SvgSearch />
+              <SvgSearch color="var(--subheader-color)" />
             </div>
           </InputContainer>
         </SubHeader1>
@@ -174,7 +175,7 @@ const Home = () => {
       ) : (
         <CardContainer>
           {allClients?.map((data: any) => {
-            return <CustomerCard data={data} />;
+            return <CustomerCard data={data} key={data.ID} />;
           })}
         </CardContainer>
       )}

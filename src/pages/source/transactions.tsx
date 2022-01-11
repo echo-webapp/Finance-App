@@ -15,7 +15,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--black);
+  background-color: var(--background);
   min-height: 100vh;
   width: 100%;
 `;
@@ -24,7 +24,7 @@ const Container1 = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--black);
+  background-color: var(--background);
   min-height: 100vh;
   width: 100%;
 `;
@@ -33,21 +33,26 @@ const SubContainer = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  width: 80%;
+  width: 100%;
   max-width: 1500px;
   min-height: 700px;
   margin-top: 20px;
   background: var(--white);
   border-radius: 93px;
   gap: 20px;
-  @media only screen and (max-width: 1700px) {
-    width: 100%;
-    transform: scale(0.9);
+  @media only screen and (max-width: 1600px) {
+    max-width: 1400px;
+    min-height: 650px;
   }
 
-  @media only screen and (max-width: 1600px) {
-    width: 100%;
-    transform: scale(0.9);
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+    min-height: 600px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
+    min-height: 600px;
   }
 `;
 
@@ -93,6 +98,11 @@ const BankAccountCardsHeading = styled.div`
   .heading-text {
     font-weight: 600;
     font-size: 20px;
+  }
+  @media only screen and (max-width: 1600px) {
+    .heading-text {
+      font-size: 18px;
+    }
   }
 `;
 
@@ -153,42 +163,9 @@ const CreditCardsHeading = styled.div`
     font-weight: 600;
     font-size: 20px;
   }
-`;
-
-const SubHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--black);
-  width: 70%;
-  max-width: 1500px;
-  height: 70px;
-  border-bottom: 1px solid #adb5bd;
-`;
-
-const SubHeader1 = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  .arrow-left {
-    margin-left: 20px;
-    position: relative;
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-    border-radius: 50px;
-    color: white;
-    svg {
-      vertical-align: middle;
-      height: 100%;
-      width: 100%;
-    }
-    &:hover {
-      background-color: #eee;
-      cursor: pointer;
-      color: var(--black);
+  @media only screen and (max-width: 1600px) {
+    .heading-text {
+      font-size: 18px;
     }
   }
 `;
@@ -196,8 +173,8 @@ const SubHeader1 = styled.div`
 const Transactions = ({ id }: any) => {
   const history = useHistory();
   const [sources, setsources] = useState([]);
-  const [allbankaccounts, setallbankaccounts] = useState([]);
-  const [allcreditcards, setallcreditcards] = useState([]);
+  const [allbankaccounts, setallbankaccounts]: any = useState([]);
+  const [allcreditcards, setallcreditcards]: any = useState([]);
   const [selected_cc, setselected_cc] = useState(0);
   const [selected_bank, setselected_bank] = useState(0);
   const [selected_transaction, setselected_transaction] = useState("bank");
@@ -255,13 +232,6 @@ const Transactions = ({ id }: any) => {
               });
             }}
           />
-          {/* <SubHeader>
-            <SubHeader1>
-              <div onClick={() => history.push("/")} className="arrow-left">
-                <SvgArrowleft color="white" />
-              </div>
-            </SubHeader1>
-          </SubHeader> */}
           <SubContainer>
             <DataGrid>
               <ClientDataGrid source_id={source_details?.ID} />
@@ -286,11 +256,11 @@ const Transactions = ({ id }: any) => {
               </BankAccountCardsHeading>
               <MultipleBankAccounts selected={selected_bank}>
                 {allbankaccounts
-                  ? allbankaccounts.map((bank, key) => {
+                  ? allbankaccounts.map((bank: any, key: any) => {
                       return (
                         <div
                           className="hover"
-                          key={key}
+                          key={bank.ID}
                           onClick={() => {
                             setselected_transaction("bank");
                             setselected_bank(key);
@@ -332,11 +302,11 @@ const Transactions = ({ id }: any) => {
               </CreditCardsHeading>
               <MultipleCreditCards selected={selected_cc}>
                 {allcreditcards
-                  ? allcreditcards.map((cc, key) => {
+                  ? allcreditcards.map((cc: any, key: any) => {
                       return (
                         <div
                           className="hover"
-                          key={key}
+                          key={cc.ID}
                           onClick={() => {
                             setselected_transaction("cc");
                             setselected_cc(key);

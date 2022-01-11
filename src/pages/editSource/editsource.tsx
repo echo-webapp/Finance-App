@@ -17,7 +17,7 @@ const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;
@@ -82,44 +82,6 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   border-radius: 106px;
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const SubHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--black);
-  width: 70%;
-  max-width: 1500px;
-  height: 70px;
-  border-bottom: 1px solid #adb5bd;
-`;
-
-const SubHeader1 = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  .arrow-left {
-    margin-left: 20px;
-    position: relative;
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-    border-radius: 50px;
-    color: white;
-    svg {
-      vertical-align: middle;
-      height: 100%;
-      width: 100%;
-    }
-    &:hover {
-      background-color: #eee;
-      cursor: pointer;
-      color: var(--black);
-    }
   }
 `;
 
@@ -237,18 +199,7 @@ const EditSource = ({ match }: any) => {
               handleClose={() => setopen(false)}
             />
           </Modal>
-          {/* <SubHeader>
-            <SubHeader1>
-              <div
-                onClick={() =>
-                  history.push(`/allsources/${sourceData.clientId}`)
-                }
-                className="arrow-left"
-              >
-                <SvgArrowleft color="white" />
-              </div>
-            </SubHeader1>
-          </SubHeader> */}
+
           <MainContainer>
             {selected === "bank" ? (
               <EditBankDetails

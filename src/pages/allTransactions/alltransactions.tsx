@@ -5,7 +5,6 @@ import {
   DataGrid,
   GridToolbarContainer,
   GridToolbarExport,
-  gridClasses,
 } from "@mui/x-data-grid";
 import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
@@ -15,7 +14,7 @@ const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;

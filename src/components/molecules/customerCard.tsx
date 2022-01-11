@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { SetCustomer } from "../../store/Reducers/client";
 import { useDispatch } from "react-redux";
+
 const MainContainer = styled("div")`
   padding: 24px;
   width: 388.32px;
@@ -18,6 +19,18 @@ const MainContainer = styled("div")`
   &:hover {
     cursor: pointer;
     transform: scale(1.05);
+  }
+  @media only screen and (max-width: 1600px) {
+    width: 360px;
+    min-height: 100px;
+  }
+  @media only screen and (max-width: 1500px) {
+    width: 340px;
+    min-height: 90px;
+  }
+  @media only screen and (max-width: 1420px) {
+    width: 300px;
+    min-height: 70px;
   }
 `;
 
@@ -34,16 +47,25 @@ const SubId = styled("div")`
   justify-content: flex-end;
   font-weight: 500;
   font-size: 12.6222px;
-  color: var(--black);
+  color: var(--card-text);
 `;
 
 const SubName = styled("div")`
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  color: var(--black);
+  color: var(--card-text);
   font-weight: 500;
   font-size: 25.2444px;
+  @media only screen and (max-width: 1600px) {
+    font-size: 22px;
+  }
+  @media only screen and (max-width: 1500px) {
+    font-size: 20px;
+  }
+  @media only screen and (max-width: 1420px) {
+    font-size: 18px;
+  }
 `;
 
 const SubHeader = styled("div")`
@@ -67,7 +89,7 @@ const SubJob = styled("div")`
   height: 22px;
   font-weight: 500;
   font-size: 12.6222px;
-  color: var(--grey);
+  color: var(--card-text);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -110,21 +132,7 @@ const CustomerCard = ({ data }: any) => {
         clickHandler(data.ID);
       }}
     >
-      <Avatar
-        style={{
-          color: "var(--black)",
-          backgroundColor: "var(--green)",
-          height: "83px",
-          width: "83px",
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "center",
-          justifyContent: "center",
-          fontSize: "40px",
-        }}
-      >
-        {data.firstName[0]}
-      </Avatar>
+      <Avatar>{data.firstName[0]}</Avatar>
       <SubContainer>
         <SubId>{data.eMail}</SubId>
         <SubName>

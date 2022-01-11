@@ -14,7 +14,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--black);
+  background-color: var(--background);
   min-height: 100vh;
   width: 100%;
 `;
@@ -147,8 +147,8 @@ const Allsources = ({ match }: any) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [allbankaccounts, setallbankaccounts] = useState([]);
-  const [allcreditcards, setallcreditcards] = useState([]);
+  const [allbankaccounts, setallbankaccounts]: any = useState([]);
+  const [allcreditcards, setallcreditcards]: any = useState([]);
   const [current_cc, setcurrent_cc] = useState(0);
   const [current_bank, setcurrent_bank] = useState(0);
   const [source_details, setsource_details]: any = useState(null);
@@ -248,11 +248,11 @@ const Allsources = ({ match }: any) => {
               <div className="heading">Bank account details</div>
               <MultipleCardsCarousel>
                 {allbankaccounts
-                  ? allbankaccounts.map((bank, key) => {
+                  ? allbankaccounts.map((bank: any, key: any) => {
                       return (
                         <div
                           className="hover"
-                          key={key}
+                          key={bank.ID}
                           onClick={() => {
                             setselected_source("bank");
                             setcurrent_bank(key);
@@ -279,11 +279,11 @@ const Allsources = ({ match }: any) => {
               <div className="heading">Card Details</div>
               <MultipleCards>
                 {allcreditcards
-                  ? allcreditcards.map((cc, key) => {
+                  ? allcreditcards.map((cc: any, key: any) => {
                       return (
                         <div
                           className="hover"
-                          key={key}
+                          key={cc.ID}
                           onClick={() => {
                             setselected_source("cc");
                             setcurrent_cc(key);

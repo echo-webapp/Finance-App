@@ -8,7 +8,7 @@ const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;

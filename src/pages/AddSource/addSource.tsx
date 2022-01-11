@@ -14,7 +14,7 @@ const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;
@@ -216,16 +216,6 @@ const AddSource = ({ match }: any) => {
             buttonText="Submit source details"
             buttonHandler={submitHandler}
           />
-          {/* <SubHeader>
-            <SubHeader1>
-              <div
-                onClick={() => history.push(`/source/${match.params.id}`)}
-                className="arrow-left"
-              >
-                <SvgArrowleft color="white" />
-              </div>
-            </SubHeader1>
-          </SubHeader> */}
           <MainContainer>
             {selected === "bank" ? (
               <AddBankDetails

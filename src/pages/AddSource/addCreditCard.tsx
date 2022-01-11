@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
+import { get_Dropdown } from "../../api/get";
+import SelectComponent from "../../components/atoms/select";
 
 const SubContainer1 = styled.div`
   padding: 120px;
@@ -119,8 +121,9 @@ const CSVButtonContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+const dropdown_name_arr = ["CC", "CCTYPE"];
 
-const AddBankDetails = ({ sourceData, setSouceData }: any) => {
+const AddCreditCard = ({ sourceData, setSouceData }: any) => {
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
   const [ccType, setccType] = useState("");
@@ -130,9 +133,15 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const [active, setActive] = useState("");
   const [fileName, setFileName] = useState([]);
   const [base64File, setbase64File]: any = useState([{}]);
+  const [dropdown_options, setdropdown_options] = useState({
+    cc: [],
+    cctype: [],
+  });
+
   const onButtonClick = () => {
     inputFile.current.click();
   };
+
   function getBase641(file: any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -141,6 +150,33 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
       reader.onerror = (error) => reject(error);
     });
   }
+
+  useEffect(() => {
+    const getDropdownValues = async () => {
+      dropdown_name_arr.forEach(async (name) => {
+        const res = await get_Dropdown(name);
+        const arr: any = [];
+        res.forEach((lov: any) => {
+          const obj = {
+            value: lov.LOV_CODE,
+            name: lov.LOV_VAL,
+          };
+          arr.push(obj);
+        });
+        setdropdown_options((prev) => {
+          return {
+            ...prev,
+            [name.toLowerCase()]: arr,
+          };
+        });
+      });
+    };
+    getDropdownValues();
+  }, []);
+
+  useEffect(() => {
+    console.log("dropdown", dropdown_options);
+  }, [dropdown_options]);
 
   useEffect(() => {
     let res = {
@@ -259,24 +295,20 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
               setvalue={setSouceName}
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
+          <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
+            <SelectComponent
               label="Credit Card Type"
-              placeholder="Visa"
-              height={50}
               value={ccType}
               setvalue={setccType}
+              options={dropdown_options.cctype}
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
-              label="Card Card Provider"
-              placeholder="Bank Leumi Le-Israel B.M"
-              height={50}
+          <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
+            <SelectComponent
+              label="Credit Card Provider"
               value={cardProvider}
               setvalue={setcardProvider}
+              options={dropdown_options.cc}
             />
           </div>
         </SubContainerItem>
@@ -300,7 +332,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
             </CSVUploadButton>
             {fileName.map((data: any) => {
               return (
-                <CSVButtonFile>
+                <CSVButtonFile key={data.ID}>
                   <CSVButtonFileFlex>
                     <CSVButtonFileText>{data}</CSVButtonFileText>
                     <CSVButtonFileSvg
@@ -321,4 +353,4 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   );
 };
 
-export default AddBankDetails;
+export default AddCreditCard;

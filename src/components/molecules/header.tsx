@@ -1,6 +1,6 @@
 import Button from "../atoms/button";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import AppLogo from "../vectors/Applogo";
 
 interface HeaderProps {
   heading: string;
@@ -13,54 +13,44 @@ interface HeaderProps {
 }
 
 const HeaderContainer = styled.div`
-  width: 80%;
+  width: 100%;
   max-width: 1500px;
-  height: 280px;
+  height: 152px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  padding: 35px 100px;
   align-items: center;
-  background: var(--green-gradient);
-  border-radius: 93px;
+  background: var(--header-bg);
+  border-radius: 30px;
   margin-top: 40px;
-  @media only screen and (max-width: 1700px) {
-    width: 100%;
-    transform: scale(0.9);
-  }
-
   @media only screen and (max-width: 1600px) {
-    width: 100%;
-    transform: scale(0.9);
+    max-width: 1400px;
+  }
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+  }
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
   }
 `;
 
-const Details = styled.div`
-  a {
-    color: var(--black);
-  }
+const HeaderContainer1 = styled(HeaderContainer)`
+  padding: 35px 60px;
 `;
+
+const Details = styled.div``;
 
 const Flex = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 `;
 
-const MainHeading = styled.h1`
-  font-size: 88px;
+const MainHeading = styled.div`
+  font-size: 55px;
   text-align: right;
   font-family: var(--oswald);
-`;
-
-const SubHeading = styled.div`
-  font-size: 31px;
-  text-align: right;
-  font-family: var(--oswald);
-  transform: translateY(40%);
-  text-decoration: none;
-
-  &:hover {
-    cursor: pointer;
-  }
+  color: var(--header-text);
 `;
 
 const Header = ({
@@ -74,28 +64,26 @@ const Header = ({
 }: HeaderProps) => {
   if (extraButton) {
     return (
-      <HeaderContainer>
+      <HeaderContainer1>
         <Flex>
           <Button
             title={buttonText}
             type="primary"
             clickHandler={buttonHandler}
-            padding="20px 40px"
+            padding="15px 30px"
           />
           <Button
             title={extraButton}
             type="primary"
             clickHandler={extraButtonHandler}
-            padding="20px 30px"
+            padding="15px 30px"
           />
         </Flex>
+        <AppLogo />
         <Details>
-          <Link to="/">
-            <SubHeading>[logo] Check_App</SubHeading>
-          </Link>
           <MainHeading>{heading}</MainHeading>
         </Details>
-      </HeaderContainer>
+      </HeaderContainer1>
     );
   }
 
@@ -105,15 +93,11 @@ const Header = ({
         title={buttonText}
         type="primary"
         clickHandler={buttonHandler}
-        padding="20px 40px"
+        padding="15px 30px"
         hidden={hidden}
       />
+      <AppLogo />
       <Details>
-        <SubHeading>
-          <Link to="/">
-            <SubHeading>[logo] Check_App</SubHeading>
-          </Link>
-        </SubHeading>
         <MainHeading>{heading}</MainHeading>
       </Details>
     </HeaderContainer>
