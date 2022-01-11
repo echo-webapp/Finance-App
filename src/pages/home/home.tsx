@@ -11,7 +11,9 @@ import { useDispatch } from "react-redux";
 import { SetCustomer } from "../../store/Reducers/client";
 import Logout from "../../components/atoms/logOutButton";
 import CircularProgress from "@mui/material/CircularProgress";
-
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import ClientDetails from "../../components/molecules/clientDetails";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -96,14 +98,19 @@ const LoadContainer = styled.div`
 
 const Home = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [allClients, setAllClients] = useState([]);
-  const [search, setSearch] = useState("");
-  const [flag, setFlag] = useState(true);
   const [token, customerList]: any = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.customerList.customer];
   });
 
+  const history = useHistory();
+  const [allClients, setAllClients] = useState([]);
+  const [search, setSearch] = useState("");
+  const [flag, setFlag] = useState(true);
+  const [clientDetails, setClientDetails] = useState(null);
+  const [clientDetailsId, setClientDetailsId] = useState(null);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     if (!token) {
       history.push("/login");
@@ -140,9 +147,37 @@ const Home = () => {
     }
     setAllClients(sar);
   }, [search]);
-
+  useEffect(() => {
+    if (clientDetailsId === null) return;
+    for (let i = 0; i < customerList.length; i++) {
+      if (customerList[i].ID === clientDetailsId) {
+        setClientDetails(customerList[i]);
+      }
+    }
+  }, [clientDetailsId]);
   return (
     <AddClientContainer>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={open}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+        onClose={handleClose}
+      >
+        <ClientDetails
+          clientDetails={clientDetails}
+          handleClose={handleClose}
+        />
+      </Modal>
       <Header
         heading="Your clientele"
         subheading={`${allClients ? allClients.length : 0} active clients`}
@@ -175,7 +210,14 @@ const Home = () => {
       ) : (
         <CardContainer>
           {allClients?.map((data: any) => {
-            return <CustomerCard data={data} key={data.ID} />;
+            return (
+              <CustomerCard
+                data={data}
+                key={data.ID}
+                setClientDetailsId={setClientDetailsId}
+                handleOpen={handleOpen}
+              />
+            );
           })}
         </CardContainer>
       )}

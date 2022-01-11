@@ -66,6 +66,10 @@ const Transaction = () => {
       let temp: any = [];
       for (let i = 0; i < res.length; i++) {
         let res1 = await getTransactionDetails(res[i].ID);
+        for (let j = 0; j < res1.length; j++) {
+          delete res1[j].ID;
+          res1[j].source = res[i].sourceName;
+        }
         temp = [...temp, ...res1];
       }
       if (temp.length == 0) {
@@ -73,11 +77,16 @@ const Transaction = () => {
       } else {
         const obj = temp[0];
         const columns_arr: any = [];
+        columns_arr.push({
+          field: "source",
+          headerName: "source",
+          width: 150,
+        });
         Object.keys(obj).map((key) => {
           const col = {
             field: key,
             headerName: key,
-            width: 150,
+            width: 200,
           };
           columns_arr.push(col);
         });

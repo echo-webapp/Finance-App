@@ -204,7 +204,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                         width: "100%",
                       }}
                     >
-                      {params.value}
+                      {/* {params.value} */}
                       <select
                         style={{ border: "none", background: "none" }}
                         value={params.value}

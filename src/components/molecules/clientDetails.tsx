@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import { Divider } from "@mui/material";
+import Circle from "../atoms/circle";
+import CloseIcon from "@mui/icons-material/Close";
+
 const Container = styled.div`
   display: flex;
   position: relative;
@@ -74,14 +77,54 @@ const Header = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   font-weight: 500;
-  font-size: 40px;
+  font-size: 35px;
   color: #000000;
   margin-top: 20px;
   margin-bottom: 35px;
 `;
-const ClientDetails = ({ clientDetails }: any) => {
+export const CircleContainer = styled.div`
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  border-radius: 25px;
+  /* .dark {
+    position: absolute;
+    transform: translate(-30%, 30%);
+  } */
+  .light {
+    transform: translate(-60%, -60%);
+    border-radius: 27px;
+    z-index: 5;
+  }
+`;
+const DeleteIcon = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 18px;
+  top: 18px;
+  cursor: pointer;
+  /* transform: translate(-50%, -50%); */
+  z-index: 9;
+`;
+
+const ClientDetails = ({ clientDetails, handleClose }: any) => {
   return (
     <Container>
+      <CircleContainer>
+        <div className="light">
+          <Circle color="light" size="large" />
+        </div>
+      </CircleContainer>
+      <DeleteIcon
+        onClick={() => {
+          handleClose();
+        }}
+      >
+        <CloseIcon width={50} height={50} />
+      </DeleteIcon>
       <LeftContainer>
         <SubLeftContainer>
           <SubContainerHeader>Financial details</SubContainerHeader>

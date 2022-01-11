@@ -212,6 +212,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
         res.push(sar1);
         res1.push(e.target.files[i].name);
       }
+      console.log(res);
       setFileName(res1);
       setbase64File(res);
     } else {
@@ -300,7 +301,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
       <SubContainer2>
         <input
           type="file"
-          accept=".csv"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           id="file"
           ref={inputFile}
           onChange={fileHandler}

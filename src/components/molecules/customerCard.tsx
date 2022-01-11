@@ -84,6 +84,16 @@ const SubNew = styled("div")`
   align-items: center;
   justify-content: center;
 `;
+const SubNew1 = styled("div")`
+  width: 106px;
+  height: 22px;
+  background: #fda600;
+  border-radius: 23px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
 
 const SubJob = styled("div")`
   height: 22px;
@@ -97,7 +107,7 @@ const SubJob = styled("div")`
   margin-left: 10px;
 `;
 
-const CustomerCard = ({ data }: any) => {
+const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const allClients = useSelector((state: RootState) => {
@@ -140,7 +150,15 @@ const CustomerCard = ({ data }: any) => {
         </SubName>
         <SubHeader>
           {data["new_Client"] === true && <SubNew>New</SubNew>}
-          <SubJob>{data.DOB}</SubJob>
+          <SubNew1
+            onClick={(e) => {
+              setClientDetailsId(data.ID);
+              handleOpen();
+              e.stopPropagation();
+            }}
+          >
+            View Details
+          </SubNew1>
         </SubHeader>
       </SubContainer>
     </MainContainer>

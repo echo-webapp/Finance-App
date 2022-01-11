@@ -316,7 +316,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
       <SubContainer2>
         <input
           type="file"
-          accept=".csv"
+          accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
           id="file"
           ref={inputFile}
           onChange={fileHandler}
