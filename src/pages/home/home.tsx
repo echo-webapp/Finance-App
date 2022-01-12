@@ -98,8 +98,8 @@ const LoadContainer = styled.div`
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [token, customerList]: any = useSelector((state: RootState) => {
-    return [state.isAuth.isAuth, state.customerList.customer];
+  const [token, customerList, theme]: any = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.customerList.customer, state.theme];
   });
 
   const history = useHistory();
@@ -203,7 +203,7 @@ const Home = () => {
         <LoadContainer>
           <CircularProgress
             color="inherit"
-            style={{ color: "white" }}
+            style={{ color: "black" }}
             size={50}
           />
         </LoadContainer>

@@ -1,7 +1,9 @@
 import Button from "../atoms/button";
 import styled from "styled-components";
 import AppLogo from "../vectors/Applogo";
-
+import NewAppLogo from "./../vectors/NewApplogo";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 interface HeaderProps {
   heading: string;
   subheading: string;
@@ -62,6 +64,9 @@ const Header = ({
   extraButtonHandler,
   hidden,
 }: HeaderProps) => {
+  const theme: any = useSelector((state: RootState) => {
+    return state.theme;
+  });
   if (extraButton) {
     return (
       <HeaderContainer1>
@@ -81,7 +86,7 @@ const Header = ({
             extra={true}
           />
         </Flex>
-        <AppLogo />
+        {!theme ? <AppLogo /> : <NewAppLogo />}
         <Details>
           <MainHeading>{heading}</MainHeading>
         </Details>
@@ -98,7 +103,7 @@ const Header = ({
         padding="15px 30px"
         hidden={hidden}
       />
-      <AppLogo />
+      {!theme ? <AppLogo /> : <NewAppLogo />}
       <Details>
         <MainHeading>{heading}</MainHeading>
       </Details>
