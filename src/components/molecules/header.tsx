@@ -42,7 +42,7 @@ const Details = styled.div``;
 
 const Flex = styled.div`
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 10px;
 `;
 
@@ -70,13 +70,15 @@ const Header = ({
             title={buttonText}
             type="primary"
             clickHandler={buttonHandler}
-            padding="15px 30px"
+            padding="10px 20px"
+            extra={true}
           />
           <Button
             title={extraButton}
             type="primary"
             clickHandler={extraButtonHandler}
-            padding="15px 30px"
+            padding="10px 20px"
+            extra={true}
           />
         </Flex>
         <AppLogo />

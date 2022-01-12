@@ -3,6 +3,7 @@ import { keyframes } from "styled-components";
 
 interface ButtonTypes {
   title: any;
+  extra?: boolean;
   type: string;
   padding: string;
   clickHandler: any;
@@ -13,13 +14,18 @@ interface ButtonSubContainerProps {
   color: string;
   padding: string;
   hidden?: boolean;
+  extra?: boolean;
 }
 
-const ButtonContainer = styled.div`
+interface ButtonContainerProps {
+  hidden: any;
+}
+const ButtonContainer = styled.div<ButtonContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 2px;
+  visibility: ${(props) => (props.hidden == true ? "hidden" : "visible")};
 `;
 
 const animate = keyframes`
@@ -31,7 +37,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 106px;
   padding: ${(props) => props.padding};
-  font-size: 16px;
+  font-size: ${(props) => (props.extra == true ? "14px" : "16px")};
   outline: none;
   text-decoration: none;
   border: none;
@@ -41,7 +47,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
     if (props.color == "primary") {
       return "var(--white)";
     } else {
-      return "var(--black)";
+      return "var(--login-button)";
     }
   }};
 
@@ -53,7 +59,7 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
       return "var(--white)";
     }
   }};
-  visibility: ${(props) => (props.hidden == true ? "hidden" : "visible")};
+
   &:focus {
     animation: ${animate} 0.3s ease-in forwards;
   }
@@ -61,20 +67,21 @@ const ButtonSubContainer = styled.button<ButtonSubContainerProps>`
 
 const Button = ({
   title,
+  extra,
   type,
   padding,
   clickHandler,
   hidden,
 }: ButtonTypes) => {
   return (
-    <ButtonContainer>
+    <ButtonContainer hidden={hidden}>
       <ButtonSubContainer
-        hidden={hidden}
         color={type}
         onClick={() => {
           setTimeout(clickHandler, 300);
         }}
         padding={padding}
+        extra={extra}
       >
         {title}
       </ButtonSubContainer>

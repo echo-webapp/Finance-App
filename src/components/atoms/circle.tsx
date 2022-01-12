@@ -30,10 +30,10 @@ const CircleContainer = styled.div<CircleContainerProps>`
   }};
   background-color: ${(props) => {
     if (props.color == "dark") {
-      return "var(--darkgreen)";
+      return "var(--circle-primary)";
     }
     if (props.color == "light") {
-      return "var(--green)";
+      return "var(--circle-secondary)";
     }
     return "none";
   }};

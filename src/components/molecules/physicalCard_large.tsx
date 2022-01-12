@@ -14,7 +14,7 @@ const Container = styled.div<ContainerProps>`
       return "var(--black)";
     }
     if (props.theme == "dark") {
-      return "var(--green-gradient)";
+      return "var(--largecard-primary)";
     }
   }};
   border-radius: 42px;
@@ -39,7 +39,7 @@ const DetailsContainer = styled.div<DetailsContainerProps>`
       return "var(--card-grey)";
     }
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--largecard-secondary)";
     }
   }};
   text-align: right;
@@ -60,7 +60,7 @@ const Heading = styled.div<HeadingProps>`
   font-weight: 400;
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--green)";
+      return "var(--largecard-primary-text)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -77,7 +77,7 @@ const Info = styled.div<InfoProps>`
   font-weight: 600;
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--white)";
+      return "var(--subheader-color)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -100,7 +100,7 @@ const BalanceContainer = styled.div<BalanceContainerProps>`
   border-bottom-right-radius: 42px;
   background: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--green-gradient)";
+      return "var(--largecard-primary)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -108,7 +108,7 @@ const BalanceContainer = styled.div<BalanceContainerProps>`
   }};
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--header-text)";
     }
     if (props.theme == "light") {
       return "var(--white)";
@@ -187,7 +187,7 @@ const PhysicalCard_large = ({
           handleOpen();
         }}
       >
-        <SvgDelete width={20} height={20} />
+        <SvgDelete color="var(--header-text)" width={20} height={20} />
       </DeleteIcon>
 
       <DetailsContainer theme={theme}>

@@ -7,7 +7,7 @@ const AddClientContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--black);
+  background-color: var(--background);
   width: 100%;
   min-height: 100vh;
 `;
@@ -15,7 +15,11 @@ const AddClientContainer = styled.div`
 const LoaderScreen = () => {
   return (
     <AddClientContainer>
-      <CircularProgress color="inherit" style={{ color: "white" }} size={70} />
+      <CircularProgress
+        color="inherit"
+        style={{ color: "var(--ink-text)" }}
+        size={70}
+      />
     </AddClientContainer>
   );
 };

@@ -16,14 +16,14 @@ const AddText = styled.div`
   font-weight: 500;
   font-size: 35.102px;
   text-align: center;
-  color: #ffffff;
+  color: var(--grid-text);
   margin-top: 40px;
 `;
 const AddText1 = styled.div`
   font-weight: 500;
   font-size: 35.102px;
   text-align: center;
-  color: #ffffff;
+  color: var(--grid-text);
 `;
 const NoSource = () => {
   const history = useHistory();
@@ -38,7 +38,7 @@ const NoSource = () => {
         }}
       />
       <div style={{ marginTop: "20px" }}>
-        <NotFound />
+        <NotFound color="var(--ink-icon)"/>
       </div>
       <AddText>This page is not available</AddText>
       <AddText1>It seems something went wrong....</AddText1>

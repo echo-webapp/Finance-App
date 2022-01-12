@@ -28,7 +28,7 @@ const Container = styled.div<ContainerProps>`
       return "var(--card-grey)";
     }
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--cc-small-primary)";
     }
   }};
 
@@ -75,7 +75,7 @@ const Container = styled.div<ContainerProps>`
         return "var(--black)";
       }
       if (props.theme == "dark") {
-        return "var(--green)";
+        return "var(--cc-small-account-text)";
       }
     }};
     font-size: 16px;
@@ -146,7 +146,7 @@ const LargeContainer = styled.div<LargeContainerProps>`
   width: 300px;
   background: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--cc-primary)";
     }
     if (props.theme == "light") {
       return "var(--card-grey)";
@@ -154,7 +154,7 @@ const LargeContainer = styled.div<LargeContainerProps>`
   }};
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--white)";
+      return "var(--cc-text)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -249,7 +249,7 @@ const CreditCard = ({
             handleOpen();
           }}
         >
-          <SvgDelete width={20} height={20} />
+          <SvgDelete color="var(--header-text)" width={20} height={20} />
         </DeleteIcon>
         <CircleContainer theme={theme}>
           <div className="dark1">

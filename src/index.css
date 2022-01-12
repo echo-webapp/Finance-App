@@ -66,3 +66,10 @@
 .MuiButton-root {
   color: var(--export-button) !important;
 }
+
+.MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+.MuiDataGrid-columnHeaderTitle{
+  font-size: 18px !important;
+}

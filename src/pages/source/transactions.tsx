@@ -10,6 +10,12 @@ import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { Tooltip } from "@mui/material";
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import ClientDetails from "../../components/molecules/clientDetails";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,6 +24,7 @@ const Container = styled.div`
   min-height: 100vh;
   width: 100%;
 `;
+
 const Container1 = styled.div`
   display: flex;
   flex-direction: column;

@@ -9,7 +9,7 @@ const Container = styled.div<ContainerProps>`
   position: relative;
   background: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--green-gradient)";
+      return "var(--largecard-primary)";
     }
     if (props.theme == "light") {
       return "var(--black)";
@@ -38,7 +38,7 @@ const DetailsContainer = styled.div<DetailsContainerProps>`
   border-radius: 24.3404px;
   background-color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--largecard-secondary)";
     }
     if (props.theme == "light") {
       return "var(--card-grey)";
@@ -67,7 +67,7 @@ const BalanceContainer = styled.div<BalanceContainerProps>`
   text-align: right;
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--black)";
+      return "var(--header-text)";
     }
     if (props.theme == "light") {
       return "var(--white)";
@@ -100,7 +100,7 @@ const Heading = styled.div<HeadingProps>`
   font-weight: 500;
   color: ${(props) => {
     if (props.theme == "dark") {
-      return "var(--green)";
+      return "var(--largecard-primary-text)";
     }
     if (props.theme == "light") {
       return "var(--white)";
@@ -113,6 +113,7 @@ const Info = styled.div`
   div {
     font-weight: 500;
     font-size: 20px;
+    color: var(--subheader-color);
   }
   .account-holder-name {
     font-size: 24px;

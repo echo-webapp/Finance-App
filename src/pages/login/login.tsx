@@ -11,6 +11,14 @@ import { useHistory } from "react-router";
 import Circle from "../../components/atoms/circle";
 import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
+import ThemeSwitch from "../../components/atoms/themeSwitch";
+import styled from "styled-components";
+
+const Theme = styled.div`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+`;
 
 const Login: any = () => {
   const history = useHistory();
@@ -71,6 +79,9 @@ const Login: any = () => {
 
   return (
     <div className="login-MainContainer">
+      <Theme>
+        <ThemeSwitch />
+      </Theme>
       <div
         className="login-Container"
         style={{

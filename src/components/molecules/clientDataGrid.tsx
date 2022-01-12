@@ -1,18 +1,22 @@
 import { Fragment, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { getTransactionDetails } from "../../api/get";
+import { getTransactionDetails, get_Dropdown } from "../../api/get";
 import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 import { updateTransaction } from "../../api/update";
 import { create_Transaction } from "../../api/create";
 import SvgPlusIcon from "../../components/vectors/PlusIcon";
 import { Tooltip } from "@mui/material";
-import Select from "../atoms/select";
+// import Select from "../atoms/select";
 import { delete_Transaction } from "../../api/delete";
 import { toast } from "react-toastify";
 import { Checkbox } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 interface ClientDataGridProps {
   source_id: any;
@@ -24,13 +28,13 @@ const NoTransactions = styled.div`
   align-items: center;
   height: 100%;
   border-radius: 93px;
-  border: 2px solid white;
-  background-color: var(--black);
+  border: 2px solid var(--ink-icon);
+  background-color: var(--background);
   .text {
     font-weight: 500;
     font-size: 35.102px;
     text-align: center;
-    color: #ffffff;
+    color: var(--ink-icon);
   }
 `;
 
@@ -80,6 +84,8 @@ const InOut_Options = [
   { value: "out", name: "Out" },
 ];
 
+const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
+
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
@@ -87,10 +93,43 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const [loader, setloader] = useState(true);
   const [selected, setselected]: any = useState(null);
   const [flag, setflag] = useState(false);
+  const [type, settype] = useState("hello");
+  const [dropdown_options, setdropdown_options] = useState({
+    type: [],
+    subtype: [],
+  });
 
-  const onChangeHandler = (e: any) => {
-    console.log("value", e);
-  };
+  useEffect(() => {
+    const getDropdownValues = async () => {
+      dropdown_name_arr.forEach(async (name) => {
+        const res = await get_Dropdown(name);
+        const arr: any = [];
+        res.forEach((lov: any) => {
+          const obj = {
+            value: lov.LOV_CODE,
+            name: lov.LOV_VAL,
+          };
+          arr.push(obj);
+        });
+        if (name == "TRANS_TYPE") {
+          setdropdown_options((prev) => {
+            return {
+              ...prev,
+              type: arr,
+            };
+          });
+        } else {
+          setdropdown_options((prev) => {
+            return {
+              ...prev,
+              subtype: arr,
+            };
+          });
+        }
+      });
+    };
+    getDropdownValues();
+  }, []);
 
   useEffect(() => {
     const genResults = async () => {
@@ -100,7 +139,6 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
           setloader(false);
           settransactions(null);
         } else {
-          console.log("arr", res);
           settransactions(true);
           const obj = res[0];
           const columns_arr: any = [];
@@ -126,7 +164,12 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                         gap: 4,
                       }}
                     >
-                      <span>₪</span> <span>{params.value}</span>
+                      <span
+                        style={{ fontSize: 20, transform: "translateY(-5%)" }}
+                      >
+                        ₪
+                      </span>{" "}
+                      <span>{params.value}</span>
                     </div>
                   );
                 },
@@ -150,12 +193,89 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                         gap: 4,
                       }}
                     >
-                      <span>₪ </span>
+                      <span
+                        style={{ fontSize: 20, transform: "translateY(-5%)" }}
+                      >
+                        ₪
+                      </span>
                       <span>
                         {(
                           parseFloat(row.amount) / parseFloat(row.multiPlyer)
                         ).toFixed(1)}
                       </span>
+                    </div>
+                  );
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
+            if (key == "type") {
+              const new_col = {
+                field: key,
+                width: 150,
+                editable: true,
+                renderCell: (params: any) => {
+                  const row = params.row;
+                  return (
+                    <div>
+                      <FormControl sx={{ m: 1, minWidth: 140 }}>
+                        <Select
+                          value={params.value}
+                          onChange={(e) =>
+                            handleOptionChange(
+                              params.row,
+                              params.field,
+                              e.target.value
+                            )
+                          }
+                          label="Age"
+                        >
+                          {dropdown_options.type.map((item: any) => {
+                            return (
+                              <MenuItem value={item.value}>
+                                {item.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
+                    </div>
+                  );
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
+            if (key == "subType") {
+              const new_col = {
+                field: key,
+                width: 150,
+                editable: true,
+                renderCell: (params: any) => {
+                  const row = params.row;
+                  return (
+                    <div>
+                      <FormControl sx={{ m: 1, minWidth: 140 }}>
+                        <Select
+                          value={params.value}
+                          onChange={(e) =>
+                            handleOptionChange(
+                              params.row,
+                              params.field,
+                              e.target.value
+                            )
+                          }
+                        >
+                          {dropdown_options.subtype.map((item: any) => {
+                            return (
+                              <MenuItem value={item.value}>
+                                {item.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
                     </div>
                   );
                 },
@@ -172,10 +292,10 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 renderCell: (params: any) => {
                   return (
                     <Checkbox
-                      checked={params.value == "N" ? false : true}
+                      checked={params.value == "Y" ? true : false}
                       onChange={(e) => {
                         handleCheckboxChange(
-                          params.id,
+                          params.row,
                           params.field,
                           e.target.checked
                         );
@@ -194,39 +314,28 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 width: 150,
                 editable: false,
                 renderCell: (params: any) => {
-                  // console.log("params", params);
                   return (
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "start",
-                        alignItems: "center",
-                        width: "100%",
-                      }}
-                    >
-                      {/* {params.value} */}
-                      <select
-                        style={{ border: "none", background: "none" }}
-                        value={params.value}
-                        onChange={(e) => {
-                          handleOptionChange(
-                            params.id,
-                            params.field,
-                            e.target.value
-                          );
-                        }}
-                      >
-                        {InOut_Options.map((opt: any) => {
-                          return (
-                            <option
-                              style={{ background: "white", color: "black" }}
-                              value={opt.value}
-                            >
-                              {opt.name}
-                            </option>
-                          );
-                        })}
-                      </select>
+                    <div>
+                      <FormControl sx={{ m: 1, minWidth: 140 }}>
+                        <Select
+                          value={params.value}
+                          onChange={(e) =>
+                            handleOptionChange(
+                              params.row,
+                              params.field,
+                              e.target.value
+                            )
+                          }
+                        >
+                          {InOut_Options.map((item: any) => {
+                            return (
+                              <MenuItem value={item.value}>
+                                {item.name}
+                              </MenuItem>
+                            );
+                          })}
+                        </Select>
+                      </FormControl>
                     </div>
                   );
                 },
@@ -242,14 +351,11 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             const new_obj = { id: index, ...obj };
             rows_arr.push(new_obj);
           });
-          console.log("rows-arrary", rows_arr);
           setcolumns(columns_arr);
           setrows(rows_arr);
-          setloader(false);
         }
       } catch (err) {
         console.log(err);
-        setloader(false);
       }
     };
 
@@ -258,9 +364,18 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     } else {
       setloader(false);
     }
-  }, [source_id, flag]);
+  }, [source_id, flag, dropdown_options]);
 
-  const generateTransaction = async () => {
+  useEffect(() => {
+    if (
+      dropdown_options.subtype.length > 0 &&
+      dropdown_options.type.length > 0
+    ) {
+      setTimeout(() => setloader(false), 1000);
+    }
+  }, [dropdown_options]);
+
+  const addTransaction = async () => {
     const data = {
       name: "",
       date: "",
@@ -280,14 +395,12 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ...data,
       date: `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`,
     };
-    console.log("moddata", mod_data);
     const res = await create_Transaction(mod_data, source_id);
-    console.log("response", res);
     setflag((prev) => !prev);
   };
 
   const handleCheckboxChange = async (
-    id: any,
+    row: any,
     field: any,
     checked: boolean
   ) => {
@@ -295,25 +408,25 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     if (checked) {
       val = "Y";
     } else val = "N";
-    console.log("id", id);
-    const row_data: any = rows.filter((x: any) => x.ID == id);
     const new_obj = {
-      ...row_data[0],
+      ...row,
       [field]: val,
     };
-    console.log("changed", new_obj);
+    // console.log("new_obj", new_obj);
+    const res = await updateTransaction(new_obj);
+    // console.log("response", res);
+    setflag((prev) => !prev);
   };
 
-  const handleOptionChange = (id: any, field: any, val: any) => {
-    console.log("id", id);
-    console.log("rows", rows);
-    const row_data: any = rows.filter((x: any) => x.ID == id);
-    console.log("rwo_data", row_data);
+  const handleOptionChange = async (row: any, field: any, val: any) => {
     const new_obj = {
-      ...row_data[0],
+      ...row,
       [field]: val,
     };
-    console.log("changed", new_obj);
+    // console.log("changed", new_obj);
+    const res = await updateTransaction(new_obj);
+    setflag((prev) => !prev);
+    // console.log("response", res);
   };
 
   const handleChangeRow = async (obj: any, event: any) => {
@@ -324,44 +437,36 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ...row,
       [field]: value,
     };
-    console.log(new_obj, "new_obj");
+    // console.log(new_obj, "new_obj");
     delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
-    console.log("response", res);
+    setflag((prev) => !prev);
+    // console.log("response", res);
   };
 
   const handleChangeRow1 = async (row: any) => {
-    console.log("inside");
     const id = row.id;
     const value = row.value;
     const row_data: any = rows.filter((x: any) => x.ID == id);
-    console.log("row_dat", row_data);
     const new_obj = {
       ...row_data[0],
       [row.field]: value,
     };
-    console.log(new_obj, "new_obj");
     delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
-    console.log("response", res);
+    setflag((prev) => !prev);
   };
 
   const deleteSelected = async () => {
     if (selected) {
       selected.forEach(async (id: any) => {
-        console.log("id", id, source_id);
         const res = await delete_Transaction(id, source_id);
-        console.log(res);
         setflag((prev) => !prev);
       });
     } else {
       toast.warning("Please Select the Transaction to Delete");
     }
   };
-
-  useEffect(() => {
-    console.log("selected", selected);
-  }, [selected]);
 
   return (
     <div
@@ -375,14 +480,14 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         <NoTransactions>
           <CircularProgress
             color="inherit"
-            style={{ color: "white" }}
+            style={{ color: "var(--ink-icon)" }}
             size={70}
           />
         </NoTransactions>
       ) : transactions ? (
         <Fragment>
           <Fragment>
-            <AddTransactionButton onClick={generateTransaction}>
+            <AddTransactionButton onClick={addTransaction}>
               <AddCircleIcon />
             </AddTransactionButton>
             <DeleteTransactionButton onClick={deleteSelected}>
@@ -410,7 +515,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ) : (
         <NoTransactions>
           <div className="text">No transactions available</div>
-          <AddTransactionButton onClick={generateTransaction}>
+          <AddTransactionButton onClick={addTransaction}>
             <AddCircleIcon />
           </AddTransactionButton>
         </NoTransactions>

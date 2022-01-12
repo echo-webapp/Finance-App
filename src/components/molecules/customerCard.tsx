@@ -75,24 +75,31 @@ const SubHeader = styled("div")`
 `;
 
 const SubNew = styled("div")`
-  width: 56px;
-  height: 22px;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  padding: 5px 15px;
   background: #fda600;
   border-radius: 23px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 14px;
+  margin: auto;
+  color: var(--background);
 `;
 const SubNew1 = styled("div")`
-  width: 106px;
+  width: 136px;
   height: 22px;
-  background: #fda600;
-  border-radius: 23px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-decoration: underline;
+  
 `;
 
 const SubJob = styled("div")`
@@ -105,6 +112,10 @@ const SubJob = styled("div")`
   align-items: center;
   justify-content: center;
   margin-left: 10px;
+`;
+
+const AvatarContainer = styled.div`
+  position: relative;
 `;
 
 const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
@@ -142,14 +153,18 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
         clickHandler(data.ID);
       }}
     >
-      <Avatar>{data.firstName[0]}</Avatar>
+      <AvatarContainer>
+        <Avatar>
+          <div>{data.firstName[0]}</div>
+        </Avatar>
+        {<SubNew>new</SubNew>}
+      </AvatarContainer>
       <SubContainer>
         <SubId>{data.eMail}</SubId>
         <SubName>
           {data.firstName} {data.lastName}
         </SubName>
         <SubHeader>
-          {data["new_Client"] === true && <SubNew>New</SubNew>}
           <SubNew1
             onClick={(e) => {
               setClientDetailsId(data.ID);
@@ -157,7 +172,7 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
               e.stopPropagation();
             }}
           >
-            View Details
+            View Client Details
           </SubNew1>
         </SubHeader>
       </SubContainer>
@@ -166,3 +181,4 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
 };
 
 export default CustomerCard;
+// data["new_Client"] === true &&

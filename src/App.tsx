@@ -31,7 +31,6 @@ const App = () => {
       {theme ? <GlobalDarkTheme /> : <GlobalLightTheme />}
       <Theme>
         <ThemeSwitch />
-        
       </Theme>
       <Routes />
     </Fragment>
