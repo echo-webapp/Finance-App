@@ -99,7 +99,6 @@ const SubNew1 = styled("div")`
   align-items: center;
   justify-content: center;
   text-decoration: underline;
-  
 `;
 
 const SubJob = styled("div")`
@@ -157,7 +156,7 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
         <Avatar>
           <div>{data.firstName[0]}</div>
         </Avatar>
-        {<SubNew>new</SubNew>}
+        {data["new_Client"] === true && <SubNew>new</SubNew>}
       </AvatarContainer>
       <SubContainer>
         <SubId>{data.eMail}</SubId>
