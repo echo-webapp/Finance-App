@@ -37,10 +37,24 @@ const NoTransactions = styled.div`
 const DataGrid1 = styled.div`
   margin-top: 50px;
   height: 637px;
-  width: 1301px;
-  width: 70%;
+  max-width: 1500px;
+  width: 100%;
   border-bottom-left-radius: 800px;
   border-top-left-radius: 800px;
+  @media only screen and (max-width: 1600px) {
+    max-width: 1400px;
+    min-height: 650px;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+    min-height: 600px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
+    min-height: 600px;
+  }
 `;
 
 const Transaction = () => {

@@ -324,7 +324,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           multiple
         />
         {fileName.length === 0 ? (
-          <CSVButton onClick={onButtonClick}>+ Import CSV</CSVButton>
+          <CSVButton onClick={onButtonClick}>Import XLS/XLSX</CSVButton>
         ) : (
           <CSVButtonContainer>
             <CSVUploadButton onClick={onButtonClick}>

@@ -310,7 +310,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
         />
         {fileName.length === 0 ? (
           <CSVButton onClick={onButtonClick}>
-            <span className="plus">+</span> <span>Import CSV</span>
+            <span>Import XLS/XLSX</span>
           </CSVButton>
         ) : (
           <CSVButtonContainer>

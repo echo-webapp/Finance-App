@@ -320,7 +320,7 @@ const EditCreditCard = ({
                 })}
               </Fragment>
             ) : (
-              <CSVButton onClick={onButtonClick}>+ Import CSV</CSVButton>
+              <CSVButton onClick={onButtonClick}>Import XLS/XLSX</CSVButton>
             )}
           </CSVButtonContainer>
         ) : (
