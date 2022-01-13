@@ -14,6 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
 import ClientDetails from "../../components/molecules/clientDetails";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -184,7 +185,6 @@ const Home = () => {
         buttonText="+ Add New Client"
         buttonHandler={() => history.push("/addclient")}
       />
-
       <SubHeader>
         <SubHeader1>
           <Logout />

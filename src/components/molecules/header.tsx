@@ -4,6 +4,8 @@ import AppLogo from "../vectors/Applogo";
 import NewAppLogo from "./../vectors/NewApplogo";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { useHistory } from "react-router-dom";
+
 interface HeaderProps {
   heading: string;
   subheading: string;
@@ -44,8 +46,13 @@ const Details = styled.div``;
 
 const Flex = styled.div`
   display: flex;
-  /* flex-direction: column; */
   gap: 10px;
+`;
+
+const LogoContainer = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const MainHeading = styled.div`
@@ -67,6 +74,8 @@ const Header = ({
   const theme: any = useSelector((state: RootState) => {
     return state.theme;
   });
+  const history = useHistory();
+
   if (extraButton) {
     return (
       <HeaderContainer1>
@@ -86,7 +95,9 @@ const Header = ({
             extra={true}
           />
         </Flex>
-        {!theme ? <AppLogo /> : <NewAppLogo />}
+        <LogoContainer onClick={() => history.push("/")}>
+          {!theme ? <AppLogo /> : <NewAppLogo />}
+        </LogoContainer>
         <Details>
           <MainHeading>{heading}</MainHeading>
         </Details>
@@ -103,7 +114,9 @@ const Header = ({
         padding="15px 30px"
         hidden={hidden}
       />
-      {!theme ? <AppLogo /> : <NewAppLogo />}
+      <LogoContainer onClick={() => history.push("/")}>
+        {!theme ? <AppLogo /> : <NewAppLogo />}
+      </LogoContainer>
       <Details>
         <MainHeading>{heading}</MainHeading>
       </Details>

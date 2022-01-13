@@ -53,7 +53,7 @@ const DataGrid1 = styled.div`
 
   @media only screen and (max-width: 1400px) {
     max-width: 1200px;
-    min-height: 600px;
+    min-height: 550px;
   }
 `;
 
