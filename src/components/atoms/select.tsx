@@ -25,6 +25,45 @@ const SelectContainer = styled.div<SelectContainerProps>`
     }
     return "258px";
   }};
+
+  @media only screen and (max-width: 1600px) {
+    max-width: ${(props) => {
+      if (
+        props.label == "Bank Name" ||
+        props.label == "Credit Card Type" ||
+        props.label == "Credit Card Provider"
+      ) {
+        return "100%";
+      }
+      return "230px";
+    }};
+  }
+
+  @media only screen and (max-width: 1500px) {
+    max-width: ${(props) => {
+      if (
+        props.label == "Bank Name" ||
+        props.label == "Credit Card Type" ||
+        props.label == "Credit Card Provider"
+      ) {
+        return "100%";
+      }
+      return "210px";
+    }};
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: ${(props) => {
+      if (
+        props.label == "Bank Name" ||
+        props.label == "Credit Card Type" ||
+        props.label == "Credit Card Provider"
+      ) {
+        return "100%";
+      }
+      return "200px";
+    }};
+  }
 `;
 
 const SelectContainer1 = styled.div`

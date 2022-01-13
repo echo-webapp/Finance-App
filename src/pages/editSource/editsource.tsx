@@ -24,15 +24,30 @@ const AddClientContainer = styled.div`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 1395px;
+  width: 100%;
+  max-width: 1500px;
   min-height: 537px;
   background: var(--lightgrey);
   border-radius: 93px;
   margin: 39px;
+  @media only screen and (max-width: 1600px) {
+    max-width: 1400px;
+    min-height: 650px;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+    min-height: 600px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
+    min-height: 600px;
+  }
 `;
 
 const SubContainer = styled.div`
-  width: 365px;
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;

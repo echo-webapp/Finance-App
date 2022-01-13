@@ -7,6 +7,7 @@ import { delete_CSV } from "../../api/delete";
 import { toast } from "react-toastify";
 
 const SubContainer1 = styled.div`
+  position: relative;
   padding: 120px;
   padding-top: 50px;
   padding-bottom: 0px;
@@ -17,8 +18,11 @@ const SubContainer1 = styled.div`
   border-radius: 93px;
 `;
 const SubContainer2 = styled.div`
-  margin-top: 35px;
-  margin-left: 42px;
+  position: absolute;
+  bottom: 10px;
+  left: 0px;
+  padding: 120px;
+  padding-bottom: 10px;
 `;
 const SubHeader = styled.div`
   width: 100%;
@@ -212,7 +216,7 @@ const EditBankDetails = ({
       <SubHeader>Enter Account Details</SubHeader>
       <SubContainer11>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Active"
@@ -223,7 +227,7 @@ const EditBankDetails = ({
               name="ACTIVE"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Account Number"
@@ -236,7 +240,7 @@ const EditBankDetails = ({
           </div>
         </SubContainerItem>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Source Name"
@@ -247,7 +251,7 @@ const EditBankDetails = ({
               name="sourceName"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Bank Name"
@@ -258,7 +262,7 @@ const EditBankDetails = ({
               name="bankName"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Bank Branch"

@@ -12,8 +12,6 @@ import Backdrop from "@mui/material/Backdrop";
 import { SetCustomer } from "../../store/Reducers/client";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import SvgArrowleft from "../../components/vectors/Arrowleft";
-import { useHistory } from "react-router";
 import validator from "validator";
 import { get_Dropdown } from "../../api/get";
 
@@ -32,11 +30,20 @@ const Details = styled.div`
   flex-direction: row-reverse;
   gap: 65px;
   background-color: var(--white);
-  width: 1400px;
+  width: 1500px;
   max-width: 1500px;
   position: relative;
   border-radius: 93px;
   padding-bottom: 120px;
+  @media only screen and (max-width: 1600px) {
+    max-width: 1400px;
+  }
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+  }
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
+  }
 `;
 
 const PersonalDetails = styled.div`
@@ -62,11 +69,33 @@ const FHeading = styled(PHeading)``;
 const InputContainerLeft = styled.div`
   width: 258px;
   justify-self: end;
+  @media only screen and (max-width: 1600px) {
+    max-width: 230px;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    max-width: 210px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 200px;
+  }
 `;
 
 const InputContainerRight = styled.div`
   width: 258px;
   justify-self: end;
+  @media only screen and (max-width: 1600px) {
+    max-width: 230px;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    max-width: 210px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 200px;
+  }
 `;
 
 const PInputFields = styled.div`
@@ -90,43 +119,6 @@ const Divider = styled.div`
   width: 531px;
   transform: translate(-50%, -50%) rotate(90deg);
   background-color: var(--grey);
-`;
-
-const SubHeader = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--black);
-  width: 80%;
-  max-width: 1500px;
-  height: 70px;
-  border-bottom: 1px solid #adb5bd;
-`;
-const SubHeader1 = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  .arrow-left {
-    margin-left: 20px;
-    position: relative;
-    height: 50px;
-    width: 50px;
-    padding: 10px;
-    border-radius: 50px;
-    color: white;
-    svg {
-      vertical-align: middle;
-      height: 100%;
-      width: 100%;
-    }
-    &:hover {
-      background-color: #eee;
-      cursor: pointer;
-      color: black;
-    }
-  }
 `;
 
 const Marriage_Option = [

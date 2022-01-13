@@ -33,21 +33,26 @@ const SubContainer = styled.div`
   display: flex;
   justify-content: space-around;
   position: relative;
-  width: 80%;
+  width: 100%;
   max-width: 1500px;
   margin-top: 20px;
   background: var(--white);
   border-radius: 93px;
   padding: 48px;
   gap: 20px;
-  @media only screen and (max-width: 1700px) {
-    width: 100%;
-    transform: scale(0.9);
+  @media only screen and (max-width: 1600px) {
+    max-width: 1400px;
+    min-height: 650px;
   }
 
-  @media only screen and (max-width: 1600px) {
-    width: 100%;
-    transform: scale(0.9);
+  @media only screen and (max-width: 1500px) {
+    max-width: 1300px;
+    min-height: 600px;
+  }
+
+  @media only screen and (max-width: 1400px) {
+    max-width: 1200px;
+    min-height: 600px;
   }
 `;
 
@@ -55,6 +60,7 @@ const AllBankAccountsCards = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
   .heading {
     font-weight: 600;
     font-size: 28px;
@@ -104,7 +110,6 @@ const MultipleCards = styled.div`
   }
 `;
 
-
 const Allsources = ({ match }: any) => {
   const history = useHistory();
   const [open, setOpen] = useState(false);
@@ -118,7 +123,7 @@ const Allsources = ({ match }: any) => {
   const [selected_source, setselected_source] = useState("bank");
   const [flag, setFlag] = useState(true);
   const [deleteId, setDeleteId] = useState("");
-
+  const [no_source_flag, setno_source_flag] = useState(false);
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllSources(match.params.id);
@@ -135,15 +140,25 @@ const Allsources = ({ match }: any) => {
       setallbankaccounts(bank);
       setallcreditcards(cc);
       if (bank.length != 0) {
+        console.log("hello");
         setsource_details(bank[0]);
       } else {
+        console.log("bye");
+        setselected_source("cc");
         setsource_details(cc[0]);
+      }
+      if (bank.length == 0 && bank.length == 0) {
+        setno_source_flag(true);
       }
       setFlag(false);
     };
 
     genResult();
   }, [open]);
+
+  useEffect(() => {
+    console.log("nosource", no_source_flag);
+  }, [no_source_flag]);
 
   return (
     <>
@@ -180,8 +195,12 @@ const Allsources = ({ match }: any) => {
           <Header
             heading="Client Name"
             subheading="@WW24"
-            buttonText="Edit source details"
+            buttonText="Add a Source"
             buttonHandler={() => {
+              history.push(`/addsource/${match.params.id}`);
+            }}
+            extraButton={!no_source_flag ? "Edit source details" : null}
+            extraButtonHandler={() => {
               history.push({
                 pathname: `/editsource/${source_details.ID}`,
                 state: {
@@ -191,21 +210,7 @@ const Allsources = ({ match }: any) => {
                 },
               });
             }}
-            extraButton="Add a Source"
-            extraButtonHandler={() =>
-              history.push(`/addsource/${match.params.id}`)
-            }
           />
-          {/* <SubHeader>
-            <SubHeader1>
-              <div
-                onClick={() => history.push(`/source/${match.params.id}`)}
-                className="arrow-left"
-              >
-                <SvgArrowleft color="white" />
-              </div>
-            </SubHeader1>
-          </SubHeader> */}
           <SubContainer>
             <AllBankAccountsCards>
               <div className="heading">Bank account details</div>
