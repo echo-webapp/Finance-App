@@ -232,8 +232,8 @@ const Transactions = ({ id }: any) => {
             extraButton="View all transactions"
             extraButtonHandler={() => {
               history.push({
-                pathname: "/transactions",
-                state: { sources_list: sources },
+                pathname: `/transactions`,
+                state: { sources_list: sources, client_id: id },
               });
             }}
           />

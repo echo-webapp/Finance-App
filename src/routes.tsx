@@ -12,7 +12,7 @@ import Allsources from "./pages/source/allsources";
 import EditSource from "./pages/editSource/editsource";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
-
+import Chart from "./pages/Chart/chart";
 const Router = () => {
   const user: any = useSelector((state: RootState) => state.isAuth?.isAuth);
   const token = localStorage.getItem("token");
@@ -27,6 +27,7 @@ const Router = () => {
         <Route exact path="/addsource/:id" component={AddSource} />
         <Route exact path="/transactions" component={Transaction} />
         <Route exact path="/allsources/:id" component={Allsources} />
+        <Route exact path="/statistics/:id" component={Chart} />
         <Route exact path="/editsource/:id" component={EditSource} />
         <Route component={NotFound} />
       </Switch>

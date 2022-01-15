@@ -63,7 +63,6 @@ const Transaction = () => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [flag, setFlag] = useState(true);
-  const [ref, setref]: any = useState(null);
 
   function CustomToolbar() {
     return (
@@ -128,13 +127,10 @@ const Transaction = () => {
           <Header
             heading="Unified transactions"
             subheading="@WW24"
-            buttonText="Export csv"
+            buttonText="View Charts"
             buttonHandler={() => {
-              if (ref) {
-                ref.click();
-              }
+              history.push(`/statistics/${history.location.state.client_id}`);
             }}
-            hidden={true}
           />
           <DataGrid1>
             <div
