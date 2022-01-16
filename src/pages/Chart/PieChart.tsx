@@ -9,11 +9,11 @@ var options = {
       fontSize: 25,
     },
   },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
+  //   plugins: {
+  //     legend: {
+  //       display: false,
+  //     },
+  //   },
 };
 const initial_data = {
   labels: ["Critical case", "Urgent case", "Errors", "Reviewed", "Success"],
