@@ -17,7 +17,7 @@ const LoaderScreen = () => {
     <AddClientContainer>
       <CircularProgress
         color="inherit"
-        style={{ color: "var(--ink-text)" }}
+        style={{ color: "var(--ink-icon)" }}
         size={70}
       />
     </AddClientContainer>

@@ -45,6 +45,8 @@ const GlobalStyle: any = createGlobalStyle`
     --cc-small-account-text:#CCF148;
     --cc-small-primary:#343A40;
 
+    
+
     --oswald:"Oswald";
     --font:"Poppins";
   }

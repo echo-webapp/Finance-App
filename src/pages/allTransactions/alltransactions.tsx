@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { getTransactionDetails } from "./../../api/get";
+import { getTransactionDetails, get_AllSources } from "./../../api/get";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -9,7 +9,7 @@ import {
 import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import Header from "../../components/molecules/header";
-import { Hidden } from "@mui/material";
+import Chart from "../Chart/chart";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -58,24 +58,27 @@ const DataGrid1 = styled.div`
   }
 `;
 
-const Transaction = () => {
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarExport />
+    </GridToolbarContainer>
+  );
+}
+
+const AllTransaction = ({ match }: any) => {
   const history: any = useHistory();
   const [allTransactions, setallTransactions] = useState([]);
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [flag, setFlag] = useState(true);
-
-  function CustomToolbar() {
-    return (
-      <GridToolbarContainer>
-        <GridToolbarExport />
-      </GridToolbarContainer>
-    );
-  }
+  const [state, setstate] = useState(true);
 
   useEffect(() => {
     const getAll: any = async () => {
-      const res = history.location.state.sources_list;
+      const client_id = match.params.id;
+      const res = await get_AllSources(client_id);
+      // const res = history.location.state.sources_list;
       console.log("res", res);
       let temp: any = [];
       for (let i = 0; i < res.length; i++) {
@@ -119,67 +122,72 @@ const Transaction = () => {
     getAll();
   }, []);
 
-  return (
-    <>
-      {flag ? (
-        <LoaderScreen />
-      ) : (
-        <AddClientContainer>
-          {allTransactions.length === 0 ? (
-            <Header
-              heading="Unified transactions"
-              subheading="@WW24"
-              buttonText="View Charts"
-              buttonHandler={() => {
-                history.push(`/statistics/${history.location.state.client_id}`);
-              }}
-              hidden
-            />
-          ) : (
-            <Header
-              heading="Unified transactions"
-              subheading="@WW24"
-              buttonText="View Charts"
-              buttonHandler={() => {
-                history.push(`/statistics/${history.location.state.client_id}`);
-              }}
-            />
-          )}
+  if (state) {
+    return (
+      <>
+        {flag ? (
+          <LoaderScreen />
+        ) : (
+          <AddClientContainer>
+            {allTransactions.length === 0 ? (
+              <Header
+                heading="Unified transactions"
+                subheading="@WW24"
+                buttonText="View Charts"
+                buttonHandler={() => {
+                  setstate((prev) => !prev);
+                }}
+                hidden
+              />
+            ) : (
+              <Header
+                heading="Unified transactions"
+                subheading="@WW24"
+                buttonText="View Charts"
+                buttonHandler={() => {
+                  setstate((prev) => !prev);
+                }}
+              />
+            )}
 
-          <DataGrid1>
-            <div
-              style={{
-                height: "100%",
-                background:
-                  allTransactions.length === 0
-                    ? "var(--white)"
-                    : "var(--white)",
-                borderRadius: 93,
-              }}
-            >
-              {allTransactions.length != 0 ? (
-                <DataGrid
-                  rows={rows}
-                  columns={columns}
-                  pageSize={8}
-                  rowsPerPageOptions={[5]}
-                  checkboxSelection
-                  disableSelectionOnClick
-                  components={{
-                    Toolbar: CustomToolbar,
-                  }}
-                />
-              ) : (
-                <NoTransactions>
-                  <div className="text">No transactions available</div>
-                </NoTransactions>
-              )}
-            </div>
-          </DataGrid1>
-        </AddClientContainer>
-      )}
-    </>
+            <DataGrid1>
+              <div
+                style={{
+                  height: "100%",
+                  background:
+                    allTransactions.length === 0
+                      ? "var(--white)"
+                      : "var(--white)",
+                  borderRadius: 93,
+                }}
+              >
+                {allTransactions.length != 0 ? (
+                  <DataGrid
+                    rows={rows}
+                    columns={columns}
+                    pageSize={8}
+                    rowsPerPageOptions={[5]}
+                    checkboxSelection
+                    disableSelectionOnClick
+                    components={{
+                      Toolbar: CustomToolbar,
+                    }}
+                  />
+                ) : (
+                  <NoTransactions>
+                    <div className="text">No transactions available</div>
+                  </NoTransactions>
+                )}
+              </div>
+            </DataGrid1>
+          </AddClientContainer>
+        )}
+      </>
+    );
+  }
+  return (
+    <Chart setstate={setstate} client_id={history.location.state.client_id} />
   );
 };
 
-export default Transaction;
+export default AllTransaction;

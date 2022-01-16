@@ -225,14 +225,14 @@ const Transactions = ({ id }: any) => {
           <Header
             heading="Transaction details"
             subheading="@WW24"
-            buttonText="View all sources"
+            buttonText="All sources"
             buttonHandler={() => {
               history.push(`/allsources/${id}`);
             }}
-            extraButton="View all transactions"
+            extraButton="Unified transactions"
             extraButtonHandler={() => {
               history.push({
-                pathname: `/transactions`,
+                pathname: `/transactions/${id}`,
                 state: { sources_list: sources, client_id: id },
               });
             }}

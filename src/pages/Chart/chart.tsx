@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Header from "../../components/molecules/header";
 import styled from "styled-components";
 import ChartType1 from "./ChartType1";
@@ -41,20 +41,17 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  width: calc(100% - 1030px);
+  /* width: 370px; */
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 45px;
   .buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 24px;
-  }
-  @media only screen and (max-width: 1500px) {
-    margin-left: 10px;
   }
 `;
 
@@ -80,14 +77,14 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   text-align: center;
   background: ${(props) => {
     if (props.name == props.selected) {
-      return "var(--black)";
+      return "var(--cc-primary)";
     } else {
       return "none";
     }
   }};
   color: ${(props) => {
     if (props.name == props.selected) {
-      return "var(--white)";
+      return "var(--cc-text)";
     } else {
       return "var(--black)";
     }
@@ -104,7 +101,7 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   }
 `;
 
-const Chart = ({ match }: any) => {
+const Chart = ({ client_id, setstate }: any) => {
   const history = useHistory();
   const [selected, setSelected]: any = useState("type1");
   return (
@@ -113,18 +110,18 @@ const Chart = ({ match }: any) => {
         <Header
           heading="Client Statistics"
           subheading="@WW24"
-          buttonText="View Transactions"
+          buttonText="Unified transactions"
           buttonHandler={() => {
-            history.push(`/source/${match.params.id}`);
+            setstate((prev: any) => !prev);
           }}
         />
         <MainContainer>
           {selected === "type1" ? (
-            <ChartType1 clientId={match.params.id} />
+            <ChartType1 clientId={client_id} />
           ) : selected === "type2" ? (
-            <ChartType2 clientId={match.params.id} />
+            <ChartType2 clientId={client_id} />
           ) : selected === "type3" ? (
-            <ChartType3 clientId={match.params.id} />
+            <ChartType3 clientId={client_id} />
           ) : (
             <ChartType4 />
           )}
@@ -158,7 +155,7 @@ const Chart = ({ match }: any) => {
               >
                 Income Expense pie
               </SubContainerButtonText>
-              <SubContainerButtonText
+              {/* <SubContainerButtonText
                 name="type4"
                 selected={selected}
                 onClick={() => {
@@ -166,7 +163,7 @@ const Chart = ({ match }: any) => {
                 }}
               >
                 Drill from Income Expense Pie
-              </SubContainerButtonText>
+              </SubContainerButtonText> */}
             </div>
           </SubContainer>
         </MainContainer>

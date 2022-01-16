@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;

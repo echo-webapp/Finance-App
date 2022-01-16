@@ -36,7 +36,7 @@ const SubContainer = styled.div`
   justify-content: space-between;
   padding: "40px";
 `;
-const SubContainer11 = styled.div`
+export const SubContainer11 = styled.div`
   width: 100%;
   height: 400px;
   display: flex;

@@ -4,9 +4,13 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { get_Chart2Data } from "./../../api/chart";
 import { Line } from "react-chartjs-2";
+import SelectComponent from "../../components/atoms/select";
+import ChartDetailsCard1 from "../../components/molecules/Chartdetails1";
+import { SubContainer11 } from "./ChartType1";
+import { CircularProgress } from "@mui/material";
 
 const SubContainer1 = styled.div`
-  padding: 80px;
+  padding: 60px;
   padding-top: 50px;
   padding-bottom: 0px;
   width: 1030px;
@@ -16,26 +20,56 @@ const SubContainer1 = styled.div`
   border-radius: 93px;
 `;
 
-const SubHeader = styled.div`
-  width: 100%;
+const SubHeaderContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 28px;
+  color: #343a40;
+  div {
+    .yield-select {
+      width: 100px;
+      transform: translate(-110px, 0px);
+    }
+    .estimated {
+      transform: translateY(5px);
+      font-size: 18px;
+    }
+  }
+`;
+
+const SubHeader = styled.div`
   font-weight: 600;
   font-size: 28px;
-  text-align: right;
   color: #343a40;
 `;
 
 const SubContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   padding: "40px";
+  margin-top: 50px;
+  gap: 20px;
+  .line-chart {
+    height: 350px;
+    width: 400px;
+  }
 `;
 
-var chartColors = ["rgb(112, 255, 99)", "#ed5b3d"];
+const Yield_option = [
+  { value: "1", name: "1" },
+  { value: "2", name: "2" },
+  { value: "3", name: "3" },
+  { value: "4", name: "4" },
+  { value: "5", name: "5" },
+  { value: "6", name: "6" },
+  { value: "7", name: "7" },
+  { value: "8", name: "8" },
+  { value: "9", name: "9" },
+  { value: "10", name: "10" },
+];
 
 const ChartType1 = ({ clientId }: any) => {
   const theme: any = useSelector((state: RootState) => {
@@ -43,7 +77,7 @@ const ChartType1 = ({ clientId }: any) => {
   });
 
   const [chartData, setChartData] = useState(null);
-  const [yieldno, setyieldno] = useState(5);
+  const [yieldno, setyieldno] = useState("5");
   const [data, setData]: any = useState(null);
 
   const up = (ctx: any, value: any) => {
@@ -68,7 +102,7 @@ const ChartType1 = ({ clientId }: any) => {
       console.log("data1", data1);
       const labels: any = [];
       const values: any = [];
-      data1.slice(0, 7).map((obj: any) => {
+      data1.map((obj: any) => {
         labels.push(obj.ForAge);
         values.push(obj.NetWorth);
       });
@@ -80,9 +114,6 @@ const ChartType1 = ({ clientId }: any) => {
           {
             label: "NetWorth",
             data: values,
-            // borderColor: "#7D8C0B",
-            // backgroundColor: "#CCF148",
-            // tension: 0.4,
             fill: true,
             segment: {
               borderColor: (ctx: any) =>
@@ -95,12 +126,12 @@ const ChartType1 = ({ clientId }: any) => {
           },
         ],
       };
-      console.log("dataa", data);
+      console.log("data", data);
       setData(data);
       setChartData(data1);
     };
     getData();
-  }, []);
+  }, [yieldno]);
 
   useEffect(() => {
     console.log("data", data);
@@ -123,18 +154,35 @@ const ChartType1 = ({ clientId }: any) => {
 
   return (
     <SubContainer1>
-      <SubHeader>Long Term Capital </SubHeader>
+      <SubHeaderContainer>
+        <SubHeader>Long Term Capital</SubHeader>
+        <div>
+          <div className="yield-select">
+            <SelectComponent
+              options={Yield_option}
+              value={yieldno}
+              setvalue={setyieldno}
+            />
+          </div>
+          <div className="estimated">Estimated Yield</div>
+        </div>
+      </SubHeaderContainer>
+
       {chartData ? (
         <SubContainer>
-          <div style={{ height: "400px", width: "450px", marginTop: "25px" }}>
+          <div className="line-chart">
             <Line options={options} data={data} />
           </div>
-          {/* <ChartDetailsCard
+          <ChartDetailsCard1
             theme={`${theme ? "light" : "dark"}`}
             chartData={chartData}
-          /> */}
+          />
         </SubContainer>
-      ) : null}
+      ) : (
+        <SubContainer11>
+          <CircularProgress />
+        </SubContainer11>
+      )}
     </SubContainer1>
   );
 };

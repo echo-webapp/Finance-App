@@ -44,7 +44,8 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  width: 365px;
+  /* width: 365px; */
+  width: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -79,14 +80,14 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   text-align: center;
   background: ${(props) => {
     if (props.name == props.selected) {
-      return "var(--black)";
+      return "var(--cc-primary)";
     } else {
       return "var(--card-grey)";
     }
   }};
   color: ${(props) => {
     if (props.name == props.selected) {
-      return "var(--white)";
+      return "var(--cc-text)";
     } else {
       return "var(--black)";
     }

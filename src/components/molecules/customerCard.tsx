@@ -171,7 +171,7 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
               e.stopPropagation();
             }}
           >
-            View Client Details
+            Client Details
           </SubNew1>
         </SubHeader>
       </SubContainer>
