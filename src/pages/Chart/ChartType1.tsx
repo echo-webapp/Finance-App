@@ -6,6 +6,7 @@ import { RootState } from "../../store/store";
 import { get_Chart1Data } from "./../../api/chart";
 import { Bar } from "react-chartjs-2";
 import { CircularProgress } from "@mui/material";
+
 const SubContainer1 = styled.div`
   padding: 80px;
   padding-top: 50px;
@@ -16,6 +17,7 @@ const SubContainer1 = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 93px;
 `;
+
 const SubHeader = styled.div`
   width: 100%;
   display: flex;
@@ -25,6 +27,7 @@ const SubHeader = styled.div`
   text-align: right;
   color: #343a40;
 `;
+
 const SubContainer = styled.div`
   width: 100%;
   display: flex;
@@ -42,6 +45,7 @@ const SubContainer11 = styled.div`
   justify-content: center;
   padding: "40px";
 `;
+
 const ChartType1 = ({ clientId }: any) => {
   const theme: any = useSelector((state: RootState) => {
     return state.theme;

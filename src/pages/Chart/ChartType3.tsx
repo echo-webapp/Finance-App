@@ -61,7 +61,7 @@ const MainContainer = styled.div`
 `;
 const MainContainer1 = styled.div`
   height: 400px;
-  width: 55%;
+  width: 57%;
 `;
 const ChartType3 = ({ clientId }: any) => {
   const [type, setType] = useState("In");

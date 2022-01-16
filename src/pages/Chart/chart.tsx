@@ -6,6 +6,7 @@ import ChartType2 from "./ChartType2";
 import ChartType3 from "./ChartType3";
 import ChartType4 from "./ChartType4";
 import { useHistory } from "react-router";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -17,8 +18,6 @@ const AddClientContainer = styled.div`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
-  /* align-items: center;
-  justify-content: space-between; */
   width: 100%;
   max-width: 1500px;
   min-height: 650px;
@@ -42,7 +41,7 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  width: 365px;
+  width: calc(100% - 1030px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,8 +51,10 @@ const SubContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 24px;
+  }
+  @media only screen and (max-width: 1500px) {
+    margin-left: 10px;
   }
 `;
 
@@ -72,20 +73,16 @@ interface SubContainerBankTextProps {
 
 const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   font-weight: 500;
   font-size: 18px;
   padding: 24px 28px;
-  width: 359px;
-  height: 64px;
   text-align: center;
   background: ${(props) => {
     if (props.name == props.selected) {
       return "var(--black)";
     } else {
-      return "var(--card-grey)";
+      return "none";
     }
   }};
   color: ${(props) => {
@@ -98,6 +95,12 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
   border-radius: 106px;
   &:hover {
     cursor: pointer;
+  }
+  @media only screen and (max-width: 1600px) {
+    padding: 15px 18px;
+  }
+  @media only screen and (max-width: 1500px) {
+    padding: 10px 12px;
   }
 `;
 
@@ -119,7 +122,7 @@ const Chart = ({ match }: any) => {
           {selected === "type1" ? (
             <ChartType1 clientId={match.params.id} />
           ) : selected === "type2" ? (
-            <ChartType2 />
+            <ChartType2 clientId={match.params.id} />
           ) : selected === "type3" ? (
             <ChartType3 clientId={match.params.id} />
           ) : (
