@@ -121,7 +121,7 @@ const Chart = ({ match }: any) => {
           ) : selected === "type2" ? (
             <ChartType2 />
           ) : selected === "type3" ? (
-            <ChartType3 />
+            <ChartType3 clientId={match.params.id} />
           ) : (
             <ChartType4 />
           )}
