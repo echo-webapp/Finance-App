@@ -16,7 +16,6 @@ export const get_Chart1Data = async (id: any) => {
 };
 export const get_Chart3Data = async (id: any, type: any, category: any) => {
   const url = `https://pikel-it.com/finapp/charts/InOutGroup.php?clientId=${id}&mode=${type}&groupBy=${category}`;
-  console.log(url);
   return fetch(url, {
     method: "GET", // or 'PUT'
     headers: {

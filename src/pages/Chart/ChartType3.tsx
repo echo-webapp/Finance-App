@@ -5,6 +5,8 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { CircularProgress } from "@mui/material";
 import { get_Chart3Data } from "./../../api/chart";
+import PieChart from "./PieChart";
+import { DataGrid } from "@mui/x-data-grid";
 const SubContainer1 = styled.div`
   padding: 20px;
   /* padding-top: 50px; */
@@ -50,11 +52,23 @@ const SubHeader1 = styled.div`
 `;
 const MainContainer = styled.div`
   height: 500px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+const MainContainer1 = styled.div`
+  height: 400px;
+  width: 55%;
 `;
 const ChartType3 = ({ clientId }: any) => {
   const [type, setType] = useState("In");
   const [option, setOption] = useState("Type");
   const [loading, setLoading] = useState(true);
+  const [rows, setrows] = useState([]);
+  const [columns, setcolumns] = useState([]);
+  const [chartData, setChartData]: any = useState([]);
   const handleChange = (event: any) => {
     setOption(event.target.value);
   };
@@ -62,11 +76,40 @@ const ChartType3 = ({ clientId }: any) => {
     const getData = async () => {
       setLoading(true);
       const data = await get_Chart3Data(clientId, type, option);
-      console.log(data);
+      setChartData(data);
       setLoading(false);
     };
     getData();
   }, [type, option]);
+  useEffect(() => {
+    const columns_arr: any = [];
+    columns_arr.push({
+      field: "Category",
+      headerName: "Category",
+      width: 160,
+    });
+    columns_arr.push({
+      field: "Amount",
+      headerName: "Amount",
+      width: 150,
+    });
+    columns_arr.push({
+      field: "Expenses",
+      headerName: "% Expenses",
+      width: 150,
+    });
+    setcolumns(columns_arr);
+    const rows_arr: any = [];
+    for (let i = 0; i < chartData.length; i++) {
+      let temp: any = {};
+      temp.id = i;
+      temp.Category = chartData[i].GroupName;
+      temp.Amount = chartData[i].Amount;
+      temp.Expenses = chartData[i].Precents.toFixed(2);
+      rows_arr.push(temp);
+    }
+    setrows(rows_arr);
+  }, [chartData]);
   return (
     <SubContainer1>
       {loading ? (
@@ -115,7 +158,25 @@ const ChartType3 = ({ clientId }: any) => {
               </FormControl>
             </div>
           </SubHeader1>
-          <MainContainer>sarthak</MainContainer>
+          <MainContainer>
+            <div
+              style={{
+                height: "500px",
+                width: "350px",
+              }}
+            >
+              <PieChart chartData={chartData} />
+            </div>
+            <MainContainer1>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                pageSize={8}
+                rowsPerPageOptions={[5]}
+                disableSelectionOnClick
+              />
+            </MainContainer1>
+          </MainContainer>
         </>
       )}
     </SubContainer1>
