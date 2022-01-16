@@ -7,6 +7,7 @@ import { CircularProgress } from "@mui/material";
 import { get_Chart3Data } from "./../../api/chart";
 import PieChart from "./PieChart";
 import { DataGrid } from "@mui/x-data-grid";
+import ChartGrid from "../../components/molecules/ChartGrid";
 const SubContainer1 = styled.div`
   padding: 20px;
   /* padding-top: 50px; */
@@ -168,13 +169,7 @@ const ChartType3 = ({ clientId }: any) => {
               <PieChart chartData={chartData} />
             </div>
             <MainContainer1>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={8}
-                rowsPerPageOptions={[5]}
-                disableSelectionOnClick
-              />
+              <ChartGrid rows={rows} columns={columns} />
             </MainContainer1>
           </MainContainer>
         </>
