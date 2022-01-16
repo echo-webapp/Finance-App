@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { get_Chart1Data } from "./../../api/chart";
 import { Bar } from "react-chartjs-2";
+import { CircularProgress } from "@mui/material";
 const SubContainer1 = styled.div`
   padding: 80px;
   padding-top: 50px;
@@ -32,14 +33,25 @@ const SubContainer = styled.div`
   justify-content: space-between;
   padding: "40px";
 `;
+const SubContainer11 = styled.div`
+  width: 100%;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: "40px";
+`;
 const ChartType1 = ({ clientId }: any) => {
   const theme: any = useSelector((state: RootState) => {
     return state.theme;
   });
   const [chartData, setChartData] = useState(null);
   const [data, setData]: any = useState(null);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       const data1 = await get_Chart1Data(clientId);
       let data = {};
       if (data1.SPM > 0) {
@@ -69,6 +81,7 @@ const ChartType1 = ({ clientId }: any) => {
       }
       setData(data);
       setChartData(data1);
+      setLoading(false);
     };
     getData();
   }, []);
@@ -99,7 +112,11 @@ const ChartType1 = ({ clientId }: any) => {
             chartData={chartData}
           />
         </SubContainer>
-      ) : null}
+      ) : (
+        <SubContainer11>
+          <CircularProgress />
+        </SubContainer11>
+      )}
     </SubContainer1>
   );
 };
