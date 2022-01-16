@@ -207,8 +207,8 @@ const AddClient = () => {
         return;
       }
     }
-
-    if (!validator.isEmail(data.email)) {
+    console.log(data);
+    if (!validator.isEmail(data.eMail)) {
       toast.warning("Please Fill Correct Email");
       return;
     }
