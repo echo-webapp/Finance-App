@@ -38,7 +38,7 @@ const DetailsContainer = styled.div<DetailsContainerProps>`
   border-radius: 42px;
   padding: 28px;
   padding-top: 42px;
-  padding-right:20px;
+  padding-right: 20px;
   background: ${(props) => {
     if (props.theme == "light") {
       return "var(--card-grey)";
@@ -180,7 +180,6 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
 
   useEffect(() => {
     const all_networth: any = chartData.map((val: any) => val.NetWorth);
-    console.log(all_networth, "all_networth");
     if (all_networth.length > 0) {
       setendingbalance(
         Math.max(
@@ -205,7 +204,9 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
       </CircleContainer>
       <DetailsContainer theme={theme}>
         <SubContainer>
-          <Info theme={theme}>{chartData[0].StartNetWorth}</Info>
+          <Info theme={theme}>
+            {chartData.length > 0 ? chartData[0].StartNetWorth : null}
+          </Info>
           <HeadingContainer>
             <Heading theme={theme}>Beginning balance</Heading>
             <Heading11>
@@ -230,7 +231,9 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
-        <div className="balance-amount">{chartData[0].SPY.toFixed(2)}</div>
+        <div className="balance-amount">
+          {chartData.length > 0 ? chartData[0].SPY.toFixed(2) : null}
+        </div>
         <div className="balance-text">Savings per year</div>
       </BalanceContainer>
     </Container>

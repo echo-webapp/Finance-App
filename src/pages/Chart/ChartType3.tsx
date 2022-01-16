@@ -73,6 +73,7 @@ const ChartType3 = ({ clientId }: any) => {
   const handleChange = (event: any) => {
     setOption(event.target.value);
   };
+
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
@@ -82,6 +83,7 @@ const ChartType3 = ({ clientId }: any) => {
     };
     getData();
   }, [type, option]);
+
   useEffect(() => {
     const columns_arr: any = [];
     columns_arr.push({
@@ -111,6 +113,7 @@ const ChartType3 = ({ clientId }: any) => {
     }
     setrows(rows_arr);
   }, [chartData]);
+
   return (
     <SubContainer1>
       {loading ? (

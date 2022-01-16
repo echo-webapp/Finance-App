@@ -81,7 +81,6 @@ const ChartType1 = ({ clientId }: any) => {
   const [data, setData]: any = useState(null);
 
   const up = (ctx: any, value: any) => {
-    console.log(ctx.p0.parsed.y, ctx.p1.parsed.y);
     if (ctx.p0.parsed.y > 0) {
       return value;
     }
@@ -89,7 +88,6 @@ const ChartType1 = ({ clientId }: any) => {
   };
 
   const down = (ctx: any, value: any) => {
-    console.log(ctx.p0.parsed.y, ctx.p1.parsed.y);
     if (ctx.p0.parsed.y < 0) {
       return value;
     }
@@ -98,6 +96,7 @@ const ChartType1 = ({ clientId }: any) => {
 
   useEffect(() => {
     const getData = async () => {
+      setChartData(null);
       const data1 = await get_Chart2Data(clientId, yieldno);
       console.log("data1", data1);
       const labels: any = [];
@@ -106,8 +105,6 @@ const ChartType1 = ({ clientId }: any) => {
         labels.push(obj.ForAge);
         values.push(obj.NetWorth);
       });
-      console.log("labels", labels);
-      console.log("values", values);
       const data = {
         labels: labels,
         datasets: [
@@ -132,10 +129,6 @@ const ChartType1 = ({ clientId }: any) => {
     };
     getData();
   }, [yieldno]);
-
-  useEffect(() => {
-    console.log("data", data);
-  }, [data]);
 
   var options = {
     maintainAspectRatio: false,
@@ -167,7 +160,6 @@ const ChartType1 = ({ clientId }: any) => {
           <div className="estimated">Estimated Yield</div>
         </div>
       </SubHeaderContainer>
-
       {chartData ? (
         <SubContainer>
           <div className="line-chart">
