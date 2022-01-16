@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import Header from "../../components/molecules/header";
+import { Hidden } from "@mui/material";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -124,14 +125,27 @@ const Transaction = () => {
         <LoaderScreen />
       ) : (
         <AddClientContainer>
-          <Header
-            heading="Unified transactions"
-            subheading="@WW24"
-            buttonText="View Charts"
-            buttonHandler={() => {
-              history.push(`/statistics/${history.location.state.client_id}`);
-            }}
-          />
+          {allTransactions.length === 0 ? (
+            <Header
+              heading="Unified transactions"
+              subheading="@WW24"
+              buttonText="View Charts"
+              buttonHandler={() => {
+                history.push(`/statistics/${history.location.state.client_id}`);
+              }}
+              hidden
+            />
+          ) : (
+            <Header
+              heading="Unified transactions"
+              subheading="@WW24"
+              buttonText="View Charts"
+              buttonHandler={() => {
+                history.push(`/statistics/${history.location.state.client_id}`);
+              }}
+            />
+          )}
+
           <DataGrid1>
             <div
               style={{
