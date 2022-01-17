@@ -70,7 +70,6 @@ const ChartType1 = ({ clientId }: any) => {
       if (data1.SPY === "-1") {
         setFlag(true);
       }
-      setFlag(true);
       let data = {};
       if (data1.SPM > 0) {
         data = {

@@ -17,7 +17,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-
 interface ClientDataGridProps {
   source_id: any;
 }
@@ -398,6 +397,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const res = await create_Transaction(mod_data, source_id);
     console.log(mod_data);
     setflag((prev) => !prev);
+    toast.success("New Transaction Created");
   };
 
   const handleCheckboxChange = async (
@@ -464,6 +464,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         const res = await delete_Transaction(id, source_id);
         setflag((prev) => !prev);
       });
+      toast.success("Selected Transaction Deleted");
     } else {
       toast.warning("Please Select the Transaction to Delete");
     }

@@ -167,7 +167,7 @@ const AllTransaction = ({ match }: any) => {
                     columns={columns}
                     pageSize={8}
                     rowsPerPageOptions={[5]}
-                    checkboxSelection
+                    // checkboxSelection
                     disableSelectionOnClick
                     components={{
                       Toolbar: CustomToolbar,

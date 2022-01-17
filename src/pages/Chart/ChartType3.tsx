@@ -8,6 +8,7 @@ import { get_Chart3Data } from "./../../api/chart";
 import PieChart from "./PieChart";
 import { DataGrid } from "@mui/x-data-grid";
 import ChartGrid from "../../components/molecules/ChartGrid";
+import SelectComponent from "../../components/atoms/select";
 const SubContainer1 = styled.div`
   padding: 20px;
   /* padding-top: 50px; */
@@ -50,6 +51,10 @@ const SubHeader1 = styled.div`
   align-items: center;
   justify-content: flex-end;
   margin-right: 30px;
+  .select-component {
+    width: 280px;
+    margin-bottom: 10px;
+  }
 `;
 const MainContainer = styled.div`
   height: 500px;
@@ -73,6 +78,12 @@ const MainContainer1 = styled.div`
   height: 400px;
   width: 57%;
 `;
+
+const Options = [
+  { value: "Type", name: "By Category" },
+  { value: "Subtype", name: "By Category and Sub Category" },
+];
+
 const ChartType3 = ({ clientId }: any) => {
   const [type, setType] = useState("In");
   const [option, setOption] = useState("Type");
@@ -157,21 +168,12 @@ const ChartType3 = ({ clientId }: any) => {
             </SubHeaderItem>
           </SubHeader>
           <SubHeader1>
-            <div>
-              <FormControl fullWidth>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={option}
-                  label="Category"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={"Type"}>By Category</MenuItem>
-                  <MenuItem value={"Subtype"}>
-                    By Category and Sub Category
-                  </MenuItem>
-                </Select>
-              </FormControl>
+            <div className="select-component">
+              <SelectComponent
+                options={Options}
+                value={option}
+                setvalue={setOption}
+              />
             </div>
           </SubHeader1>
           {flag ? (

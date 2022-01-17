@@ -10,11 +10,7 @@ import PhysicalCard_small from "../../components/molecules/physicalCard_small";
 import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { Tooltip } from "@mui/material";
-import Modal from "@mui/material/Modal";
-import Backdrop from "@mui/material/Backdrop";
-import ClientDetails from "../../components/molecules/clientDetails";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   display: flex;
@@ -177,7 +173,7 @@ const CreditCardsHeading = styled.div`
 `;
 
 const Transactions = ({ id }: any) => {
-  const history = useHistory();
+  const history: any = useHistory();
   const [sources, setsources] = useState([]);
   const [allbankaccounts, setallbankaccounts]: any = useState([]);
   const [allcreditcards, setallcreditcards]: any = useState([]);
@@ -213,7 +209,14 @@ const Transactions = ({ id }: any) => {
 
     genResult();
   }, []);
-
+  useEffect(() => {
+    if (history.location.state?.flag) {
+      toast.success(history.location.state?.flag);
+      let state = { ...history.location.state };
+      delete state.flag;
+      history.replace({ ...history.location, state });
+    }
+  }, []);
   return (
     <>
       {flag ? (

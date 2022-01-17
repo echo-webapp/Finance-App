@@ -144,7 +144,12 @@ const EditSource = ({ match }: any) => {
         }
         setFlag(false);
         if (Array.isArray(res2)) {
-          history.push(`/allsources/${clientId}`);
+          history.push({
+            pathname: `/allsources/${clientId}`,
+            state: {
+              flag: "Bank Details Updated Successfully",
+            },
+          });
         }
       }
       setFlag(false);
@@ -171,7 +176,12 @@ const EditSource = ({ match }: any) => {
           const res = await create_CSV(base64File[i], match.params.id);
         }
         if (Array.isArray(res2)) {
-          history.push(`/allsources/${clientId}`);
+          history.push({
+            pathname: `/allsources/${clientId}`,
+            state: {
+              flag: "Credit Card Updated Successfully",
+            },
+          });
         }
       }
       setFlag(false);

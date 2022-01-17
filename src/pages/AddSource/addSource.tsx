@@ -150,7 +150,12 @@ const AddSource = ({ match }: any) => {
         }
         setFlag(false);
         if (Array.isArray(res2)) {
-          history.push(`/source/${match.params.id}`);
+          history.push({
+            pathname: `/source/${match.params.id}`,
+            state: {
+              flag: "New Bank Source Added",
+            },
+          });
         }
       }
     }
@@ -177,7 +182,12 @@ const AddSource = ({ match }: any) => {
         }
         setFlag(false);
         if (Array.isArray(res2)) {
-          history.push(`/source/${match.params.id}`);
+          history.push({
+            pathname: `/source/${match.params.id}`,
+            state: {
+              flag: "New Credit Card Added",
+            },
+          });
         }
       }
     }
