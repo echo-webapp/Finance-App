@@ -176,7 +176,6 @@ const ImageContainer1 = styled(ImageContainer)`
   justify-content: flex-end;
   align-items: flex-end;
   flex-direction: column;
-  margin-bottom: 24px;
   .text {
     transform: translateY(-20%);
   }
@@ -226,6 +225,7 @@ const DeleteIcon = styled.div`
 `;
 
 interface BankaccountCardProps {
+  selected?: string;
   theme: string;
   size: string;
   details: any;
@@ -250,14 +250,20 @@ const CreditCard = ({
             handleOpen();
           }}
         >
-          <SvgDelete color="var(--header-text)" width={20} height={20} />
+          <SvgDelete
+            color={
+              theme == "dark" ? "var(--icon-select)" : "var(--header-text)"
+            }
+            width={20}
+            height={20}
+          />
         </DeleteIcon>
         <CircleContainer theme={theme}>
           <div className="dark1">
             <Circle color="dark" size="small" />
           </div>
           <div className="light1">
-            <Circle color="light" size="small" />
+            <Circle theme={theme} color="light" size="small" />
           </div>
         </CircleContainer>
         <ImageContainer1 theme={theme}>
@@ -295,10 +301,10 @@ const CreditCard = ({
     <Container theme={theme}>
       <CircleContainer>
         <div className="dark">
-          <Circle color="dark" size="verysmall" />
+          <Circle theme={theme} color="dark" size="verysmall" />
         </div>
         <div className="light">
-          <Circle color="light" size="verysmall" />
+          <Circle theme={theme} color="light" size="verysmall" />
         </div>
       </CircleContainer>
       <div className="price">xxx</div>

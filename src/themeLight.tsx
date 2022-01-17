@@ -18,10 +18,13 @@ const GlobalStyle: any = createGlobalStyle`
     --darkgreen:#7D8C0B;
     --green:#CCF148;
 
+    --icon-select:#343A40;
+
     --logout-icon:#343A40;
 
     --circle-primary:#16337E;
     --circle-secondary:#2196F3;
+    --circle-tertiary:#E5E5E5;
 
     --ink-icon:#343A40;
 
@@ -35,14 +38,14 @@ const GlobalStyle: any = createGlobalStyle`
     --login-button:#2196F3;
 
     --largecard-primary:#2196F3;
-    --largecard-secondary:#EFEFEF;
+    --largecard-secondary:#E5E5E5;
     --largecard-primary-text:#2196F3;
 
     --cc-primary:#2196F3;
-    --cc-secondary:#EFEFEF;
+    --cc-secondary:#E5E5E5;
     --cc-text:#EFEFEF;
 
-    --cc-small-account-text:#EFEFEF;
+    --cc-small-account-text:#E5E5E5;
     --cc-small-primary:#2196F3;
 
     --oswald:"Oswald";

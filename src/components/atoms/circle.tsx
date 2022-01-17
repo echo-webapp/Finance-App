@@ -2,9 +2,11 @@ import React from "react";
 import styled from "styled-components";
 
 interface CircleContainerProps {
+  selected?: string;
   color: string;
   size: string;
 }
+
 const CircleContainer = styled.div<CircleContainerProps>`
   width: ${(props) => {
     if (props.size == "large") {
@@ -33,7 +35,11 @@ const CircleContainer = styled.div<CircleContainerProps>`
       return "var(--circle-primary)";
     }
     if (props.color == "light") {
-      return "var(--circle-secondary)";
+      if (props.theme == "dark") {
+        return "var(--circle-tertiary)";
+      } else {
+        return "var(--circle-secondary)";
+      }
     }
     return "none";
   }};
@@ -41,12 +47,15 @@ const CircleContainer = styled.div<CircleContainerProps>`
 `;
 
 interface CircleProps {
+  theme?: string;
   color: string;
   size: string;
 }
 
-const Circle = ({ color, size }: CircleProps) => {
-  return <CircleContainer color={color} size={size}></CircleContainer>;
+const Circle = ({ theme, color, size }: CircleProps) => {
+  return (
+    <CircleContainer theme={theme} color={color} size={size}></CircleContainer>
+  );
 };
 
 export default Circle;

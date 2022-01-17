@@ -19,8 +19,11 @@ const GlobalStyle: any = createGlobalStyle`
     --notif:#FDA600;
     --card-grey:#C4C4C4;
 
-     --circle-primary:#7D8C0B;
-     --circle-secondary:#CCF148;
+    --circle-primary:#7D8C0B;
+    --circle-secondary:#CCF148;
+    --circle-tertiary:#CCF148;
+
+    --icon-select:#343A40;
 
     --subheader-color:#FFFFFF;
 
@@ -44,8 +47,6 @@ const GlobalStyle: any = createGlobalStyle`
 
     --cc-small-account-text:#CCF148;
     --cc-small-primary:#343A40;
-
-    
 
     --oswald:"Oswald";
     --font:"Poppins";
