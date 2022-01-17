@@ -8,7 +8,6 @@ import { create_CSV } from "../../api/create";
 import { useHistory } from "react-router";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { toast } from "react-toastify";
-import SvgArrowleft from "../../components/vectors/Arrowleft";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -44,7 +43,6 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-  /* width: 365px; */
   width: 30%;
   display: flex;
   flex-direction: column;

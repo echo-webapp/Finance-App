@@ -2,9 +2,10 @@ import React, { useState, useRef, useEffect, Fragment } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
-import { get_CSV } from "../../api/get";
+import { get_CSV, get_Dropdown } from "../../api/get";
 import { delete_CSV } from "../../api/delete";
 import { toast } from "react-toastify";
+import SelectComponent from "../../components/atoms/select";
 
 const SubContainer1 = styled.div`
   position: relative;
@@ -125,6 +126,11 @@ const CSVUploadButton = styled.div`
   }
 `;
 
+const ActiveOptions = [
+  { value: "Y", name: "Yes" },
+  { value: "N", name: "No" },
+];
+
 const EditBankDetails = ({
   open,
   setopen,
@@ -140,6 +146,7 @@ const EditBankDetails = ({
   const onButtonClick = () => {
     inputFile.current.click();
   };
+  const [bank_list, setbank_list] = useState([]);
   const [allcsv, setallcsv] = useState([]);
 
   function getBase641(file: any) {
@@ -203,6 +210,22 @@ const EditBankDetails = ({
   };
 
   useEffect(() => {
+    const getAllBanks = async () => {
+      const res = await get_Dropdown("BANK");
+      const arr: any = [];
+      res.forEach((lov: any) => {
+        const obj = {
+          value: lov.LOV_CODE,
+          name: lov.LOV_VAL,
+        };
+        arr.push(obj);
+      });
+      setbank_list(arr);
+    };
+    getAllBanks();
+  }, []);
+
+  useEffect(() => {
     const getAllcsv = async () => {
       const res = await get_CSV(sourceData.ID);
       console.log(res);
@@ -217,16 +240,15 @@ const EditBankDetails = ({
       <SubContainer11>
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 300 }}>
-            <Input
-              type="text"
+            <SelectComponent
               label="Active"
-              placeholder="Yes"
-              height={50}
+              options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSourceData}
               name="ACTIVE"
             />
           </div>
+
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
@@ -251,7 +273,16 @@ const EditBankDetails = ({
               name="sourceName"
             />
           </div>
-          <div style={{ marginTop: "15px", width: 300 }}>
+          <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
+            <SelectComponent
+              label="Bank Name"
+              value={sourceData.bankName}
+              setvalue={setSourceData}
+              options={bank_list}
+              name="bankName"
+            />
+          </div>
+          {/* <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Bank Name"
@@ -261,7 +292,7 @@ const EditBankDetails = ({
               setvalue={setSourceData}
               name="bankName"
             />
-          </div>
+          </div> */}
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"

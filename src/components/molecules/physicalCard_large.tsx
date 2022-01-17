@@ -192,7 +192,7 @@ const PhysicalCard_large = ({
 
       <DetailsContainer theme={theme}>
         <SubContainer>
-          <Info theme={theme}>Wade Warren</Info>
+          <Info theme={theme}>{details.sourceName}</Info>
           <Heading theme={theme}>Account holder name</Heading>
         </SubContainer>
         <SubContainer>

@@ -119,9 +119,8 @@ const Allsources = ({ match }: any) => {
   });
 
   const history: any = useHistory();
+
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const [allbankaccounts, setallbankaccounts]: any = useState([]);
   const [allcreditcards, setallcreditcards]: any = useState([]);
   const [current_cc, setcurrent_cc] = useState(0);
@@ -132,6 +131,7 @@ const Allsources = ({ match }: any) => {
   const [deleteId, setDeleteId] = useState("");
   const [no_source_flag, setno_source_flag] = useState(false);
   const [name, setName] = useState("Client Name");
+
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllSources(match.params.id);
@@ -147,26 +147,23 @@ const Allsources = ({ match }: any) => {
       });
       setallbankaccounts(bank);
       setallcreditcards(cc);
-      if (bank.length != 0) {
-        console.log("hello");
+      if (bank.length > 0) {
+        console.log("details", bank[0]);
         setsource_details(bank[0]);
       } else {
-        console.log("bye");
-        setselected_source("cc");
-        setsource_details(cc[0]);
-      }
-      if (bank.length == 0 && bank.length == 0) {
-        setno_source_flag(true);
+        if (cc.length > 0) {
+          console.log("details", bank[0]);
+          setselected_source("cc");
+          setsource_details(cc[0]);
+        } else {
+          setno_source_flag(true);
+        }
       }
       setFlag(false);
     };
 
     genResult();
   }, [open]);
-
-  useEffect(() => {
-    console.log("nosource", no_source_flag);
-  }, [no_source_flag]);
 
   useEffect(() => {
     if (history.location.state?.flag) {
@@ -176,6 +173,7 @@ const Allsources = ({ match }: any) => {
       history.replace({ ...history.location, state });
     }
   }, []);
+
   useEffect(() => {
     for (let i = 0; i < customerList.length; i++) {
       if (customerList[i].ID === match.params.id) {
@@ -184,6 +182,10 @@ const Allsources = ({ match }: any) => {
       }
     }
   }, []);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <>
       {flag ? (

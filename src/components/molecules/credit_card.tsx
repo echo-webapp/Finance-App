@@ -241,6 +241,7 @@ const CreditCard = ({
   handleOpen,
 }: BankaccountCardProps) => {
   if (size == "large") {
+    console.log("details large", details);
     return (
       <LargeContainer theme={theme}>
         <DeleteIcon
@@ -260,16 +261,17 @@ const CreditCard = ({
           </div>
         </CircleContainer>
         <ImageContainer1 theme={theme}>
-          <div className="image">
-            <SvgVisa
+          <div className={theme == "dark" ? "white image" : "black image"}>
+            {details.ccProvider}
+            {/* <SvgVisa
               color={theme == "dark" ? "white" : "black"}
               width={35}
               height={20}
-            />
+            /> */}
           </div>
           <div className="text">Credit Card</div>
         </ImageContainer1>
-        <div className="card-holder-name">Wade Warren</div>
+        <div className="card-holder-name">{details.sourceName}</div>
         <CardDetails theme={theme}>
           <div className="account-balance">
             <div className="balance">Balance</div>
@@ -302,16 +304,17 @@ const CreditCard = ({
       <div className="price">xxx</div>
       <div className="divider"></div>
       <div className="account-number">{details.cc4digits}</div>
-      <ImageContainer>
-        <div className="image">
-          <SvgVisa
-            color={theme == "dark" ? "white" : "black"}
-            width={35}
-            height={20}
-          />
+      <ImageContainer1 theme={theme}>
+        <div className={theme == "dark" ? "white image" : "black image"}>
+          {details.ccProvider}
+          {/* <SvgVisa
+              color={theme == "dark" ? "white" : "black"}
+              width={35}
+              height={20}
+            /> */}
         </div>
         <div className="text">Credit Card</div>
-      </ImageContainer>
+      </ImageContainer1>
     </Container>
   );
 };

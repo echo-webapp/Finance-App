@@ -7,7 +7,6 @@ import { create_CSV } from "../../api/create";
 import { useHistory } from "react-router";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { toast } from "react-toastify";
-import SvgArrowleft from "../../components/vectors/Arrowleft";
 import { updateSource } from "../../api/update";
 import Modal from "@mui/material/Modal";
 import DeleteObject from "../../components/molecules/deleteObjects";

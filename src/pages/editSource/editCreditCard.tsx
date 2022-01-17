@@ -1,11 +1,10 @@
-import { useState, useRef, useEffect, Fragment } from "react";
-import styled from "styled-components";
-import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { get_CSV } from "../../api/get";
-import { delete_CSV } from "../../api/delete";
-import { create_CSV } from "../../api/create";
+import styled from "styled-components";
+import { get_CSV, get_Dropdown } from "../../api/get";
+import Input from "../../components/atoms/input";
+import SelectComponent from "../../components/atoms/select";
 
 const SubContainer1 = styled.div`
   padding: 120px;
@@ -122,6 +121,13 @@ const CSVUploadButton = styled.div`
   }
 `;
 
+const dropdown_name_arr = ["CC", "CCTYPE"];
+
+const ActiveOptions = [
+  { value: "Y", name: "Yes" },
+  { value: "N", name: "No" },
+];
+
 const EditCreditCard = ({
   open,
   setopen,
@@ -135,6 +141,10 @@ const EditCreditCard = ({
 }: any) => {
   const inputFile: any = useRef(null);
   const [allcsv, setallcsv] = useState([]);
+  const [dropdown_options, setdropdown_options] = useState({
+    cc: [],
+    cctype: [],
+  });
 
   const onButtonClick = () => {
     inputFile.current.click();
@@ -209,23 +219,45 @@ const EditCreditCard = ({
     getAllcsv();
   }, [open]);
 
+  useEffect(() => {
+    const getDropdownValues = async () => {
+      dropdown_name_arr.forEach(async (name) => {
+        const res = await get_Dropdown(name);
+        const arr: any = [];
+        res.forEach((lov: any) => {
+          const obj = {
+            value: lov.LOV_CODE,
+            name: lov.LOV_VAL,
+          };
+          arr.push(obj);
+        });
+        console.log("dropdown", arr);
+        setdropdown_options((prev) => {
+          return {
+            ...prev,
+            [name.toLowerCase()]: arr,
+          };
+        });
+      });
+    };
+    getDropdownValues();
+  }, []);
+
   return (
     <SubContainer1>
       <SubHeader>Enter Credit Card Details</SubHeader>
       <SubContainer11>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
+          <div style={{ marginTop: "15px", width: 300 }}>
+            <SelectComponent
               label="Active"
-              placeholder="Yes"
-              height={50}
+              options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSouceData}
               name="ACTIVE"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Credit Card 4 Digits"
@@ -236,7 +268,7 @@ const EditCreditCard = ({
               name="cc4digits"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Source Credit Card Limit"
@@ -249,7 +281,7 @@ const EditCreditCard = ({
           </div>
         </SubContainerItem>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
               label="Source Name"
@@ -260,7 +292,25 @@ const EditCreditCard = ({
               name="sourceName"
             />
           </div>
-          <div style={{ marginTop: "15px" }}>
+          <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
+            <SelectComponent
+              label="Credit Card Type"
+              value={sourceData.ccType}
+              setvalue={setSouceData}
+              options={dropdown_options.cctype}
+              name="ccType"
+            />
+          </div>
+          <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
+            <SelectComponent
+              label="Credit Card Provider"
+              value={sourceData.ccProvider}
+              setvalue={setSouceData}
+              options={dropdown_options.cc}
+              name="ccProvider"
+            />
+          </div>
+          {/* <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
               label="Credit Card Type"
@@ -281,7 +331,7 @@ const EditCreditCard = ({
               setvalue={setSouceData}
               name="ccProvider"
             />
-          </div>
+          </div> */}
         </SubContainerItem>
       </SubContainer11>
       <SubContainer2>

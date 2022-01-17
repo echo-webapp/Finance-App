@@ -131,8 +131,8 @@ const CSVButtonContainer = styled.div`
 `;
 
 const ActiveOptions = [
-  { value: "Yes", name: "Yes" },
-  { value: "No", name: "No" },
+  { value: "Y", name: "Yes" },
+  { value: "N", name: "No" },
 ];
 
 const AddBankDetails = ({ sourceData, setSouceData }: any) => {

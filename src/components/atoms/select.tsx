@@ -5,6 +5,7 @@ import styled from "styled-components";
 const { Option } = Select;
 
 interface SelectProps {
+  name?: string;
   label?: string;
   value: any;
   setvalue: any;
@@ -82,7 +83,13 @@ const SelectLabel = styled.div`
   font-size: 18px;
 `;
 
-const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
+const SelectComponent = ({
+  name,
+  label,
+  value,
+  setvalue,
+  options,
+}: SelectProps) => {
   if (!label) {
     return (
       <SelectContainer1>
@@ -90,7 +97,18 @@ const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
           style={{ width: "100%" }}
           value={value}
           placeholder="In"
-          onChange={(e) => setvalue(e)}
+          onChange={(e) => {
+            if (name) {
+              setvalue((prev: any) => {
+                return {
+                  ...prev,
+                  [name]: e,
+                };
+              });
+            } else {
+              setvalue(e);
+            }
+          }}
         >
           {options.map((opt: any) => {
             return (
@@ -111,7 +129,19 @@ const SelectComponent = ({ label, value, setvalue, options }: SelectProps) => {
         style={{ width: "100%" }}
         value={value}
         placeholder="Select"
-        onChange={(e) => setvalue(e)}
+        onChange={(e) => {
+          if (name) {
+            console.log("selet", e);
+            setvalue((prev: any) => {
+              return {
+                ...prev,
+                [name]: e,
+              };
+            });
+          } else {
+            setvalue(e);
+          }
+        }}
       >
         {options.map((opt: any) => {
           return (
