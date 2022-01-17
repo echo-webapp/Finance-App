@@ -60,7 +60,7 @@ const DeleteObject = ({ id, parid, text, type, handleClose }: any) => {
     }
     if (type == "csv") {
       const res = await delete_CSV(id, parid);
-      toast.success("CSV Deleted Successfully");
+      toast.success("File Deleted Successfully");
       handleClose();
     }
   };

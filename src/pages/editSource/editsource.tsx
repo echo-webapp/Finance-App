@@ -219,7 +219,7 @@ const EditSource = ({ match }: any) => {
             <DeleteObject
               id={deleteId}
               parid={match.params.id}
-              text={"Delete this CSV?"}
+              text={"Delete this File?"}
               type={"csv"}
               handleClose={() => setopen(false)}
             />
