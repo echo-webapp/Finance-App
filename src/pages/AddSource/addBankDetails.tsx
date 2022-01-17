@@ -130,6 +130,11 @@ const CSVButtonContainer = styled.div`
   align-items: center;
 `;
 
+const ActiveOptions = [
+  { value: "Yes", name: "Yes" },
+  { value: "No", name: "No" },
+];
+
 const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
@@ -246,12 +251,10 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
       <SubHeader>Enter Account Details</SubHeader>
       <SubContainer11>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
+          <div style={{ marginTop: "15px", width: 345 }}>
+            <SelectComponent
               label="Active"
-              placeholder="Yes"
-              height={50}
+              options={ActiveOptions}
               value={active}
               setvalue={setActive}
             />

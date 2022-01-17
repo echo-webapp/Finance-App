@@ -121,7 +121,13 @@ const CSVButtonContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
 `;
+
 const dropdown_name_arr = ["CC", "CCTYPE"];
+
+const ActiveOptions = [
+  { value: "Yes", name: "Yes" },
+  { value: "No", name: "No" },
+];
 
 const AddCreditCard = ({ sourceData, setSouceData }: any) => {
   const inputFile: any = useRef(null);
@@ -253,12 +259,10 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
       <SubHeader>Enter Credit Card Details</SubHeader>
       <SubContainer11>
         <SubContainerItem>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
+          <div style={{ marginTop: "15px", width: 345 }}>
+            <SelectComponent
               label="Active"
-              placeholder="Yes"
-              height={50}
+              options={ActiveOptions}
               value={active}
               setvalue={setActive}
             />

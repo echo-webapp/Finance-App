@@ -19,7 +19,8 @@ const SelectContainer = styled.div<SelectContainerProps>`
     if (
       props.label == "Bank Name" ||
       props.label == "Credit Card Type" ||
-      props.label == "Credit Card Provider"
+      props.label == "Credit Card Provider" ||
+      props.label == "Active"
     ) {
       return "100%";
     }
@@ -31,7 +32,8 @@ const SelectContainer = styled.div<SelectContainerProps>`
       if (
         props.label == "Bank Name" ||
         props.label == "Credit Card Type" ||
-        props.label == "Credit Card Provider"
+        props.label == "Credit Card Provider" ||
+        props.label == "Active"
       ) {
         return "100%";
       }
@@ -44,7 +46,8 @@ const SelectContainer = styled.div<SelectContainerProps>`
       if (
         props.label == "Bank Name" ||
         props.label == "Credit Card Type" ||
-        props.label == "Credit Card Provider"
+        props.label == "Credit Card Provider" ||
+        props.label == "Active"
       ) {
         return "100%";
       }
@@ -57,7 +60,8 @@ const SelectContainer = styled.div<SelectContainerProps>`
       if (
         props.label == "Bank Name" ||
         props.label == "Credit Card Type" ||
-        props.label == "Credit Card Provider"
+        props.label == "Credit Card Provider" ||
+        props.label == "Active"
       ) {
         return "100%";
       }
