@@ -57,7 +57,16 @@ const SubContainer = styled.div`
     width: 400px;
   }
 `;
-
+const MainContainerTemp = styled.div`
+  height: 500px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 150px;
+`;
 const Yield_option = [
   { value: "1", name: "1" },
   { value: "2", name: "2" },
@@ -76,10 +85,10 @@ const ChartType1 = ({ clientId }: any) => {
     return state.theme;
   });
 
-  const [chartData, setChartData] = useState(null);
+  const [chartData, setChartData]: any = useState(null);
   const [yieldno, setyieldno] = useState("5");
   const [data, setData]: any = useState(null);
-
+  const [flag, setFlag] = useState(false);
   const up = (ctx: any, value: any) => {
     if (ctx.p0.parsed.y > 0) {
       return value;
@@ -98,6 +107,12 @@ const ChartType1 = ({ clientId }: any) => {
     const getData = async () => {
       setChartData(null);
       const data1 = await get_Chart2Data(clientId, yieldno);
+      if (data1.length === 0) {
+        console.log("dfjhgbjkuigbh");
+        setFlag(true);
+        setChartData([]);
+        return;
+      }
       console.log("data1", data1);
       const labels: any = [];
       const values: any = [];
@@ -161,15 +176,21 @@ const ChartType1 = ({ clientId }: any) => {
         </div>
       </SubHeaderContainer>
       {chartData ? (
-        <SubContainer>
-          <div className="line-chart">
-            <Line options={options} data={data} />
-          </div>
-          <ChartDetailsCard1
-            theme={`${theme ? "light" : "dark"}`}
-            chartData={chartData}
-          />
-        </SubContainer>
+        flag ? (
+          <MainContainerTemp>
+            <h1>No Data Available</h1>
+          </MainContainerTemp>
+        ) : (
+          <SubContainer>
+            <div className="line-chart">
+              <Line options={options} data={data} />
+            </div>
+            <ChartDetailsCard1
+              theme={`${theme ? "light" : "dark"}`}
+              chartData={chartData}
+            />
+          </SubContainer>
+        )
       ) : (
         <SubContainer11>
           <CircularProgress />

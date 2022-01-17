@@ -59,6 +59,16 @@ const MainContainer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+const MainContainerTemp = styled.div`
+  height: 500px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 150px;
+`;
 const MainContainer1 = styled.div`
   height: 400px;
   width: 57%;
@@ -70,6 +80,7 @@ const ChartType3 = ({ clientId }: any) => {
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [chartData, setChartData]: any = useState([]);
+  const [flag, setFlag] = useState(false);
   const handleChange = (event: any) => {
     setOption(event.target.value);
   };
@@ -78,6 +89,7 @@ const ChartType3 = ({ clientId }: any) => {
     const getData = async () => {
       setLoading(true);
       const data = await get_Chart3Data(clientId, type, option);
+      if (data.length === 0) setFlag(true);
       setChartData(data);
       setLoading(false);
     };
@@ -162,19 +174,25 @@ const ChartType3 = ({ clientId }: any) => {
               </FormControl>
             </div>
           </SubHeader1>
-          <MainContainer>
-            <div
-              style={{
-                height: "500px",
-                width: "350px",
-              }}
-            >
-              <PieChart chartData={chartData} />
-            </div>
-            <MainContainer1>
-              <ChartGrid rows={rows} columns={columns} />
-            </MainContainer1>
-          </MainContainer>
+          {flag ? (
+            <MainContainerTemp>
+              <h1>No Data Available</h1>
+            </MainContainerTemp>
+          ) : (
+            <MainContainer>
+              <div
+                style={{
+                  height: "500px",
+                  width: "350px",
+                }}
+              >
+                <PieChart chartData={chartData} />
+              </div>
+              <MainContainer1>
+                <ChartGrid rows={rows} columns={columns} />
+              </MainContainer1>
+            </MainContainer>
+          )}
         </>
       )}
     </SubContainer1>

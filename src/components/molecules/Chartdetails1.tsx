@@ -215,7 +215,7 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
           </HeadingContainer>
         </SubContainer>
         <SubContainer>
-          <Info theme={theme}>{endingbalance?.toFixed(2)}</Info>
+          <Info theme={theme}>{parseFloat(endingbalance)?.toFixed(2)}</Info>
           <HeadingContainer>
             <Heading theme={theme}>Ending Balance</Heading>
             <Heading11>{neg ? <Heading3 /> : <Heading2 />}</Heading11>
@@ -232,7 +232,9 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
       </DetailsContainer>
       <BalanceContainer theme={theme}>
         <div className="balance-amount">
-          {chartData.length > 0 ? chartData[0].SPY.toFixed(2) : null}
+          {chartData.length > 0
+            ? parseFloat(chartData[0].SPY).toFixed(2)
+            : null}
         </div>
         <div className="balance-text">Savings per year</div>
       </BalanceContainer>

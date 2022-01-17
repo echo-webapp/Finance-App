@@ -45,7 +45,16 @@ export const SubContainer11 = styled.div`
   justify-content: center;
   padding: "40px";
 `;
-
+const MainContainerTemp = styled.div`
+  height: 500px;
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 150px;
+`;
 const ChartType1 = ({ clientId }: any) => {
   const theme: any = useSelector((state: RootState) => {
     return state.theme;
@@ -53,10 +62,15 @@ const ChartType1 = ({ clientId }: any) => {
   const [chartData, setChartData] = useState(null);
   const [data, setData]: any = useState(null);
   const [loading, setLoading] = useState(false);
+  const [flag, setFlag] = useState(false);
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
       const data1 = await get_Chart1Data(clientId);
+      if (data1.SPY === "-1") {
+        setFlag(true);
+      }
+      setFlag(true);
       let data = {};
       if (data1.SPM > 0) {
         data = {
@@ -107,15 +121,21 @@ const ChartType1 = ({ clientId }: any) => {
     <SubContainer1>
       <SubHeader>Average monthy income v/s outcome</SubHeader>
       {chartData ? (
-        <SubContainer>
-          <div style={{ height: "400px", width: "250px", marginTop: "25px" }}>
-            <Bar data={data} height={400} options={options} />
-          </div>
-          <ChartDetailsCard
-            theme={`${theme ? "light" : "dark"}`}
-            chartData={chartData}
-          />
-        </SubContainer>
+        flag ? (
+          <MainContainerTemp>
+            <h1>No Data Available</h1>
+          </MainContainerTemp>
+        ) : (
+          <SubContainer>
+            <div style={{ height: "400px", width: "250px", marginTop: "25px" }}>
+              <Bar data={data} height={400} options={options} />
+            </div>
+            <ChartDetailsCard
+              theme={`${theme ? "light" : "dark"}`}
+              chartData={chartData}
+            />
+          </SubContainer>
+        )
       ) : (
         <SubContainer11>
           <CircularProgress />
