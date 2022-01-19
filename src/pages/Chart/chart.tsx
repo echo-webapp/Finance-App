@@ -6,7 +6,8 @@ import ChartType2 from "./ChartType2";
 import ChartType3 from "./ChartType3";
 import ChartType4 from "./ChartType4";
 import { useHistory } from "react-router";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -102,15 +103,18 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
 `;
 
 const Chart = ({ client_id, setstate }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const history = useHistory();
   const [selected, setSelected]: any = useState("type1");
   return (
     <>
       <AddClientContainer>
         <Header
-          heading="Client Statistics"
+          heading={lang ? "סטטיסטיקת לקוחות" : "Client Statistics"}
           subheading="@WW24"
-          buttonText="Unified transactions"
+          buttonText={lang ? "ריכוז פעולות" : "Unified transactions"}
           buttonHandler={() => {
             setstate((prev: any) => !prev);
           }}
@@ -126,7 +130,9 @@ const Chart = ({ client_id, setstate }: any) => {
             <ChartType4 />
           )}
           <SubContainer>
-            <SubContainerText>Charts Type</SubContainerText>
+            <SubContainerText>
+              {lang ? "סוג תרשימים" : "Charts Type"}
+            </SubContainerText>
             <div className="buttons">
               <SubContainerButtonText
                 name="type1"
@@ -135,7 +141,7 @@ const Chart = ({ client_id, setstate }: any) => {
                   setSelected("type1");
                 }}
               >
-                Income Expense result
+                {lang ? "הכנסה תוצאת הוצאות" : "Income Expense result"}
               </SubContainerButtonText>
               <SubContainerButtonText
                 name="type2"
@@ -144,7 +150,7 @@ const Chart = ({ client_id, setstate }: any) => {
                   setSelected("type2");
                 }}
               >
-                Long Term Capital
+                {lang ? "הון לטווח ארוך" : "Long Term Capital"}
               </SubContainerButtonText>
               <SubContainerButtonText
                 name="type3"
@@ -153,7 +159,7 @@ const Chart = ({ client_id, setstate }: any) => {
                   setSelected("type3");
                 }}
               >
-                Income Expense pie
+                {lang ? "עוגת הכנסות והוצאות" : " Income Expense pie"}
               </SubContainerButtonText>
               {/* <SubContainerButtonText
                 name="type4"

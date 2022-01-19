@@ -10,6 +10,8 @@ import styled from "styled-components";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import Header from "../../components/molecules/header";
 import Chart from "../Chart/chart";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -67,6 +69,9 @@ function CustomToolbar() {
 }
 
 const AllTransaction = ({ match }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const history: any = useHistory();
   const [allTransactions, setallTransactions] = useState([]);
   const [rows, setrows] = useState([]);
@@ -131,9 +136,9 @@ const AllTransaction = ({ match }: any) => {
           <AddClientContainer>
             {allTransactions.length === 0 ? (
               <Header
-                heading="Unified transactions"
+                heading={lang ? "ריכוז פעולות" : "Unified transactions"}
                 subheading="@WW24"
-                buttonText="View Charts"
+                buttonText={lang ? "צפיה בגראפים" : "View Charts"}
                 buttonHandler={() => {
                   setstate((prev) => !prev);
                 }}
@@ -141,9 +146,9 @@ const AllTransaction = ({ match }: any) => {
               />
             ) : (
               <Header
-                heading="Unified transactions"
+                heading={lang ? "ריכוז פעולות" : "Unified transactions"}
                 subheading="@WW24"
-                buttonText="View Charts"
+                buttonText={lang ? "צפיה בגראפים" : "View Charts"}
                 buttonHandler={() => {
                   setstate((prev) => !prev);
                 }}
@@ -175,7 +180,9 @@ const AllTransaction = ({ match }: any) => {
                   />
                 ) : (
                   <NoTransactions>
-                    <div className="text">No transactions available</div>
+                    <div className="text">
+                      {lang ? "אין עסקאות זמינות" : "No transactions available"}
+                    </div>
                   </NoTransactions>
                 )}
               </div>
