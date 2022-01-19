@@ -17,6 +17,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 interface ClientDataGridProps {
   source_id: any;
 }
@@ -86,6 +88,7 @@ const InOut_Options = [
 const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
 
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
+  const lang = useSelector((state: RootState) => state.lang);
   const [rows, setrows] = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
@@ -397,7 +400,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const res = await create_Transaction(mod_data, source_id);
     console.log(mod_data);
     setflag((prev) => !prev);
-    toast.success("New Transaction Created");
+    toast.success(lang ? "נוצרה עסקה חדשה" : "New Transaction Created");
   };
 
   const handleCheckboxChange = async (
@@ -464,9 +467,15 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         const res = await delete_Transaction(id, source_id);
         setflag((prev) => !prev);
       });
-      toast.success("Selected Transaction Deleted");
+      toast.success(
+        lang ? "העסקה שנבחרה נמחקה" : "Selected Transaction Deleted"
+      );
     } else {
-      toast.warning("Please Select the Transaction to Delete");
+      toast.warning(
+        lang
+          ? "אנא בחר את העסקה למחיקה"
+          : "Please Select the Transaction to Delete"
+      );
     }
   };
 

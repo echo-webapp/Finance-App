@@ -254,7 +254,6 @@ const EditCreditCard = ({
   return (
     <SubContainer1>
       <SubHeader>
-        {" "}
         {lang ? "הזן את פרטי כרטיס האשראי" : "Enter Credit Card Details"}
       </SubHeader>
       <SubContainer11>

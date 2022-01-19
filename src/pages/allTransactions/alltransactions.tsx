@@ -28,13 +28,13 @@ const NoTransactions = styled.div`
   align-items: center;
   height: 100%;
   border-radius: 93px;
-  border: 2px solid white;
-  background-color: var(--black);
+  border: 2px solid var(--logout-icon);
+  background-color: var(--background);
   .text {
     font-weight: 500;
     font-size: 35.102px;
     text-align: center;
-    color: #ffffff;
+    color: var(--grid-text);
   }
 `;
 const DataGrid1 = styled.div`

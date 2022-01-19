@@ -81,8 +81,8 @@ const Yield_option = [
 ];
 
 const ChartType1 = ({ clientId }: any) => {
-  const theme: any = useSelector((state: RootState) => {
-    return state.theme;
+  const [theme, lang]: any = useSelector((state: RootState) => {
+    return [state.theme, state.lang];
   });
 
   const [chartData, setChartData]: any = useState(null);
@@ -108,12 +108,10 @@ const ChartType1 = ({ clientId }: any) => {
       setChartData(null);
       const data1 = await get_Chart2Data(clientId, yieldno);
       if (data1.length === 0) {
-        console.log("dfjhgbjkuigbh");
         setFlag(true);
         setChartData([]);
         return;
       }
-      console.log("data1", data1);
       const labels: any = [];
       const values: any = [];
       data1.map((obj: any) => {
@@ -124,7 +122,7 @@ const ChartType1 = ({ clientId }: any) => {
         labels: labels,
         datasets: [
           {
-            label: "NetWorth",
+            label: lang ? "שווי נקי" : "NetWorth",
             data: values,
             fill: true,
             segment: {
@@ -138,7 +136,6 @@ const ChartType1 = ({ clientId }: any) => {
           },
         ],
       };
-      console.log("data", data);
       setData(data);
       setChartData(data1);
     };
@@ -163,7 +160,7 @@ const ChartType1 = ({ clientId }: any) => {
   return (
     <SubContainer1>
       <SubHeaderContainer>
-        <SubHeader>Long Term Capital</SubHeader>
+        <SubHeader>{lang ? "יתרה " : "Long Term Capital"}</SubHeader>
         <div>
           <div className="yield-select">
             <SelectComponent
@@ -172,13 +169,13 @@ const ChartType1 = ({ clientId }: any) => {
               setvalue={setyieldno}
             />
           </div>
-          <div className="estimated">Estimated Yield</div>
+          <div className="estimated">{lang ? "תשואה" : "Estimated Yield"}</div>
         </div>
       </SubHeaderContainer>
       {chartData ? (
         flag ? (
           <MainContainerTemp>
-            <h1>No Data Available</h1>
+            <h1>{lang ? "אין נתונים זמינים" : "No Data Available"}</h1>
           </MainContainerTemp>
         ) : (
           <SubContainer>

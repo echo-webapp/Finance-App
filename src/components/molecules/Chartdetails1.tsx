@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "../../store/store";
 import Circle from "../atoms/circle";
 import SvgDelete from "../vectors/Delete";
 
@@ -176,10 +178,21 @@ export const CircleContainer = styled.div`
 const ChartDetailsCard1 = ({ theme, chartData }: any) => {
   const [neg, setNeg] = useState(false);
   const [endingbalance, setendingbalance]: any = useState(null);
-  console.log("chartdata", chartData);
+  const lang = useSelector((state: RootState) => state.lang);
+  const [nomoney_age, setnomoney_age] = useState(-1);
 
   useEffect(() => {
     const all_networth: any = chartData.map((val: any) => val.NetWorth);
+    const all_data: any = chartData.map((val: any) => [
+      val.NetWorth,
+      val.ForAge,
+    ]);
+    all_data.sort();
+    all_data.map((val: any) => {
+      if (val[0] == 0) {
+        setnomoney_age(val[1]);
+      }
+    });
     if (all_networth.length > 0) {
       setendingbalance(
         Math.max(
@@ -208,7 +221,9 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
             {chartData.length > 0 ? chartData[0].StartNetWorth : null}
           </Info>
           <HeadingContainer>
-            <Heading theme={theme}>Beginning balance</Heading>
+            <Heading theme={theme}>
+              {lang ? "יתרה התחלתית" : "Beginning balance"}
+            </Heading>
             <Heading11>
               <Heading1 />
             </Heading11>
@@ -217,15 +232,17 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
         <SubContainer>
           <Info theme={theme}>{parseFloat(endingbalance)?.toFixed(2)}</Info>
           <HeadingContainer>
-            <Heading theme={theme}>Ending Balance</Heading>
+            <Heading theme={theme}>
+              {lang ? "מאזן סיום" : "Ending Balance"}
+            </Heading>
             <Heading11>{neg ? <Heading3 /> : <Heading2 />}</Heading11>
           </HeadingContainer>
         </SubContainer>
         <SubContainer>
-          <Info theme={theme}>{51}</Info>
+          <Info theme={theme}>{nomoney_age}</Info>
           <HeadingContainer>
             <Heading className="no-money" theme={theme}>
-              No money age
+              {lang ? "גיל בו הכסף אוזל" : "No money age"}
             </Heading>
           </HeadingContainer>
         </SubContainer>
@@ -236,7 +253,9 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
             ? parseFloat(chartData[0].SPY).toFixed(2)
             : null}
         </div>
-        <div className="balance-text">Savings per year</div>
+        <div className="balance-text">
+          {lang ? "חסכון שנתי" : "Savings per year"}
+        </div>
       </BalanceContainer>
     </Container>
   );

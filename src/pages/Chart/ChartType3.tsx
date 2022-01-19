@@ -9,6 +9,8 @@ import PieChart from "./PieChart";
 import { DataGrid } from "@mui/x-data-grid";
 import ChartGrid from "../../components/molecules/ChartGrid";
 import SelectComponent from "../../components/atoms/select";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const SubContainer1 = styled.div`
   padding: 20px;
   /* padding-top: 50px; */
@@ -79,12 +81,20 @@ const MainContainer1 = styled.div`
   width: 57%;
 `;
 
-const Options = [
-  { value: "Type", name: "By Category" },
-  { value: "Subtype", name: "By Category and Sub Category" },
-];
-
 const ChartType3 = ({ clientId }: any) => {
+  const lang = useSelector((state: RootState) => state.lang);
+
+  const [Options, setOptions] = useState([
+    {
+      value: lang ? "סוּג" : "Type",
+      name: lang ? "לפי קטגוריה" : "By Category",
+    },
+    {
+      value: lang ? "" : "Subtype",
+      name: lang ? "לפי קטגוריות ותת קטגוריות" : "By Category and Sub Category",
+    },
+  ]);
+
   const [type, setType] = useState("In");
   const [option, setOption] = useState("Type");
   const [loading, setLoading] = useState(true);
@@ -110,18 +120,18 @@ const ChartType3 = ({ clientId }: any) => {
   useEffect(() => {
     const columns_arr: any = [];
     columns_arr.push({
-      field: "Category",
-      headerName: "Category",
+      field: lang ? "קטגוריה" : "Category",
+      headerName: lang ? "קטגוריה" : "Category",
       width: 160,
     });
     columns_arr.push({
-      field: "Amount",
-      headerName: "Amount",
+      field: lang ? "כמות" : "Amount",
+      headerName: lang ? "כמות" : "Amount",
       width: 150,
     });
     columns_arr.push({
-      field: "Expenses",
-      headerName: "% Expenses",
+      field: lang ? "הוצאות" : "Expenses",
+      headerName: lang ? "הוצאות" : "% Expenses",
       width: 150,
     });
     setcolumns(columns_arr);
@@ -150,9 +160,11 @@ const ChartType3 = ({ clientId }: any) => {
               }}
             >
               {type === "In" ? (
-                <div className="chart-selected">Income</div>
+                <div className="chart-selected">
+                  {lang ? "הכנסה" : "Income"}
+                </div>
               ) : (
-                <div>Income</div>
+                <div>{lang ? "" : "Income"}</div>
               )}
             </SubHeaderItem>
             <SubHeaderItem
@@ -161,9 +173,11 @@ const ChartType3 = ({ clientId }: any) => {
               }}
             >
               {type === "Out" ? (
-                <div className="chart-selected">Expense</div>
+                <div className="chart-selected">
+                  {lang ? "הוצאה" : "Expense"}
+                </div>
               ) : (
-                <div>Expense</div>
+                <div>{lang ? "הוצאה" : "Expense"}</div>
               )}
             </SubHeaderItem>
           </SubHeader>
@@ -178,7 +192,7 @@ const ChartType3 = ({ clientId }: any) => {
           </SubHeader1>
           {flag ? (
             <MainContainerTemp>
-              <h1>No Data Available</h1>
+              <h1>{lang ? "אין נתונים זמינים" : "No Data Available"}</h1>
             </MainContainerTemp>
           ) : (
             <MainContainer>

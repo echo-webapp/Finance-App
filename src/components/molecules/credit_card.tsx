@@ -5,6 +5,7 @@ import SvgCopy from "../vectors/Copy";
 import SvgDelete from "../vectors/Delete";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { useState, useEffect } from "react";
 interface ContainerProps {
   theme: string;
 }
@@ -200,6 +201,12 @@ const CardDetails = styled.div`
     }
   }
 
+  .account-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
   .number-and-icon {
     display: flex;
     gap: 12px;
@@ -244,8 +251,19 @@ const CreditCard = ({
   const lang: any = useSelector((state: RootState) => {
     return state.lang;
   });
+  const [date, setdate] = useState(null);
+
+  useEffect(() => {
+    const arr = details.CREATED.split("-");
+    if (arr.length > 2) {
+      const arr1 = arr[2].split(" ");
+      const date: any = `${arr[1]}/${arr1[0]}`;
+      console.log("date", date);
+      setdate(date);
+    }
+  }, []);
+
   if (size == "large") {
-    console.log("details large", details);
     return (
       <LargeContainer theme={theme}>
         <DeleteIcon
@@ -273,11 +291,6 @@ const CreditCard = ({
         <ImageContainer1 theme={theme}>
           <div className={theme == "dark" ? "white image" : "black image"}>
             {details.ccProvider}
-            {/* <SvgVisa
-              color={theme == "dark" ? "white" : "black"}
-              width={35}
-              height={20}
-            /> */}
           </div>
           <div className="text">{lang ? "כרטיס אשראי" : "Credit Card"}</div>
         </ImageContainer1>
@@ -287,14 +300,14 @@ const CreditCard = ({
             <div className="balance">{lang ? `יתרה בש"ח` : "Balance"}</div>
             <div className="number">xxx</div>
           </div>
-          <div className="account-number-with-date">
+          <div className="account-details">
             <div className="number-and-icon">
               <div className="copy-icon">
                 <SvgCopy color={theme == "dark" ? "white" : "black"} />
               </div>
               <div className="account-number">{details.cc4digits}</div>
             </div>
-            <div className="date">06/25</div>
+            <div className="date">{date}</div>
           </div>
         </CardDetails>
       </LargeContainer>
@@ -317,11 +330,6 @@ const CreditCard = ({
       <ImageContainer1 theme={theme}>
         <div className={theme == "dark" ? "white image" : "black image"}>
           {details.ccProvider}
-          {/* <SvgVisa
-              color={theme == "dark" ? "white" : "black"}
-              width={35}
-              height={20}
-            /> */}
         </div>
         <div className="text">{lang ? "כרטיס אשראי" : "Credit Card"}</div>
       </ImageContainer1>

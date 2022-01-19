@@ -56,8 +56,8 @@ const MainContainerTemp = styled.div`
   padding-top: 150px;
 `;
 const ChartType1 = ({ clientId }: any) => {
-  const theme: any = useSelector((state: RootState) => {
-    return state.theme;
+  const [theme, lang]: any = useSelector((state: RootState) => {
+    return [state.theme, state.lang];
   });
   const [chartData, setChartData] = useState(null);
   const [data, setData]: any = useState(null);
@@ -76,7 +76,7 @@ const ChartType1 = ({ clientId }: any) => {
           labels: ["In", "Out"],
           datasets: [
             {
-              label: ["Value"],
+              label: lang ? "ערך" : "Value",
               backgroundColor: ["#2196f3", "#ccf148"],
               hoverBackgroundColor: ["#1B26C9", "#7D8C0B"],
               data: [data1.In, data1.Out],
@@ -88,7 +88,7 @@ const ChartType1 = ({ clientId }: any) => {
           labels: ["In", "Out"],
           datasets: [
             {
-              label: ["Value"],
+              label: "Value",
               backgroundColor: ["#2196f3", "#D11515"],
               hoverBackgroundColor: ["#1B26C9", "#D14E4E"],
               data: [data1.In, data1.Out],
@@ -118,11 +118,15 @@ const ChartType1 = ({ clientId }: any) => {
   };
   return (
     <SubContainer1>
-      <SubHeader>Average monthy income v/s outcome</SubHeader>
+      <SubHeader>
+        {lang
+          ? "הכנסה ממוצעת מול הוצאה ממוצעת"
+          : "Average monthy income v/s outcome"}
+      </SubHeader>
       {chartData ? (
         flag ? (
           <MainContainerTemp>
-            <h1>No Data Available</h1>
+            <h1>{lang ? "אין נתונים זמינים" : "No Data Available"}</h1>
           </MainContainerTemp>
         ) : (
           <SubContainer>

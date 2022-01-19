@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { RootState } from "../../store/store";
 import Circle from "../atoms/circle";
 import SvgDelete from "../vectors/Delete";
 
@@ -170,6 +172,7 @@ export const CircleContainer = styled.div`
 
 const ChartDetailsCard = ({ theme, chartData }: any) => {
   const [neg, setNeg] = useState(false);
+  const lang = useSelector((state: RootState) => state.lang);
   useEffect(() => {
     if (chartData.SPM < 0) {
       setNeg(true);
@@ -189,7 +192,9 @@ const ChartDetailsCard = ({ theme, chartData }: any) => {
         <SubContainer>
           <Info theme={theme}>{chartData.In.toFixed(2)}</Info>
           <HeadingContainer>
-            <Heading theme={theme}>Avg monthly income</Heading>
+            <Heading theme={theme}>
+              {lang ? "הכנסה חודשית ממוצעת" : "Avg monthly income"}
+            </Heading>
             <Heading11>
               <Heading1 />
             </Heading11>
@@ -198,20 +203,24 @@ const ChartDetailsCard = ({ theme, chartData }: any) => {
         <SubContainer>
           <Info theme={theme}>{chartData.Out.toFixed(2)}</Info>
           <HeadingContainer>
-            <Heading theme={theme}>Avg monthy outcome</Heading>
+            <Heading theme={theme}>
+              {lang ? "ממוצע הוצאות חודשי" : "Avg monthy outcome"}
+            </Heading>
             <Heading11>{neg ? <Heading3 /> : <Heading2 />}</Heading11>
           </HeadingContainer>
         </SubContainer>
         <SubContainer1>
           <Info theme={theme}>{chartData.SPM.toFixed(2)}</Info>
           <Heading style={{ marginRight: "15px" }} theme={theme}>
-            Savings per month
+            {lang ? "חסכון חודשי" : "Savings per month"}
           </Heading>
         </SubContainer1>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
         <div className="balance-amount">{chartData.SPY.toFixed(2)}</div>
-        <div className="balance-text">Savings per year</div>
+        <div className="balance-text">
+          {lang ? "חסכון שנתי" : "Savings per year"}
+        </div>
       </BalanceContainer>
     </Container>
   );
