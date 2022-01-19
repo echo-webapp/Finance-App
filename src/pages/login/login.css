@@ -37,8 +37,22 @@
 }
 
 .login-Header {
-  margin-top: 90px;
+  position: relative;
+  padding-top: 90px;
 }
+
+.logo {
+  position: absolute;
+  top: 0;
+  padding: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  z-index: -1;
+}
+
 .login-text-1 {
   width: 100%;
   display: flex;

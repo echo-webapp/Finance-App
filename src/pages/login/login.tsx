@@ -13,7 +13,9 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import ThemeSwitch from "../../components/atoms/themeSwitch";
 import styled from "styled-components";
-import AppLogo from "../../components/vectors/NewApplogo";
+import AppLogo from "../../components/vectors/LoginAppLogo";
+import NewAppLogo from "../../components/vectors/LoginNewAppLogo";
+
 const Theme = styled.div`
   position: absolute;
   top: 5px;
@@ -21,7 +23,9 @@ const Theme = styled.div`
 `;
 
 const Login: any = () => {
+  const theme = useSelector((state: RootState) => state.theme);
   const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(false);
@@ -111,6 +115,7 @@ const Login: any = () => {
           </div>
         </div>
         <div className="login-Header">
+          <div className="logo">{!theme ? <AppLogo /> : <NewAppLogo />}</div>
           <div className="login-text-1">{lang ? "כניסה" : "Login"}</div>
           <div className="login-text-2">
             {lang ? "ברוכים הבאים" : "Welcome back !"}

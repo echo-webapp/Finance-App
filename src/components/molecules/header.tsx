@@ -18,6 +18,7 @@ interface HeaderProps {
 
 const HeaderContainer = styled.div`
   width: 100%;
+  position: relative;
   max-width: 1500px;
   height: 152px;
   display: flex;
@@ -39,6 +40,7 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderContainer1 = styled(HeaderContainer)`
+  position: relative;
   padding: 35px 60px;
 `;
 
@@ -50,6 +52,10 @@ const Flex = styled.div`
 `;
 
 const LogoContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   &:hover {
     cursor: pointer;
   }
