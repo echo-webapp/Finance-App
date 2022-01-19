@@ -8,7 +8,8 @@ import { create_CSV } from "../../api/create";
 import { useHistory } from "react-router";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { toast } from "react-toastify";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -112,6 +113,9 @@ const Initial_State: any = {
 
 const AddSource = ({ match }: any) => {
   const history = useHistory();
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const [sourceData, setSouceData]: any = useState(Initial_State);
   const [selected, setSelected]: any = useState("bank");
   const [flag, setFlag] = useState(false);
@@ -135,8 +139,11 @@ const AddSource = ({ match }: any) => {
         res1.ACTIVE == "" ||
         res1.bankAccountNumber == ""
       ) {
-        console.log("inside1");
-        toast.warning("Please Fill All Required Field");
+        if (lang) {
+          toast.warning("אנא מלא את כל השדות הנדרשים");
+        } else {
+          toast.warning("Please Fill All Required Field");
+        }
       } else {
         setFlag(true);
         delete res1.sourceFileName;
@@ -151,7 +158,7 @@ const AddSource = ({ match }: any) => {
           history.push({
             pathname: `/source/${match.params.id}`,
             state: {
-              flag: "New Bank Source Added",
+              flag: `${lang ? "מקור בנק חדש נוסף" : "New Bank Source Added"}`,
             },
           });
         }
@@ -166,8 +173,11 @@ const AddSource = ({ match }: any) => {
         res1.ACTIVE == "" ||
         res1.sourceCreditLimit == ""
       ) {
-        console.log("inside3");
-        toast.warning("Please Fill All Required Field");
+        if (lang) {
+          toast.warning("אנא מלא את כל השדות הנדרשים");
+        } else {
+          toast.warning("Please Fill All Required Field");
+        }
       } else {
         setFlag(true);
         console.log("inside4");
@@ -183,7 +193,9 @@ const AddSource = ({ match }: any) => {
           history.push({
             pathname: `/source/${match.params.id}`,
             state: {
-              flag: "New Credit Card Added",
+              flag: `${
+                lang ? "נוסף כרטיס אשראי חדש" : "New Credit Card Added"
+              }`,
             },
           });
         }
@@ -198,9 +210,9 @@ const AddSource = ({ match }: any) => {
       ) : (
         <AddClientContainer>
           <Header
-            heading="Add a new income source"
+            heading={lang ? "הוסף מקור הכנסה" : "Add a new income source"}
             subheading="@WW24"
-            buttonText="Submit source details"
+            buttonText={lang ? "שלח פרטי מקור" : "Submit source details"}
             buttonHandler={submitHandler}
           />
           <MainContainer>
@@ -216,7 +228,9 @@ const AddSource = ({ match }: any) => {
               />
             )}
             <SubContainer>
-              <SubContainerText>Select source type</SubContainerText>
+              <SubContainerText>
+                {lang ? "בחר סוג מקור" : "Select source type"}
+              </SubContainerText>
               <div className="buttons">
                 <SubContainerButtonText
                   name="bank"
@@ -226,7 +240,7 @@ const AddSource = ({ match }: any) => {
                     setSelected("bank");
                   }}
                 >
-                  Bank Account
+                  {lang ? "מספר חשבון" : "Bank Account"}
                 </SubContainerButtonText>
                 <SubContainerButtonText
                   name="cc"
@@ -236,7 +250,7 @@ const AddSource = ({ match }: any) => {
                     setSelected("cc");
                   }}
                 >
-                  Credit Card
+                  {lang ? "כרטיס אשראי" : "Credit Card"}
                 </SubContainerButtonText>
               </div>
             </SubContainer>

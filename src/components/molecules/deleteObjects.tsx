@@ -5,7 +5,8 @@ import Circle from "../atoms/circle";
 import { delete_Source } from "../../api/delete";
 import { toast } from "react-toastify";
 import { delete_CSV } from "../../api/delete";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const Text1 = styled.div`
   margin-top: 5px;
   font-weight: 600;
@@ -52,15 +53,29 @@ export const CircleContainer = styled.div`
 `;
 
 const DeleteObject = ({ id, parid, text, type, handleClose }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
+
   const deleteItem = async () => {
     if (type === "source") {
       const res = await delete_Source(parid, id);
-      toast.success("Source Deleted Successfully!");
+      if (lang) {
+        toast.success("המקור נמחק בהצלחה!");
+      } else {
+        toast.success("Source Deleted Successfully!");
+      }
+
       handleClose();
     }
     if (type == "csv") {
       const res = await delete_CSV(id, parid);
-      toast.success("File Deleted Successfully");
+      if (lang) {
+        toast.success("הקובץ נמחק בהצלחה!");
+      } else {
+        toast.success("File Deleted Successfully!");
+      }
+
       handleClose();
     }
   };
@@ -76,16 +91,18 @@ const DeleteObject = ({ id, parid, text, type, handleClose }: any) => {
         </div>
       </CircleContainer>
       <Text1>{text}</Text1>
-      <Text2>you will not able to recover it</Text2>
+      <Text2>
+        {lang ? "לא תוכל לשחזר נתונים אלה" : "you will not able to recover it"}
+      </Text2>
       <ButtonCon>
         <Button
-          title="Delete"
+          title={lang ? "מחיקה" : "Delete"}
           type="secondary"
           padding="24px 48px"
           clickHandler={deleteItem}
         ></Button>
         <Button
-          title="Cancel"
+          title={lang ? "ביטול" : "Cancel"}
           type="primary"
           padding="24px 48px"
           clickHandler={() => {

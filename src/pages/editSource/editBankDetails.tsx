@@ -6,7 +6,8 @@ import { get_CSV, get_Dropdown } from "../../api/get";
 import { delete_CSV } from "../../api/delete";
 import { toast } from "react-toastify";
 import SelectComponent from "../../components/atoms/select";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const SubContainer1 = styled.div`
   position: relative;
   padding: 120px;
@@ -142,6 +143,10 @@ const EditBankDetails = ({
   setdeleteId,
   setbase64File,
 }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
+
   const inputFile: any = useRef(null);
   const onButtonClick = () => {
     inputFile.current.click();
@@ -184,7 +189,11 @@ const EditBankDetails = ({
       setfileName(res1);
       setbase64File(res);
     } else {
-      toast.warning("Cannot Upload Same File Again");
+      if (lang) {
+        toast.warning("לא ניתן להעלות את אותו קובץ שוב");
+      } else {
+        toast.warning("Cannot Upload Same File Again");
+      }
     }
   };
 
@@ -236,12 +245,15 @@ const EditBankDetails = ({
 
   return (
     <SubContainer1>
-      <SubHeader>Enter Account Details</SubHeader>
+      <SubHeader>
+        {" "}
+        {lang ? "הקלד פרטי חשבון" : "Enter Account Details"}
+      </SubHeader>
       <SubContainer11>
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 300 }}>
             <SelectComponent
-              label="Active"
+              label={lang ? "פָּעִיל" : "Active"}
               options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSourceData}
@@ -252,7 +264,7 @@ const EditBankDetails = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Account Number"
+              label={lang ? "מספר חשבון" : "Account Number"}
               placeholder="SLA220154653"
               height={50}
               value={sourceData.bankAccountNumber}
@@ -265,7 +277,7 @@ const EditBankDetails = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Source Name"
+              label={lang ? "שם המקור" : "Source Name"}
               placeholder="My Main Bank"
               height={50}
               value={sourceData.sourceName}
@@ -275,7 +287,7 @@ const EditBankDetails = ({
           </div>
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
-              label="Bank Name"
+              label={lang ? "שם בנק" : "Bank Name"}
               value={sourceData.bankName}
               setvalue={setSourceData}
               options={bank_list}
@@ -296,7 +308,7 @@ const EditBankDetails = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Bank Branch"
+              label={lang ? "סניף" : "Bank Branch"}
               placeholder="IL950108000000090722422"
               height={50}
               value={sourceData.bankBranch}
@@ -342,7 +354,10 @@ const EditBankDetails = ({
                 })}
               </Fragment>
             ) : (
-              <CSVButton onClick={onButtonClick}>Import XLS/XLSX</CSVButton>
+              <CSVButton onClick={onButtonClick}>
+                {" "}
+                <span>{`${lang ? "טען קובץ" : "Import"} XLS/XLSX`}</span>
+              </CSVButton>
             )}
           </CSVButtonContainer>
         ) : (

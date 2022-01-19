@@ -114,8 +114,8 @@ const MultipleCards = styled.div`
 `;
 
 const Allsources = ({ match }: any) => {
-  const customerList: any = useSelector((state: RootState) => {
-    return state.customerList.customer;
+  const [customerList, lang]: any = useSelector((state: RootState) => {
+    return [state.customerList.customer, state.lang];
   });
 
   const history: any = useHistory();
@@ -213,7 +213,7 @@ const Allsources = ({ match }: any) => {
             <DeleteObject
               id={deleteId}
               parid={match.params.id}
-              text={"Delete this source ?"}
+              text={lang ? "למחוק את המקור הזה?" : "Delete this source ?"}
               type={"source"}
               handleClose={handleClose}
             />
@@ -221,11 +221,17 @@ const Allsources = ({ match }: any) => {
           <Header
             heading={name}
             subheading="@WW24"
-            buttonText="Add a Source"
+            buttonText={lang ? "הוסף קובץ" : "Add a Source"}
             buttonHandler={() => {
               history.push(`/addsource/${match.params.id}`);
             }}
-            extraButton={!no_source_flag ? "Edit source details" : null}
+            extraButton={
+              !no_source_flag
+                ? lang
+                  ? "ערוך מקור נתונים"
+                  : "Edit source details"
+                : null
+            }
             extraButtonHandler={() => {
               history.push({
                 pathname: `/editsource/${source_details.ID}`,
@@ -239,7 +245,9 @@ const Allsources = ({ match }: any) => {
           />
           <SubContainer>
             <AllBankAccountsCards>
-              <div className="heading">Bank account details</div>
+              <div className="heading">
+                {lang ? "פרטי חשבון בנק" : "Bank account details"}
+              </div>
               <MultipleCardsCarousel>
                 {allbankaccounts
                   ? allbankaccounts.map((bank: any, key: any) => {
@@ -270,7 +278,9 @@ const Allsources = ({ match }: any) => {
               </MultipleCardsCarousel>
             </AllBankAccountsCards>
             <AllCreditCards>
-              <div className="heading">Card Details</div>
+              <div className="heading">
+                {lang ? "פרטי כרטיס" : "Card Details"}
+              </div>
               <MultipleCards>
                 {allcreditcards
                   ? allcreditcards.map((cc: any, key: any) => {

@@ -5,7 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 import { get_Dropdown } from "../../api/get";
 import SelectComponent from "../../components/atoms/select";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;
@@ -124,12 +125,10 @@ const CSVButtonContainer = styled.div`
 
 const dropdown_name_arr = ["CC", "CCTYPE"];
 
-const ActiveOptions = [
-  { value: "Y", name: "Yes" },
-  { value: "N", name: "No" },
-];
-
 const AddCreditCard = ({ sourceData, setSouceData }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
   const [ccType, setccType] = useState("");
@@ -143,6 +142,10 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
     cc: [],
     cctype: [],
   });
+  const ActiveOptions = [
+    { value: "Y", name: `${lang ? "כן" : "Yes"}` },
+    { value: "N", name: `${lang ? "לא" : "No"}` },
+  ];
 
   const onButtonClick = () => {
     inputFile.current.click();
@@ -229,7 +232,11 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
       setFileName(res1);
       setbase64File(res);
     } else {
-      toast.warning("Cannot Upload Same File Again");
+      if (lang) {
+        toast.warning("לא ניתן להעלות את אותו קובץ שוב");
+      } else {
+        toast.warning("Cannot Upload Same File Again");
+      }
     }
   };
 
@@ -261,7 +268,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 345 }}>
             <SelectComponent
-              label="Active"
+              label={lang ? "פָּעִיל" : "Active"}
               options={ActiveOptions}
               value={active}
               setvalue={setActive}
@@ -270,7 +277,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Credit Card 4 Digits"
+              label={lang ? "כרטיס אשראי 4 ספרות" : "Credit Card 4 Digits"}
               placeholder="2422"
               height={50}
               value={digits}
@@ -280,7 +287,9 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Source Credit Card Limit"
+              label={
+                lang ? "מגבלת כרטיס אשראי מקור" : "Source Credit Card Limit"
+              }
               placeholder="20000$"
               height={50}
               value={limit}
@@ -292,7 +301,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Source Name"
+              label={lang ? "שם המקור" : "Source Name"}
               placeholder="My Main Bank"
               height={50}
               value={sourceName}
@@ -301,7 +310,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           </div>
           <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
             <SelectComponent
-              label="Credit Card Type"
+              label={lang ? "סוג כרטיס" : "Credit Card Type"}
               value={ccType}
               setvalue={setccType}
               options={dropdown_options.cctype}
@@ -309,7 +318,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           </div>
           <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
             <SelectComponent
-              label="Credit Card Provider"
+              label={lang ? "ספק כרטיסי אשראי" : "Credit Card Provider"}
               value={cardProvider}
               setvalue={setcardProvider}
               options={dropdown_options.cc}
@@ -328,7 +337,10 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           multiple
         />
         {fileName.length === 0 ? (
-          <CSVButton onClick={onButtonClick}>Import XLS/XLSX</CSVButton>
+          <CSVButton onClick={onButtonClick}>
+            {" "}
+            <span>{`${lang ? "טען קובץ" : "Import"} XLS/XLSX`}</span>
+          </CSVButton>
         ) : (
           <CSVButtonContainer>
             <CSVUploadButton onClick={onButtonClick}>

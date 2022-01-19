@@ -3,7 +3,8 @@ import Circle from "../atoms/circle";
 import SvgVisa from "../vectors/Visa";
 import SvgCopy from "../vectors/Copy";
 import SvgDelete from "../vectors/Delete";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 interface ContainerProps {
   theme: string;
 }
@@ -240,6 +241,9 @@ const CreditCard = ({
   setDeleteId,
   handleOpen,
 }: BankaccountCardProps) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   if (size == "large") {
     console.log("details large", details);
     return (
@@ -275,12 +279,12 @@ const CreditCard = ({
               height={20}
             /> */}
           </div>
-          <div className="text">Credit Card</div>
+          <div className="text">{lang ? "כרטיס אשראי" : "Credit Card"}</div>
         </ImageContainer1>
         <div className="card-holder-name">{details.sourceName}</div>
         <CardDetails theme={theme}>
           <div className="account-balance">
-            <div className="balance">Balance</div>
+            <div className="balance">{lang ? `יתרה בש"ח` : "Balance"}</div>
             <div className="number">xxx</div>
           </div>
           <div className="account-number-with-date">
@@ -319,7 +323,7 @@ const CreditCard = ({
               height={20}
             /> */}
         </div>
-        <div className="text">Credit Card</div>
+        <div className="text">{lang ? "כרטיס אשראי" : "Credit Card"}</div>
       </ImageContainer1>
     </Container>
   );

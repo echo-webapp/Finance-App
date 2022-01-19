@@ -11,7 +11,8 @@ import { updateSource } from "../../api/update";
 import Modal from "@mui/material/Modal";
 import DeleteObject from "../../components/molecules/deleteObjects";
 import Backdrop from "@mui/material/Backdrop";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;
@@ -100,6 +101,9 @@ const SubContainerButtonText = styled.div<SubContainerBankTextProps>`
 `;
 
 const EditSource = ({ match }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const history: any = useHistory();
   const [sourceData, setSourceData]: any = useState(
     history.location.state.source_details
@@ -130,8 +134,11 @@ const EditSource = ({ match }: any) => {
         res1.ACTIVE == "" ||
         res1.bankAccountNumber == ""
       ) {
-        console.log("inside1");
-        toast.warning("Please Fill All Required Field");
+        if (lang) {
+          toast.warning("אנא מלא את כל השדות הנדרשים");
+        } else {
+          toast.warning("Please Fill All Required Field");
+        }
       } else {
         delete res1.sourceFileName;
         delete res1.base64File;
@@ -146,7 +153,11 @@ const EditSource = ({ match }: any) => {
           history.push({
             pathname: `/allsources/${clientId}`,
             state: {
-              flag: "Bank Details Updated Successfully",
+              flag: `${
+                lang
+                  ? "פרטי הבנק עודכנו בהצלחה"
+                  : "Bank Details Updated Successfully"
+              }`,
             },
           });
         }
@@ -162,8 +173,11 @@ const EditSource = ({ match }: any) => {
         res1.ACTIVE == "" ||
         res1.sourceCreditLimit == ""
       ) {
-        console.log("inside3");
-        toast.warning("Please Fill All Required Field");
+        if (lang) {
+          toast.warning("אנא מלא את כל השדות הנדרשים");
+        } else {
+          toast.warning("Please Fill All Required Field");
+        }
       } else {
         console.log("inside4");
         delete res1.sourceFileName;
@@ -178,7 +192,11 @@ const EditSource = ({ match }: any) => {
           history.push({
             pathname: `/allsources/${clientId}`,
             state: {
-              flag: "Credit Card Updated Successfully",
+              flag: `${
+                lang
+                  ? "פרטי הכרטיס עודכנו בהצלחה"
+                  : "Card Details Updated Successfully"
+              }`,
             },
           });
         }
@@ -218,7 +236,7 @@ const EditSource = ({ match }: any) => {
             <DeleteObject
               id={deleteId}
               parid={match.params.id}
-              text={"Delete this File?"}
+              text={lang ? "האם למחוק את הקובץ?" : "Delete this File?"}
               type={"csv"}
               handleClose={() => setopen(false)}
             />
@@ -251,15 +269,18 @@ const EditSource = ({ match }: any) => {
               />
             )}
             <SubContainer>
-              <SubContainerText>Source type</SubContainerText>
+              <SubContainerText>
+                {" "}
+                {lang ? "בחר סוג מקור" : "Select source type"}
+              </SubContainerText>
               <div className="buttons">
                 {selected == "bank" ? (
                   <SubContainerButtonText name="bank" selected={selected}>
-                    Bank Account
+                    {lang ? "מספר חשבון" : "Bank Account"}
                   </SubContainerButtonText>
                 ) : (
                   <SubContainerButtonText name="cc" selected={selected}>
-                    Credit Card
+                    {lang ? "כרטיס אשראי" : "Credit Card"}
                   </SubContainerButtonText>
                 )}
               </div>

@@ -5,7 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 import SelectComponent from "../../components/atoms/select";
 import { get_Dropdown } from "../../api/get";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;
@@ -130,12 +131,10 @@ const CSVButtonContainer = styled.div`
   align-items: center;
 `;
 
-const ActiveOptions = [
-  { value: "Y", name: "Yes" },
-  { value: "N", name: "No" },
-];
-
 const AddBankDetails = ({ sourceData, setSouceData }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
   const [bankName, setBankName] = useState("");
@@ -146,6 +145,10 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const [bank_list, setbank_list] = useState([]);
   const [base64File, setbase64File]: any = useState([]);
 
+  const ActiveOptions = [
+    { value: "Y", name: `${lang ? "כן" : "Yes"}` },
+    { value: "N", name: `${lang ? "לא" : "No"}` },
+  ];
   useEffect(() => {
     const getAllBanks = async () => {
       const res = await get_Dropdown("BANK");
@@ -221,7 +224,11 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
       setFileName(res1);
       setbase64File(res);
     } else {
-      toast.warning("Cannot Upload Same File Again");
+      if (lang) {
+        toast.warning("לא ניתן להעלות את אותו קובץ שוב");
+      } else {
+        toast.warning("Cannot Upload Same File Again");
+      }
     }
   };
 
@@ -248,12 +255,14 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
 
   return (
     <SubContainer1>
-      <SubHeader>Enter Account Details</SubHeader>
+      <SubHeader>
+        {lang ? "הקלד פרטי חשבון" : "Enter Account Details"}
+      </SubHeader>
       <SubContainer11>
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 345 }}>
             <SelectComponent
-              label="Active"
+              label={lang ? "פָּעִיל" : "Active"}
               options={ActiveOptions}
               value={active}
               setvalue={setActive}
@@ -262,7 +271,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Account Number"
+              label={lang ? "מספר חשבון" : "Account Number"}
               placeholder="SLA220154653"
               height={50}
               value={bankAccountNumber}
@@ -274,7 +283,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Source Name"
+              label={lang ? "שם המקור" : "Source Name"}
               placeholder="My Main Bank"
               height={50}
               value={sourceName}
@@ -283,7 +292,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           </div>
           <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
             <SelectComponent
-              label="Bank Name"
+              label={lang ? "שם בנק" : "Bank Name"}
               value={bankName}
               setvalue={setBankName}
               options={bank_list}
@@ -292,7 +301,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px" }}>
             <Input
               type="text"
-              label="Bank Branch"
+              label={lang ? "סניף" : "Bank Branch"}
               placeholder="IL950108000000090722422"
               height={50}
               value={bankBranch}
@@ -313,7 +322,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
         />
         {fileName.length === 0 ? (
           <CSVButton onClick={onButtonClick}>
-            <span>Import XLS/XLSX</span>
+            <span>{`${lang ? "טען קובץ" : "Import"} XLS/XLSX`}</span>
           </CSVButton>
         ) : (
           <CSVButtonContainer>

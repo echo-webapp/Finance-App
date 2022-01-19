@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Circle from "../atoms/circle";
 import SvgDelete from "../vectors/Delete";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 interface ContainerProps {
   theme: string;
 }
@@ -166,6 +167,9 @@ const PhysicalCard_large = ({
   setDeleteId,
   handleOpen,
 }: Physical_cardProps) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   return (
     <Container theme={theme}>
       <CircleContainer
@@ -193,28 +197,32 @@ const PhysicalCard_large = ({
       <DetailsContainer theme={theme}>
         <SubContainer>
           <Info theme={theme}>{details.sourceName}</Info>
-          <Heading theme={theme}>Account holder name</Heading>
+          <Heading theme={theme}>
+            {lang ? "שם בעל חשבון" : "Account holder name"}
+          </Heading>
         </SubContainer>
         <SubContainer>
           <Info theme={theme}>{details.bankAccountNumber}</Info>
-          <Heading theme={theme}>Bank Account Number</Heading>
+          <Heading theme={theme}>
+            {lang ? "מספר חשבון" : "Bank Account Number"}
+          </Heading>
         </SubContainer>
         <SubContainer>
           <Info theme={theme}>{details.bankName}</Info>
-          <Heading theme={theme}>Bank name</Heading>
+          <Heading theme={theme}>{lang ? "שם הבנק" : "Bank name"}</Heading>
         </SubContainer>
         <SubContainer>
           <Info theme={theme}>{details.bankBranch}</Info>
-          <Heading theme={theme}>Branch name</Heading>
+          <Heading theme={theme}>{lang ? "שם סניף" : "Branch name"}</Heading>
         </SubContainer>
         <SubContainer>
           <Info theme={theme}>010800</Info>
-          <Heading theme={theme}>Bank code </Heading>
+          <Heading theme={theme}>{lang ? "קוד בנק" : "Bank code"} </Heading>
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
         <div className="balance-amount">xx xxx</div>
-        <div className="balance-text">Balance</div>
+        <div className="balance-text">{lang ? `יתרה בש"ח` : "Balance"}</div>
       </BalanceContainer>
     </Container>
   );
