@@ -263,7 +263,9 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
 
   return (
     <SubContainer1>
-      <SubHeader>Enter Credit Card Details</SubHeader>
+      <SubHeader>
+        {lang ? "הזן את פרטי כרטיס האשראי" : "Enter Credit Card Details"}
+      </SubHeader>
       <SubContainer11>
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 345 }}>

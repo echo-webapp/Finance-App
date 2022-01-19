@@ -212,9 +212,9 @@ const EditSource = ({ match }: any) => {
       ) : (
         <AddClientContainer>
           <Header
-            heading="Edit income source"
+            heading={lang ? "ערוך מקור נתוניםfd" : "Edit income source"}
             subheading="@WW24"
-            buttonText="Submit source details"
+            buttonText={lang ? "שלח פרטי מקור" : "Submit source details"}
             buttonHandler={submitHandler}
           />
           <Modal

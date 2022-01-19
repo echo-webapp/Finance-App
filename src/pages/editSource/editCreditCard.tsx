@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { get_CSV, get_Dropdown } from "../../api/get";
 import Input from "../../components/atoms/input";
 import SelectComponent from "../../components/atoms/select";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const SubContainer1 = styled.div`
   padding: 120px;
@@ -123,11 +125,6 @@ const CSVUploadButton = styled.div`
 
 const dropdown_name_arr = ["CC", "CCTYPE"];
 
-const ActiveOptions = [
-  { value: "Y", name: "Yes" },
-  { value: "N", name: "No" },
-];
-
 const EditCreditCard = ({
   open,
   setopen,
@@ -139,6 +136,13 @@ const EditCreditCard = ({
   setbase64File,
   setdeleteId,
 }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
+  const ActiveOptions = [
+    { value: "Y", name: `${lang ? "כן" : "Yes"}` },
+    { value: "N", name: `${lang ? "לא" : "No"}` },
+  ];
   const inputFile: any = useRef(null);
   const [allcsv, setallcsv] = useState([]);
   const [dropdown_options, setdropdown_options] = useState({
@@ -185,7 +189,11 @@ const EditCreditCard = ({
       setfileName(res1);
       setbase64File(res);
     } else {
-      toast.warning("Cannot Upload Same File Again");
+      if (lang) {
+        toast.warning("לא ניתן להעלות את אותו קובץ שוב");
+      } else {
+        toast.warning("Cannot Upload Same File Again");
+      }
     }
   };
 
@@ -245,12 +253,15 @@ const EditCreditCard = ({
 
   return (
     <SubContainer1>
-      <SubHeader>Enter Credit Card Details</SubHeader>
+      <SubHeader>
+        {" "}
+        {lang ? "הזן את פרטי כרטיס האשראי" : "Enter Credit Card Details"}
+      </SubHeader>
       <SubContainer11>
         <SubContainerItem>
           <div style={{ marginTop: "15px", width: 300 }}>
             <SelectComponent
-              label="Active"
+              label={lang ? "פָּעִיל" : "Active"}
               options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSouceData}
@@ -260,7 +271,7 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Credit Card 4 Digits"
+              label={lang ? "כרטיס אשראי 4 ספרות" : "Credit Card 4 Digits"}
               placeholder="2422"
               height={50}
               value={sourceData.cc4digits}
@@ -271,7 +282,9 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Source Credit Card Limit"
+              label={
+                lang ? "מגבלת כרטיס אשראי מקור" : "Source Credit Card Limit"
+              }
               placeholder="20000$"
               height={50}
               value={sourceData.sourceCreditLimit}
@@ -284,7 +297,7 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <Input
               type="text"
-              label="Source Name"
+              label={lang ? "שם המקור" : "Source Name"}
               placeholder="My Main Bank"
               height={50}
               value={sourceData.sourceName}
@@ -294,7 +307,7 @@ const EditCreditCard = ({
           </div>
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
-              label="Credit Card Type"
+              label={lang ? "סוג כרטיס" : "Credit Card Type"}
               value={sourceData.ccType}
               setvalue={setSouceData}
               options={dropdown_options.cctype}
@@ -303,7 +316,7 @@ const EditCreditCard = ({
           </div>
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
-              label="Credit Card Provider"
+              label={lang ? "ספק כרטיסי אשראי" : "Credit Card Provider"}
               value={sourceData.ccProvider}
               setvalue={setSouceData}
               options={dropdown_options.cc}

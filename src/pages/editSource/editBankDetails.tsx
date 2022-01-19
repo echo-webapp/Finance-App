@@ -127,11 +127,6 @@ const CSVUploadButton = styled.div`
   }
 `;
 
-const ActiveOptions = [
-  { value: "Y", name: "Yes" },
-  { value: "N", name: "No" },
-];
-
 const EditBankDetails = ({
   open,
   setopen,
@@ -146,7 +141,10 @@ const EditBankDetails = ({
   const lang: any = useSelector((state: RootState) => {
     return state.lang;
   });
-
+  const ActiveOptions = [
+    { value: "Y", name: `${lang ? "כן" : "Yes"}` },
+    { value: "N", name: `${lang ? "לא" : "No"}` },
+  ];
   const inputFile: any = useRef(null);
   const onButtonClick = () => {
     inputFile.current.click();
