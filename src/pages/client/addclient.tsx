@@ -259,9 +259,9 @@ const AddClient = () => {
         <NewCustomer firstname={firstname} lastname={lastname} />
       </Modal>
       <Header
-        heading="Clientele details"
+        heading={lang ? "פרטי לקוח" : "Clientele details"}
         subheading="Add new"
-        buttonText="Submit data"
+        buttonText={lang ? "שלח נתונים" : "Submit data"}
         buttonHandler={SubmitData}
       />
 
@@ -326,8 +326,8 @@ const AddClient = () => {
               />
             </InputContainerLeft>
             <SelectComponent
-              label="City"
-              value={lang ? "עיר" : "City"}
+              label={lang ? "עיר" : "City"}
+              value={city}
               setvalue={setcity}
               options={dropdown_options.city}
             />

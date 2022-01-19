@@ -10,7 +10,8 @@ import { RootState } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import ThemeSwitch from "./components/atoms/themeSwitch";
-
+import Switch from "@mui/material/Switch";
+import { ChangeLanguage } from "./store/Reducers/lang";
 const Theme = styled.div`
   position: absolute;
   top: 5px;
@@ -24,6 +25,12 @@ const App = () => {
     const val = localStorage.getItem("token");
     dispatch(SetToken(val));
   }
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChange = (event: any) => {
+    dispatch(ChangeLanguage());
+    setChecked(event.target.checked);
+  };
 
   return (
     <Fragment>
@@ -31,6 +38,11 @@ const App = () => {
       {theme ? <GlobalDarkTheme /> : <GlobalLightTheme />}
       <Theme>
         <ThemeSwitch />
+        <Switch
+          checked={checked}
+          onChange={handleChange}
+          inputProps={{ "aria-label": "controlled" }}
+        />
       </Theme>
       <Routes />
     </Fragment>
