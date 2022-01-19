@@ -131,30 +131,40 @@ const ClientDetails = ({ clientDetails, handleClose }: any) => {
       </DeleteIcon>
       <LeftContainer>
         <SubLeftContainer>
-          <SubContainerHeader>Financial details</SubContainerHeader>
+          <SubContainerHeader>
+            {lang ? "מידע פיננסי" : "Financial details"}
+          </SubContainerHeader>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.CSN}</SubContainerItem2>
-            <SubContainerItem1>CSN</SubContainerItem1>
+            <SubContainerItem1>{lang ? `ת"ז` : "CSN"}</SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.netWorth}</SubContainerItem2>
-            <SubContainerItem1>Net worth</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "שווי נטו" : "Net worth"}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>
               {clientDetails.processStartDate}
             </SubContainerItem2>
-            <SubContainerItem1>Process start</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "מתאריך" : "Process start"}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>
               {clientDetails.processEndDate}
             </SubContainerItem2>
-            <SubContainerItem1>Process end</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "עד תאריך" : "Process end"}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.netWorth}</SubContainerItem2>
-            <SubContainerItem1>Additional annual income</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "הכנסה שנתית נוספת" : "Additional annual income"}
+            </SubContainerItem1>
           </SubContainerItem>
         </SubLeftContainer>
       </LeftContainer>
@@ -166,34 +176,44 @@ const ClientDetails = ({ clientDetails, handleClose }: any) => {
           {clientDetails.firstName} {clientDetails.lastName}
         </Header>
         <SubLeftContainer1>
-          <SubContainerHeader>Personal details</SubContainerHeader>
+          <SubContainerHeader>
+            {lang ? "מידע אישי" : "Personal details"}
+          </SubContainerHeader>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.city}</SubContainerItem2>
-            <SubContainerItem1>City</SubContainerItem1>
+            <SubContainerItem1>{lang ? "עיר" : "City"}</SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.eMail}</SubContainerItem2>
-            <SubContainerItem1>Email</SubContainerItem1>
+            <SubContainerItem1>{lang ? "מייל" : "Email"}</SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.gender}</SubContainerItem2>
-            <SubContainerItem1>Gender</SubContainerItem1>
+            <SubContainerItem1>{lang ? "מין" : "Gender"}</SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.DOB}</SubContainerItem2>
-            <SubContainerItem1>Date of birth </SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "תאריך לידה" : "Date of birth"}{" "}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.status}</SubContainerItem2>
-            <SubContainerItem1>Marriage status</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "מצב משפחתי" : "Marriage status"}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.children}</SubContainerItem2>
-            <SubContainerItem1>No. of children</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "מספר ילדים" : "No. of children"}
+            </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.mobile}</SubContainerItem2>
-            <SubContainerItem1>Mobile Number</SubContainerItem1>
+            <SubContainerItem1>
+              {lang ? "טלפון סלולרי" : "Mobile Number"}
+            </SubContainerItem1>
           </SubContainerItem>
         </SubLeftContainer1>
       </RightContainer>
