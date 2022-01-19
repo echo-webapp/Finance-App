@@ -135,6 +135,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
   const lang: any = useSelector((state: RootState) => {
     return state.lang;
   });
+
   const inputFile: any = useRef(null);
   const [sourceName, setSouceName] = useState("");
   const [bankName, setBankName] = useState("");
@@ -263,6 +264,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px", width: 345 }}>
             <SelectComponent
               label={lang ? "פָּעִיל" : "Active"}
+              labelforcss="Active"
               options={ActiveOptions}
               value={active}
               setvalue={setActive}
@@ -293,6 +295,7 @@ const AddBankDetails = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
             <SelectComponent
               label={lang ? "שם בנק" : "Bank Name"}
+              labelforcss="Bank Name"
               value={bankName}
               setvalue={setBankName}
               options={bank_list}

@@ -271,6 +271,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px", width: 345 }}>
             <SelectComponent
               label={lang ? "פָּעִיל" : "Active"}
+              labelforcss="Active"
               options={ActiveOptions}
               value={active}
               setvalue={setActive}
@@ -313,6 +314,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
           <div style={{ marginTop: "15px", width: 345, position: "relative" }}>
             <SelectComponent
               label={lang ? "סוג כרטיס" : "Credit Card Type"}
+              labelforcss="Credit Card Type"
               value={ccType}
               setvalue={setccType}
               options={dropdown_options.cctype}
@@ -322,6 +324,7 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
             <SelectComponent
               label={lang ? "ספק כרטיסי אשראי" : "Credit Card Provider"}
               value={cardProvider}
+              labelforcss="Credit Card Provider"
               setvalue={setcardProvider}
               options={dropdown_options.cc}
             />

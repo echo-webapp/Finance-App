@@ -7,12 +7,13 @@ const { Option } = Select;
 interface SelectProps {
   name?: string;
   label?: string;
+  labelforcss?: string;
   value: any;
   setvalue: any;
   options: any;
 }
 interface SelectContainerProps {
-  label: string;
+  label: any;
 }
 
 const SelectContainer = styled.div<SelectContainerProps>`
@@ -86,6 +87,7 @@ const SelectLabel = styled.div`
 const SelectComponent = ({
   name,
   label,
+  labelforcss,
   value,
   setvalue,
   options,
@@ -123,7 +125,7 @@ const SelectComponent = ({
   }
 
   return (
-    <SelectContainer label={label}>
+    <SelectContainer label={labelforcss ? labelforcss : null}>
       <SelectLabel>{label}*</SelectLabel>
       <Select
         style={{ width: "100%" }}

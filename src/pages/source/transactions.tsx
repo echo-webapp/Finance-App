@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const Container = styled.div`
   display: flex;
@@ -174,6 +176,7 @@ const CreditCardsHeading = styled.div`
 
 const Transactions = ({ id }: any) => {
   const history: any = useHistory();
+  const lang = useSelector((state: RootState) => state.lang);
   const [sources, setsources] = useState([]);
   const [allbankaccounts, setallbankaccounts]: any = useState([]);
   const [allcreditcards, setallcreditcards]: any = useState([]);
@@ -182,6 +185,7 @@ const Transactions = ({ id }: any) => {
   const [selected_transaction, setselected_transaction] = useState("bank");
   const [source_details, setsource_details]: any = useState(null);
   const [flag, setFlag] = useState(true);
+
   useEffect(() => {
     const genResult = async () => {
       const res = await get_AllSources(id);
@@ -209,6 +213,7 @@ const Transactions = ({ id }: any) => {
 
     genResult();
   }, []);
+
   useEffect(() => {
     if (history.location.state?.flag) {
       toast.success(history.location.state?.flag);
@@ -217,6 +222,7 @@ const Transactions = ({ id }: any) => {
       history.replace({ ...history.location, state });
     }
   }, []);
+
   return (
     <>
       {flag ? (
@@ -226,13 +232,13 @@ const Transactions = ({ id }: any) => {
       ) : (
         <Container>
           <Header
-            heading="Transaction details"
+            heading={lang ? "פרטי פעולה" : "Transaction details"}
             subheading="@WW24"
-            buttonText="All sources"
+            buttonText={lang ? "כל המקורות" : "All sources"}
             buttonHandler={() => {
               history.push(`/allsources/${id}`);
             }}
-            extraButton="Unified transactions"
+            extraButton={lang ? "ריכוז פעולות" : "Unified transactions"}
             extraButtonHandler={() => {
               history.push({
                 pathname: `/transactions/${id}`,
@@ -246,7 +252,7 @@ const Transactions = ({ id }: any) => {
             </DataGrid>
             <CardsComponents>
               <BankAccountCardsHeading>
-                <Tooltip title="Add a Bank Source">
+                <Tooltip title={lang ? "הוסף מקור בנק" : "Add a Bank Source"}>
                   <div className="heading">
                     <Link
                       to={{
@@ -260,7 +266,9 @@ const Transactions = ({ id }: any) => {
                     </Link>
                   </div>
                 </Tooltip>
-                <div className="heading-text">Bank Accounts</div>
+                <div className="heading-text">
+                  {lang ? "חשבונות בנק" : "Bank Accounts"}
+                </div>
               </BankAccountCardsHeading>
               <MultipleBankAccounts selected={selected_bank}>
                 {allbankaccounts
@@ -292,7 +300,11 @@ const Transactions = ({ id }: any) => {
               </MultipleBankAccounts>
 
               <CreditCardsHeading>
-                <Tooltip title="Add a Card Source">
+                <Tooltip
+                  title={
+                    lang ? "הוסף מקור לכרטיס אשראי" : "Add a Credit Card Source"
+                  }
+                >
                   <div className="heading">
                     <Link
                       to={{
@@ -306,7 +318,9 @@ const Transactions = ({ id }: any) => {
                     </Link>
                   </div>
                 </Tooltip>
-                <div className="heading-text">Cards</div>
+                <div className="heading-text">
+                  {lang ? "כרטיס אשראי" : "Credit Cards"}
+                </div>
               </CreditCardsHeading>
               <MultipleCreditCards selected={selected_cc}>
                 {allcreditcards

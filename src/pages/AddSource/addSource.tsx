@@ -10,6 +10,7 @@ import LoaderScreen from "../../components/molecules/LoaderScreen";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+
 const AddClientContainer = styled.div`
   display: flex;
   align-items: center;

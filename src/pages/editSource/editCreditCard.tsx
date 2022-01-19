@@ -262,6 +262,7 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <SelectComponent
               label={lang ? "פָּעִיל" : "Active"}
+              labelforcss="Active"
               options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSouceData}
@@ -308,6 +309,7 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
               label={lang ? "סוג כרטיס" : "Credit Card Type"}
+              labelforcss="Credit Card Type"
               value={sourceData.ccType}
               setvalue={setSouceData}
               options={dropdown_options.cctype}
@@ -317,34 +319,13 @@ const EditCreditCard = ({
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
               label={lang ? "ספק כרטיסי אשראי" : "Credit Card Provider"}
+              labelforcss="Credit Card Provider"
               value={sourceData.ccProvider}
               setvalue={setSouceData}
               options={dropdown_options.cc}
               name="ccProvider"
             />
           </div>
-          {/* <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
-              label="Credit Card Type"
-              placeholder="Visa"
-              height={50}
-              value={sourceData.ccType}
-              setvalue={setSouceData}
-              name="ccType"
-            />
-          </div>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
-              label="Credit Card Provider"
-              placeholder="Bank Leumi Le-Israel B.M"
-              height={50}
-              value={sourceData.ccProvider}
-              setvalue={setSouceData}
-              name="ccProvider"
-            />
-          </div> */}
         </SubContainerItem>
       </SubContainer11>
       <SubContainer2>

@@ -252,6 +252,7 @@ const EditBankDetails = ({
           <div style={{ marginTop: "15px", width: 300 }}>
             <SelectComponent
               label={lang ? "פָּעִיל" : "Active"}
+              labelforcss="Active"
               options={ActiveOptions}
               value={sourceData.ACTIVE}
               setvalue={setSourceData}
@@ -286,6 +287,7 @@ const EditBankDetails = ({
           <div style={{ marginTop: "15px", width: 300, position: "relative" }}>
             <SelectComponent
               label={lang ? "שם בנק" : "Bank Name"}
+              labelforcss="Bank Name"
               value={sourceData.bankName}
               setvalue={setSourceData}
               options={bank_list}

@@ -215,10 +215,10 @@ const PhysicalCard_large = ({
           <Info theme={theme}>{details.bankBranch}</Info>
           <Heading theme={theme}>{lang ? "שם סניף" : "Branch name"}</Heading>
         </SubContainer>
-        <SubContainer>
+        {/* <SubContainer>
           <Info theme={theme}>010800</Info>
           <Heading theme={theme}>{lang ? "קוד בנק" : "Bank code"} </Heading>
-        </SubContainer>
+        </SubContainer> */}
       </DetailsContainer>
       <BalanceContainer theme={theme}>
         <div className="balance-amount">xx xxx</div>
