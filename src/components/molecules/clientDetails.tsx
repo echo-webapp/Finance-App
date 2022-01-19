@@ -194,7 +194,7 @@ const ClientDetails = ({ clientDetails, handleClose }: any) => {
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.DOB}</SubContainerItem2>
             <SubContainerItem1>
-              {lang ? "תאריך לידה" : "Date of birth"}{" "}
+              {lang ? "תאריך לידה" : "Date of birth"}
             </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>

@@ -121,20 +121,21 @@ const Divider = styled.div`
   background-color: var(--grey);
 `;
 
-const Marriage_Option = [
-  { value: "single", name: "Single" },
-  { value: "married", name: "Married" },
-  { value: "widow", name: "Widow" },
-  { value: "divorced", name: "Divorced" },
-];
-
 const dropdown_name_arr = ["GENDER", "CITY", "STATUS"];
 
 const AddClient = () => {
   const dispatch = useDispatch();
-  const [token, allClients]: any = useSelector((state: RootState) => {
-    return [state.isAuth.isAuth, state.customerList.customer];
+  const [token, allClients, lang]: any = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.customerList.customer, state.lang];
   });
+
+  const Marriage_Option = [
+    { value: "single", name: `${lang ? "יחיד" : "Single"}` },
+    { value: "married", name: `${lang ? "נָשׂוּי" : "Married"}` },
+    { value: "widow", name: `${lang ? "אַלמָנָה" : "Widow"}` },
+    { value: "divorced", name: `${lang ? "גרושה" : "Divorced"}` },
+  ];
+
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
   const [email, setemail] = useState("");
@@ -203,18 +204,30 @@ const AddClient = () => {
     const arr = Object.keys(data);
     for (let i = 0; i < arr.length; i++) {
       if (data[arr[i]] === "") {
-        toast.warning("Please Fill all the Details");
+        if (lang) {
+          toast.warning("נא למלא את כל הפרטים");
+        } else {
+          toast.warning("Please Fill all the Details");
+        }
         return;
       }
     }
     console.log(data);
     if (!validator.isEmail(data.eMail)) {
-      toast.warning("Please Fill Correct Email");
+      if (lang) {
+        toast.warning(`אנא מלא דוא"ל נכון`);
+      } else {
+        toast.warning("Please Fill Correct Email");
+      }
       return;
     }
     const temp1 = String(mobile);
     if (temp1.length != 10 || temp1[0] != "0" || temp1[1] != "5") {
-      toast.warning("Please Fill Correct Mobile Number");
+      if (lang) {
+        toast.warning("נא למלא מספר נייד נכון");
+      } else {
+        toast.warning("Please Fill Correct Mobile Number");
+      }
       return;
     }
     const res = await create_Client(data, token);
@@ -254,12 +267,12 @@ const AddClient = () => {
 
       <Details>
         <PersonalDetails>
-          <PHeading>Personal Details</PHeading>
+          <PHeading>{lang ? "פרטים אישיים" : "Personal Details"}</PHeading>
           <PInputFields>
             <InputContainerLeft>
               <Input
                 type="text"
-                label="First Name"
+                label={lang ? "שם פרטי" : "First Name"}
                 placeholder="Kristin"
                 height={56}
                 value={firstname}
@@ -269,7 +282,7 @@ const AddClient = () => {
             <InputContainerLeft>
               <Input
                 type="text"
-                label="Last Name"
+                label={lang ? "שם משפחה" : "Last Name"}
                 placeholder="Watson"
                 height={56}
                 value={lastname}
@@ -277,7 +290,7 @@ const AddClient = () => {
               />
             </InputContainerLeft>
             <SelectComponent
-              label="Gender"
+              label={lang ? "מין" : "Gender"}
               value={gender}
               setvalue={setgender}
               options={dropdown_options.gender}
@@ -285,7 +298,7 @@ const AddClient = () => {
             <InputContainerLeft>
               <Input
                 type="date"
-                label="Date of Birth"
+                label={lang ? "תאריך לידה" : "Date of birth"}
                 placeholder="04/12/1989"
                 height={56}
                 value={dob}
@@ -295,7 +308,7 @@ const AddClient = () => {
             <InputContainerLeft>
               <Input
                 type="email"
-                label="Email"
+                label={lang ? "מייל" : "Email"}
                 placeholder="test1.pikel@gmail.com"
                 height={56}
                 value={email}
@@ -305,7 +318,7 @@ const AddClient = () => {
             <InputContainerLeft>
               <Input
                 type="text"
-                label="Mobile No."
+                label={lang ? "טלפון סלולרי" : "Mobile Number"}
                 placeholder="0543451311"
                 height={56}
                 value={mobile}
@@ -314,18 +327,18 @@ const AddClient = () => {
             </InputContainerLeft>
             <SelectComponent
               label="City"
-              value={city}
+              value={lang ? "עיר" : "City"}
               setvalue={setcity}
               options={dropdown_options.city}
             />
             <SelectComponent
-              label="Status"
+              label={lang ? "סטָטוּס" : "Status"}
               value={status}
               setvalue={setstatus}
               options={dropdown_options.status}
             />
             <SelectComponent
-              label="Marriage Status"
+              label={lang ? "מצב משפחתי" : "Marriage status"}
               value={marriage_status}
               setvalue={setmarriage_status}
               options={Marriage_Option}
@@ -333,7 +346,7 @@ const AddClient = () => {
             <InputContainerLeft>
               <Input
                 type="text"
-                label="Number of children"
+                label={lang ? "מספר ילדים" : "Number of children"}
                 placeholder="03"
                 height={56}
                 value={noc}
@@ -344,12 +357,12 @@ const AddClient = () => {
         </PersonalDetails>
         <Divider />
         <FinancialDetails>
-          <FHeading>Financial Details</FHeading>
+          <FHeading> {lang ? "מידע פיננסי" : "Financial details"}</FHeading>
           <FInputFields>
             <InputContainerRight>
               <Input
                 type="text"
-                label="Net Worth"
+                label={lang ? "שווי נטו" : "Net worth"}
                 placeholder="13000"
                 height={56}
                 value={networth}
@@ -360,7 +373,7 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="text"
-                label="CSN"
+                label={lang ? `ת"ז` : "CSN"}
                 placeholder="031734399"
                 height={56}
                 value={csn}
@@ -371,7 +384,7 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="date"
-                label="Process Start Date"
+                label={lang ? "מתאריך" : "Process Start Date"}
                 placeholder="04/12/1989"
                 height={56}
                 value={psd}
@@ -381,7 +394,7 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="date"
-                label="Process End Date"
+                label={lang ? "עד תאריך" : "Process End Date"}
                 placeholder="04/12/1989"
                 height={56}
                 value={ped}
@@ -391,7 +404,7 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="text"
-                label="Additional Annual Income"
+                label={lang ? "הכנסה שנתית נוספת" : "Additional annual income"}
                 placeholder="5000"
                 height={56}
                 value={annual_income}

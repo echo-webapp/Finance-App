@@ -3,6 +3,8 @@ import { useHistory } from "react-router";
 import Button from "../atoms/button";
 import Circle from "../atoms/circle";
 
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const Text1 = styled.div`
   margin-top: 5px;
   font-weight: 500;
@@ -43,6 +45,10 @@ export const CircleContainer = styled.div`
 `;
 
 const NewCustomer = ({ firstname, lastname }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
+
   const history = useHistory();
   return (
     <MainContainer>
@@ -54,13 +60,13 @@ const NewCustomer = ({ firstname, lastname }: any) => {
           <Circle color="light" size="large" />
         </div>
       </CircleContainer>
-      <Text1>New client added !</Text1>
+      <Text1>{lang ? "לקוח חדש התווסף" : "New client added !"}</Text1>
       <Text2>
         {firstname} {lastname}
       </Text2>
       <div style={{ marginTop: "30px" }}>
         <Button
-          title="Go to manager dashboard"
+          title={lang ? "דשבורד מנהלים" : "Go to manager dashboard"}
           type="secondary"
           padding="25px 30px"
           clickHandler={() => {
