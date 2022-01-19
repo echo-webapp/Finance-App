@@ -99,8 +99,8 @@ const LoadContainer = styled.div`
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [token, customerList, theme]: any = useSelector((state: RootState) => {
-    return [state.isAuth.isAuth, state.customerList.customer, state.theme];
+  const [token, customerList, lang]: any = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.customerList.customer, state.lang];
   });
 
   const history = useHistory();
@@ -180,9 +180,11 @@ const Home = () => {
         />
       </Modal>
       <Header
-        heading="Your clientele"
-        subheading={`${allClients ? allClients.length : 0} active clients`}
-        buttonText="+ Add New Client"
+        heading={lang ? "רשימת לקוחות" : "Your clientele"}
+        subheading={`${allClients ? allClients.length : 0} ${
+          lang ? "לקוחות פעילים" : "active clients"
+        }`}
+        buttonText={lang ? "+ הוסף לקוח חדש" : "+ Add New Client"}
         buttonHandler={() => history.push("/addclient")}
       />
       <SubHeader>
@@ -190,7 +192,7 @@ const Home = () => {
           <Logout />
           <InputContainer>
             <SubHeaderInput
-              placeholder="Search...."
+              placeholder={lang ? "חיפוש" : "Search...."}
               onChange={(e) => setSearch(e.target.value)}
             />
             <div>

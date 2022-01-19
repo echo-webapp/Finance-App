@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { Divider } from "@mui/material";
 import Circle from "../atoms/circle";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const Container = styled.div`
   display: flex;
   position: relative;
@@ -111,6 +112,9 @@ const DeleteIcon = styled.div`
 `;
 
 const ClientDetails = ({ clientDetails, handleClose }: any) => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
   return (
     <Container>
       <CircleContainer>

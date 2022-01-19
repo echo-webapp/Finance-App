@@ -120,14 +120,12 @@ const AvatarContainer = styled.div`
 const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const allClients = useSelector((state: RootState) => {
-    return state.customerList.customer;
+  const [allClients, lang]: any = useSelector((state: RootState) => {
+    return [state.customerList.customer, state.lang];
   });
 
   const clickHandler: any = (id: any) => {
-    console.log("fgiogdfgdfhg");
     if (data["new_Client"] === true) {
-      console.log("fgiodfhg");
       const temp = {
         ...data,
       };
@@ -156,7 +154,7 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
         <Avatar>
           <div>{data.firstName[0]}</div>
         </Avatar>
-        {data["new_Client"] === true && <SubNew>new</SubNew>}
+        {data["new_Client"] === true && <SubNew>{lang ? "חדש" : "new"}</SubNew>}
       </AvatarContainer>
       <SubContainer>
         <SubId>{data.eMail}</SubId>
@@ -171,7 +169,7 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
               e.stopPropagation();
             }}
           >
-            Client Details
+            {lang ? "פרטי לקוח" : "View Client Details"}
           </SubNew1>
         </SubHeader>
       </SubContainer>

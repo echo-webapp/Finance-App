@@ -1,6 +1,8 @@
 import React from "react";
 import Logout from "../vectors/logout";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 const SubHeaderT1 = styled.div`
   margin-left: 30px;
   display: flex;
@@ -35,6 +37,10 @@ const Sub1 = styled.div`
 `;
 
 const LogOutButton = () => {
+  const lang: any = useSelector((state: RootState) => {
+    return state.lang;
+  });
+
   return (
     <SubHeaderT1
       onClick={() => {
@@ -45,7 +51,7 @@ const LogOutButton = () => {
       <Sub>
         <Logout color="var(--logout-icon)" />
         <Sub1>
-          <Text>Log out</Text>
+          <Text>{lang ? "יציאה" : "Log out"}</Text>
         </Sub1>
       </Sub>
     </SubHeaderT1>

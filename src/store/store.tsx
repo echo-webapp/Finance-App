@@ -1,6 +1,7 @@
 import authReducer from "./Reducers/Auth";
 import clientReducer from "./Reducers/client";
 import themeReducer from "./Reducers/theme";
+import langReducer from "./Reducers/lang";
 import {
   configureStore,
   ThunkAction,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   isAuth: authReducer,
   customerList: clientReducer,
   theme: themeReducer,
+  lang: langReducer,
 });
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

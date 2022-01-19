@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import CircularProgress from "@mui/material/CircularProgress";
 import ThemeSwitch from "../../components/atoms/themeSwitch";
 import styled from "styled-components";
-
+import AppLogo from "../../components/vectors/NewApplogo";
 const Theme = styled.div`
   position: absolute;
   top: 5px;
@@ -25,8 +25,8 @@ const Login: any = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(false);
-  const token = useSelector((state: RootState) => {
-    return state.isAuth.isAuth;
+  const [token, lang] = useSelector((state: RootState) => {
+    return [state.isAuth.isAuth, state.lang];
   });
 
   const dispatch = useDispatch();
@@ -55,12 +55,22 @@ const Login: any = () => {
 
   const clickHandler: any = async () => {
     if (email == "") {
-      toast.warning("Please Fill Your Email");
-      return;
+      if (lang) {
+        toast.warning("אנא מלא את האימייל שלך");
+        return;
+      } else {
+        toast.warning("Please Fill Your Email");
+        return;
+      }
     }
     if (password == "") {
-      toast.warning("Please Fill Your Password");
-      return;
+      if (lang) {
+        toast.warning("אנא מלא את הסיסמה שלך");
+        return;
+      } else {
+        toast.warning("Please Fill Your Password");
+        return;
+      }
     }
     setFlag(true);
     const data = await login(email, password);
@@ -71,7 +81,11 @@ const Login: any = () => {
       setFlag(false);
       return;
     } else {
-      toast.error("Invalid Credentials");
+      if (lang) {
+        toast.error("אישורים לא חוקיים");
+      } else {
+        toast.error("Invalid Credentials");
+      }
       setFlag(false);
       return;
     }
@@ -97,15 +111,17 @@ const Login: any = () => {
           </div>
         </div>
         <div className="login-Header">
-          <div className="login-text-1">Login</div>
-          <div className="login-text-2">Welcome back !</div>
+          <div className="login-text-1">{lang ? "כניסה" : "Login"}</div>
+          <div className="login-text-2">
+            {lang ? "ברוכים הבאים" : "Welcome back !"}
+          </div>
         </div>
         <div className="Login-email">
           <div style={{ width: "80%" }}>
             <Input
               type="email"
               placeholder="pandey27nilesh@gmail.com"
-              label="Email"
+              label={lang ? "מייל" : "Email"}
               value={email}
               setvalue={setEmail}
               height={56}
@@ -118,7 +134,7 @@ const Login: any = () => {
             <Input
               type="password"
               placeholder=""
-              label="Password"
+              label={lang ? "סיסמא" : "Password"}
               value={password}
               setvalue={setPassword}
               height={56}
@@ -136,6 +152,8 @@ const Login: any = () => {
                 style={{ color: "white" }}
                 size={28}
               />
+            ) : lang ? (
+              "כניסה"
             ) : (
               "Login"
             )
