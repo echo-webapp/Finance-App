@@ -33,7 +33,6 @@ const Multiselect = ({ label, value, setvalue }: MultiselectProps) => {
         allowClear
         style={{ width: "100%" }}
         value={value}
-        placeholder="Select"
         onChange={(e) => setvalue(e)}
       >
         {additional_soc_list.map((val) => {

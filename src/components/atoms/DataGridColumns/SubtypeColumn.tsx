@@ -1,0 +1,64 @@
+import { useState, useEffect } from "react";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { getSubtypeValuesForType } from "../../../api/get";
+
+const SubtypeColumn = ({
+  params,
+  handleOptionChange,
+  flag,
+  updateRow,
+}: any) => {
+  const [row, setrow]: any = useState(params.row);
+  const [subtype_options, setsubtype_options]: any = useState([]);
+  const [value, setvalue]: any = useState(params.value);
+
+  useEffect(() => {
+    const func = async () => {
+      console.log("type", row.type);
+      if (row.type) {
+        const SubtypesOptions: any = await getSubtypeValuesForType(row.type);
+        console.log("all subtypes", SubtypesOptions);
+        const SubtypesOptionsModified: any = SubtypesOptions.map((lov: any) => {
+          return {
+            value: lov.LOV_CODE,
+            name: lov.LOV_VAL,
+          };
+        });
+        setsubtype_options(SubtypesOptionsModified);
+      }
+    };
+
+    func();
+  }, [flag]);
+
+  return (
+    <div>
+      <FormControl sx={{ m: 1, minWidth: 140 }}>
+        <Select
+          value={value}
+          onChange={(e) => {
+            handleOptionChange(params.row, params.field, e.target.value);
+            const row = {
+              ...params.row,
+              [params.field]: e.target.value,
+            };
+            // updateRow(row);
+            setvalue(e.target.value);
+          }}
+        >
+          {subtype_options.map((item: any) => {
+            return (
+              <MenuItem key={item.value} value={item.value}>
+                {item.name}
+              </MenuItem>
+            );
+          })}
+        </Select>
+      </FormControl>
+    </div>
+  );
+};
+
+export default SubtypeColumn;

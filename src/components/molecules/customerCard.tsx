@@ -72,6 +72,8 @@ const SubHeader = styled("div")`
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  /* flex-direction: column; */
 `;
 
 const SubNew = styled("div")`
@@ -162,6 +164,15 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
           {data.firstName} {data.lastName}
         </SubName>
         <SubHeader>
+          <div
+            // style={{}}
+            onClick={(e) => {
+              history.push(`/editclient/${data.ID}`);
+              e.stopPropagation();
+            }}
+          >
+            Edit
+          </div>
           <SubNew1
             onClick={(e) => {
               setClientDetailsId(data.ID);

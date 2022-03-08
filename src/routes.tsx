@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
@@ -10,9 +9,11 @@ import NotFound from "./pages/PageNotFound/notFound";
 import Transaction from "./pages/allTransactions/alltransactions";
 import Allsources from "./pages/source/allsources";
 import EditSource from "./pages/editSource/editsource";
+import EditClient from "./pages/client/editclient";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import Chart from "./pages/Chart/chart";
+
 const Router = () => {
   const user: any = useSelector((state: RootState) => state.isAuth?.isAuth);
   const token = localStorage.getItem("token");
@@ -23,6 +24,7 @@ const Router = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/test" component={Test} />
         <Route exact path="/addclient" component={AddClient} />
+        <Route exact path="/editclient/:id" component={EditClient} />
         <Route exact path="/source/:id" component={Source} />
         <Route exact path="/addsource/:id" component={AddSource} />
         <Route exact path="/transactions/:id" component={Transaction} />

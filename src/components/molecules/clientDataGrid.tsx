@@ -1,24 +1,20 @@
 import { Fragment, useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, gridColumnsTotalWidthSelector } from "@mui/x-data-grid";
 import { getTransactionDetails, get_Dropdown } from "../../api/get";
 import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 import { updateTransaction } from "../../api/update";
 import { create_Transaction } from "../../api/create";
-import SvgPlusIcon from "../../components/vectors/PlusIcon";
-import { Tooltip } from "@mui/material";
-// import Select from "../atoms/select";
 import { delete_Transaction } from "../../api/delete";
 import { toast } from "react-toastify";
-import { Checkbox } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import SubtypeColumn from "../atoms/DataGridColumns/SubtypeColumn";
+import TypeColumn from "../atoms/DataGridColumns/TypeColumn";
+import ExcludeFlag from "../atoms/DataGridColumns/ExcludeFlag";
+import InOut from "../atoms/DataGridColumns/InOut";
 interface ClientDataGridProps {
   source_id: any;
 }
@@ -89,13 +85,12 @@ const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
 
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const lang = useSelector((state: RootState) => state.lang);
-  const [rows, setrows] = useState([]);
+  const [rows, setrows]: any = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
   const [loader, setloader] = useState(true);
   const [selected, setselected]: any = useState(null);
   const [flag, setflag] = useState(false);
-  const [type, settype] = useState("hello");
   const [dropdown_options, setdropdown_options] = useState({
     type: [],
     subtype: [],
@@ -139,7 +134,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         const res = await getTransactionDetails(source_id);
         if (res.length == 0) {
           setloader(false);
-          settransactions(null);
+          settransactions(false);
         } else {
           settransactions(true);
           const obj = res[0];
@@ -151,6 +146,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
               width: 150,
               editable: true,
             };
+
             if (key == "amount") {
               const new_col = {
                 field: key,
@@ -218,31 +214,14 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 width: 150,
                 editable: true,
                 renderCell: (params: any) => {
-                  const row = params.row;
                   return (
-                    <div>
-                      <FormControl sx={{ m: 1, minWidth: 140 }}>
-                        <Select
-                          value={params.value}
-                          onChange={(e) =>
-                            handleOptionChange(
-                              params.row,
-                              params.field,
-                              e.target.value
-                            )
-                          }
-                          label="Age"
-                        >
-                          {dropdown_options.type.map((item: any) => {
-                            return (
-                              <MenuItem value={item.value}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      </FormControl>
-                    </div>
+                    <TypeColumn
+                      params={params}
+                      handleOptionChange={handleOptionChange}
+                      dropdown_options={dropdown_options}
+                      setflag={setflag}
+                      updateRow={updateRow}
+                    />
                   );
                 },
               };
@@ -255,30 +234,13 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 width: 150,
                 editable: true,
                 renderCell: (params: any) => {
-                  const row = params.row;
                   return (
-                    <div>
-                      <FormControl sx={{ m: 1, minWidth: 140 }}>
-                        <Select
-                          value={params.value}
-                          onChange={(e) =>
-                            handleOptionChange(
-                              params.row,
-                              params.field,
-                              e.target.value
-                            )
-                          }
-                        >
-                          {dropdown_options.subtype.map((item: any) => {
-                            return (
-                              <MenuItem value={item.value}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      </FormControl>
-                    </div>
+                    <SubtypeColumn
+                      params={params}
+                      handleOptionChange={handleOptionChange}
+                      flag={flag}
+                      updateRow={updateRow}
+                    />
                   );
                 },
               };
@@ -293,15 +255,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 editable: false,
                 renderCell: (params: any) => {
                   return (
-                    <Checkbox
-                      checked={params.value == "Y" ? true : false}
-                      onChange={(e) => {
-                        handleCheckboxChange(
-                          params.row,
-                          params.field,
-                          e.target.checked
-                        );
-                      }}
+                    <ExcludeFlag
+                      params={params}
+                      handleCheckboxChange={handleCheckboxChange}
                     />
                   );
                 },
@@ -317,28 +273,11 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 editable: false,
                 renderCell: (params: any) => {
                   return (
-                    <div>
-                      <FormControl sx={{ m: 1, minWidth: 140 }}>
-                        <Select
-                          value={params.value}
-                          onChange={(e) =>
-                            handleOptionChange(
-                              params.row,
-                              params.field,
-                              e.target.value
-                            )
-                          }
-                        >
-                          {InOut_Options.map((item: any) => {
-                            return (
-                              <MenuItem value={item.value}>
-                                {item.name}
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      </FormControl>
-                    </div>
+                    <InOut
+                      params={params}
+                      handleOptionChange={handleOptionChange}
+                      InOut_Options={InOut_Options}
+                    />
                   );
                 },
               };
@@ -377,6 +316,19 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     }
   }, [dropdown_options]);
 
+  useEffect(() => {
+    console.log("rows updated");
+    console.log("rows", rows);
+    if (!rows.length && transactions) {
+      settransactions(false);
+    }
+    if (rows.length > 0 && !transactions) {
+      settransactions(true);
+    }
+  }, [rows]);
+
+  const updateRow = (updatedRow: any) => {};
+
   const addTransaction = async () => {
     const data = {
       name: "",
@@ -398,8 +350,8 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
     };
     const res = await create_Transaction(mod_data, source_id);
-    console.log(mod_data);
-    setflag((prev) => !prev);
+    console.log("row created", res);
+    setrows(res);
     toast.success(lang ? "נוצרה עסקה חדשה" : "New Transaction Created");
   };
 
@@ -408,29 +360,58 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     field: any,
     checked: boolean
   ) => {
-    let val;
+    let val: any = null;
     if (checked) {
       val = "Y";
     } else val = "N";
+
+    console.log("clicked row", row);
+    setrows((prev: any) => {
+      let val: any = null;
+      if (checked) {
+        val = "Y";
+      } else val = "N";
+      const new_obj = {
+        ...row,
+        [field]: val,
+      };
+      const filteredRows: any = prev.map((obj: any) => {
+        const updatedObj: any = { ...obj };
+        if (obj.ID === row.ID) {
+          updatedObj[field] = val;
+        }
+        return updatedObj;
+      });
+
+      return filteredRows;
+    });
+
     const new_obj = {
       ...row,
       [field]: val,
     };
-    console.log("new_obj", row);
     const res = await updateTransaction(new_obj);
     console.log("response", res);
-    setflag((prev) => !prev);
   };
 
   const handleOptionChange = async (row: any, field: any, val: any) => {
+    console.log("clicked row", row);
+    setrows((prev: any) => {
+      const filteredRows: any = prev.map((obj: any) => {
+        const updatedObj: any = { ...obj };
+        if (obj.ID === row.ID) {
+          updatedObj[field] = val;
+        }
+        return updatedObj;
+      });
+
+      setrows(filteredRows);
+    });
     const new_obj = {
       ...row,
       [field]: val,
     };
-    // console.log("changed", new_obj);
     const res = await updateTransaction(new_obj);
-    setflag((prev) => !prev);
-    // console.log("response", res);
   };
 
   const handleChangeRow = async (obj: any, event: any) => {
@@ -441,11 +422,8 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ...row,
       [field]: value,
     };
-    // console.log(new_obj, "new_obj");
     delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
-    setflag((prev) => !prev);
-    // console.log("response", res);
   };
 
   const handleChangeRow1 = async (row: any) => {
@@ -456,16 +434,16 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       ...row_data[0],
       [row.field]: value,
     };
+    console.log("row");
     delete new_obj.CREATED;
     const res = await updateTransaction(new_obj);
-    setflag((prev) => !prev);
   };
 
   const deleteSelected = async () => {
     if (selected) {
       selected.forEach(async (id: any) => {
         const res = await delete_Transaction(id, source_id);
-        setflag((prev) => !prev);
+        setrows(res);
       });
       toast.success(
         lang ? "העסקה שנבחרה נמחקה" : "Selected Transaction Deleted"

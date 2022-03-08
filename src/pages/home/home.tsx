@@ -137,6 +137,7 @@ const Home = () => {
       setAllClients(customerList);
       return;
     }
+
     let sar: any = [];
     const search1 = search.toLowerCase();
     for (let i = 0; i < customerList.length; i++) {
@@ -148,6 +149,7 @@ const Home = () => {
     }
     setAllClients(sar);
   }, [search]);
+
   useEffect(() => {
     if (clientDetailsId === null) return;
     for (let i = 0; i < customerList.length; i++) {
@@ -156,6 +158,7 @@ const Home = () => {
       }
     }
   }, [clientDetailsId]);
+
   return (
     <AddClientContainer>
       <Modal

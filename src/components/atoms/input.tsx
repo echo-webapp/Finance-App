@@ -100,7 +100,6 @@ const Input = ({
           type={type}
           value={value}
           height={height}
-          placeholder={placeholder}
           onChange={ChangeHandler}
         />
       </InputContainer>
@@ -118,7 +117,6 @@ const Input = ({
         type={type}
         value={value}
         height={height}
-        placeholder={placeholder}
         onChange={(e) => {
           setvalue(e.target.value);
         }}

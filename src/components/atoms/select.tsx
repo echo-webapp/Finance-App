@@ -98,7 +98,6 @@ const SelectComponent = ({
         <Select
           style={{ width: "100%" }}
           value={value}
-          placeholder="In"
           onChange={(e) => {
             if (name) {
               setvalue((prev: any) => {
@@ -130,7 +129,6 @@ const SelectComponent = ({
       <Select
         style={{ width: "100%" }}
         value={value}
-        placeholder="Select"
         onChange={(e) => {
           if (name) {
             console.log("selet", e);
