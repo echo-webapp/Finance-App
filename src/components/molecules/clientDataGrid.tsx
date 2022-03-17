@@ -90,6 +90,32 @@ const FilterDateButton = styled.div`
   align-items: center;
   width: 340px;
 `;
+const DateButton = styled.button`
+  position: absolute;
+  bottom: 14px;
+  left: 500px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 150px;
+  cursor: pointer;
+`;
+const DateButton1 = styled.button`
+  position: absolute;
+  bottom: 20px;
+  left: 120px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 150px;
+  cursor: pointer;
+`;
 const InOut_Options = [
   { value: "in", name: "In" },
   { value: "out", name: "Out" },
@@ -99,12 +125,10 @@ const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
 var date = new Date();
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const lang = useSelector((state: RootState) => state.lang);
-  const [value, setValue]: any = useState([
-    new Date(date.getFullYear(), date.getMonth(), 1),
-    new Date(),
-  ]);
-
+  const [value, setValue]: any = useState([null, null]);
+  const [hideDateFilter, setHideDateFilter]: any = useState(false);
   const [rows, setrows]: any = useState([]);
+  const [rowsCopy, setRowCopy]: any = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
   const [loader, setloader] = useState(true);
@@ -116,8 +140,20 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   });
 
   useEffect(() => {
-    console.log(rows);
-  }, [rows]);
+    let n = value.length;
+    if (value[n - 1] === null) return;
+    let start = new Date(value[0]);
+    let end = new Date(value[n - 1]);
+    let res = [];
+    for (let i = 0; i < rowsCopy.length; i++) {
+      let check = new Date(rowsCopy[i].CREATED);
+      if (start <= check && end >= check) {
+        res.push(rowsCopy[i]);
+      }
+    }
+    setrows(res);
+    setHideDateFilter(true);
+  }, [value]);
   useEffect(() => {
     const getDropdownValues = async () => {
       dropdown_name_arr.forEach(async (name) => {
@@ -291,6 +327,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                       updateRow={updateRow}
                       rows={rows}
                       setrows={setrows}
+                      setRowCopy={setRowCopy}
                     />
                   );
                 },
@@ -345,6 +382,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
           });
           setcolumns(columns_arr);
           setrows(rows_arr);
+          setRowCopy(rows_arr);
         }
       } catch (err) {
         console.log(err);
@@ -379,6 +417,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const updateRow = (updatedRow: any) => {};
 
   const addTransaction = async () => {
+    setloader(true);
     const data = {
       name: "",
       date: "",
@@ -401,7 +440,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     const res = await create_Transaction(mod_data, source_id);
     console.log("row created", res);
     setrows(res);
+    setRowCopy(res);
     toast.success(lang ? "נוצרה עסקה חדשה" : "New Transaction Created");
+    setloader(false);
   };
 
   const handleCheckboxChange = async (
@@ -434,7 +475,25 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
 
       return filteredRows;
     });
+    setRowCopy((prev: any) => {
+      let val: any = null;
+      if (checked) {
+        val = "Y";
+      } else val = "N";
+      const new_obj = {
+        ...row,
+        [field]: val,
+      };
+      const filteredRows: any = prev.map((obj: any) => {
+        const updatedObj: any = { ...obj };
+        if (obj.ID === row.ID) {
+          updatedObj[field] = val;
+        }
+        return updatedObj;
+      });
 
+      return filteredRows;
+    });
     const new_obj = {
       ...row,
       [field]: val,
@@ -446,6 +505,17 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const handleOptionChange = async (row: any, field: any, val: any) => {
     console.log("clicked row", row);
     setrows((prev: any) => {
+      const filteredRows: any = prev.map((obj: any) => {
+        const updatedObj: any = { ...obj };
+        if (obj.ID === row.ID) {
+          updatedObj[field] = val;
+        }
+        return updatedObj;
+      });
+
+      setrows(filteredRows);
+    });
+    setRowCopy((prev: any) => {
       const filteredRows: any = prev.map((obj: any) => {
         const updatedObj: any = { ...obj };
         if (obj.ID === row.ID) {
@@ -489,20 +559,24 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   };
 
   const deleteSelected = async () => {
+    setloader(true);
     if (selected) {
       selected.forEach(async (id: any) => {
         const res = await delete_Transaction(id, source_id);
         setrows(res);
+        setRowCopy(res);
       });
       toast.success(
         lang ? "העסקה שנבחרה נמחקה" : "Selected Transaction Deleted"
       );
+      setloader(false);
     } else {
       toast.warning(
         lang
           ? "אנא בחר את העסקה למחיקה"
           : "Please Select the Transaction to Delete"
       );
+      setloader(false);
     }
   };
 
@@ -534,6 +608,17 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             <FilterDateButton>
               <MainDateRangePicker value={value} setValue={setValue} />
             </FilterDateButton>
+            {hideDateFilter && (
+              <DateButton
+                onClick={() => {
+                  setrows(rowsCopy);
+                  setHideDateFilter(false);
+                  setValue([null, null]);
+                }}
+              >
+                Remove Date Filter
+              </DateButton>
+            )}
           </Fragment>
           <DataGrid
             rows={rows}
@@ -555,10 +640,32 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         </Fragment>
       ) : (
         <NoTransactions>
-          <div className="text">No transactions available</div>
+          {rowsCopy.length > 0 ? (
+            <div className="text">
+              {lang
+                ? "אין עסקאות זמינות עבור משבצת זמן זו"
+                : "No transactions available for this Time Slot"}
+            </div>
+          ) : (
+            <div className="text">
+              {lang ? "אין עסקאות זמינות" : "No transactions available"}
+            </div>
+          )}
+
           <AddTransactionButton onClick={addTransaction}>
             <AddCircleIcon />
           </AddTransactionButton>
+          {hideDateFilter && (
+            <DateButton1
+              onClick={() => {
+                setrows(rowsCopy);
+                setHideDateFilter(false);
+                setValue([null, null]);
+              }}
+            >
+              {lang ? "הסר מסנן תאריך" : "Remove Date Filter"}
+            </DateButton1>
+          )}
         </NoTransactions>
       )}
     </div>
