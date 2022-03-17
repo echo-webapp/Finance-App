@@ -297,8 +297,12 @@ const CreditCard = ({
         <div className="card-holder-name">{details.sourceName}</div>
         <CardDetails theme={theme}>
           <div className="account-balance">
-            <div className="balance">{lang ? `יתרה בש"ח` : "Balance"}</div>
-            <div className="number">xxx</div>
+            <div className="balance" style={{ opacity: 0 }}>
+              {lang ? `יתרה בש"ח` : "Balance"}
+            </div>
+            <div className="number" style={{ opacity: 0 }}>
+              xxx
+            </div>
           </div>
           <div className="account-details">
             <div className="number-and-icon">

@@ -9,6 +9,8 @@ const SubtypeColumn = ({
   handleOptionChange,
   flag,
   updateRow,
+  rows,
+  setrows,
 }: any) => {
   const [row, setrow]: any = useState(params.row);
   const [subtype_options, setsubtype_options]: any = useState([]);
@@ -16,9 +18,17 @@ const SubtypeColumn = ({
 
   useEffect(() => {
     const func = async () => {
-      console.log("type", row.type);
-      if (row.type) {
-        const SubtypesOptions: any = await getSubtypeValuesForType(row.type);
+      let type = null;
+      if (rows.length > 0) {
+        const filter = rows.filter((x: any) => x.ID === row.ID);
+        type = filter[0].type;
+        console.log("filter", type);
+      } else if (row.type) {
+        type = row.type;
+        console.log("type", type);
+      }
+      if (type) {
+        const SubtypesOptions: any = await getSubtypeValuesForType(type);
         console.log("all subtypes", SubtypesOptions);
         const SubtypesOptionsModified: any = SubtypesOptions.map((lov: any) => {
           return {

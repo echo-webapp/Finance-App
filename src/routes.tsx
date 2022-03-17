@@ -1,4 +1,5 @@
 import { Route, Switch, Redirect } from "react-router-dom";
+import { useEffect } from "react";
 import Home from "./pages/home/home";
 import Login from "./pages/login/login";
 import Test from "./test";
@@ -17,6 +18,17 @@ import Chart from "./pages/Chart/chart";
 const Router = () => {
   const user: any = useSelector((state: RootState) => state.isAuth?.isAuth);
   const token = localStorage.getItem("token");
+  useEffect(() => {
+    window.onhashchange = function () {
+      //@ts-ignore
+      if (window.innerDocClick) {
+        //Your own in-page mechanism triggered the hash change
+      } else {
+        //Browser back button was clicked
+        console.log("backbutton triggered");
+      }
+    };
+  }, []);
   if (token) {
     return (
       <Switch>

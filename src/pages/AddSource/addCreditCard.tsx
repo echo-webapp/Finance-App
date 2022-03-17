@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import CloseIcon from "@mui/icons-material/Close";
@@ -7,6 +7,7 @@ import { get_Dropdown } from "../../api/get";
 import SelectComponent from "../../components/atoms/select";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+
 const SubContainer1 = styled.div`
   padding: 120px;
   padding-top: 50px;
@@ -285,18 +286,6 @@ const AddCreditCard = ({ sourceData, setSouceData }: any) => {
               height={50}
               value={digits}
               setvalue={setDigits}
-            />
-          </div>
-          <div style={{ marginTop: "15px" }}>
-            <Input
-              type="text"
-              label={
-                lang ? "מגבלת כרטיס אשראי מקור" : "Source Credit Card Limit"
-              }
-              placeholder="20000$"
-              height={50}
-              value={limit}
-              setvalue={setLimit}
             />
           </div>
         </SubContainerItem>

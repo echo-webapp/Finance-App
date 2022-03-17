@@ -221,8 +221,12 @@ const PhysicalCard_large = ({
         </SubContainer> */}
       </DetailsContainer>
       <BalanceContainer theme={theme}>
-        <div className="balance-amount">xx xxx</div>
-        <div className="balance-text">{lang ? `יתרה בש"ח` : "Balance"}</div>
+        <div className="balance-amount" style={{ opacity: 0 }}>
+          xx xxx
+        </div>
+        <div className="balance-text" style={{ opacity: 0 }}>
+          {lang ? `יתרה בש"ח` : "Balance"}
+        </div>
       </BalanceContainer>
     </Container>
   );

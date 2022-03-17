@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { DataGrid, gridColumnsTotalWidthSelector } from "@mui/x-data-grid";
+import { DataGrid } from "@mui/x-data-grid";
 import { getTransactionDetails, get_Dropdown } from "../../api/get";
 import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -146,6 +146,31 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
               width: 150,
               editable: true,
             };
+            if (key == "date") {
+              const new_col = {
+                field: key,
+                width: 150,
+                editable: false,
+                renderCell: (params: any) => {
+                  const newDateArr = params.value.split("-");
+
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        fontSize: 16,
+                      }}
+                    >
+                      {`${newDateArr[2]}/${newDateArr[1]}/${newDateArr[0]}`}
+                    </div>
+                  );
+                },
+              };
+              columns_arr.push(new_col);
+              f = false;
+            }
 
             if (key == "amount") {
               const new_col = {
@@ -153,21 +178,22 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 width: 150,
                 editable: true,
                 renderCell: (params: any) => {
+                  const number = parseFloat(params.value);
+                  const finalNumber = number.toLocaleString("he", {
+                    maximumFractionDigits: 2,
+                    style: "currency",
+                    currency: "ILS",
+                  });
                   return (
                     <div
                       style={{
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        gap: 4,
+                        fontSize: 16,
                       }}
                     >
-                      <span
-                        style={{ fontSize: 20, transform: "translateY(-5%)" }}
-                      >
-                        ₪
-                      </span>{" "}
-                      <span>{params.value}</span>
+                      {finalNumber}
                     </div>
                   );
                 },
@@ -182,6 +208,15 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                 editable: true,
                 renderCell: (params: any) => {
                   const row = params.row;
+                  const number =
+                    parseFloat(row.amount) / parseFloat(row.multiPlyer);
+
+                  const finalNumber = number.toLocaleString("he", {
+                    maximumFractionDigits: 2,
+                    style: "currency",
+                    currency: "ILS",
+                  });
+
                   return (
                     <div
                       style={{
@@ -189,18 +224,10 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                         justifyContent: "center",
                         alignItems: "center",
                         gap: 4,
+                        fontSize: 16,
                       }}
                     >
-                      <span
-                        style={{ fontSize: 20, transform: "translateY(-5%)" }}
-                      >
-                        ₪
-                      </span>
-                      <span>
-                        {(
-                          parseFloat(row.amount) / parseFloat(row.multiPlyer)
-                        ).toFixed(1)}
-                      </span>
+                      {finalNumber}
                     </div>
                   );
                 },
@@ -240,6 +267,8 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                       handleOptionChange={handleOptionChange}
                       flag={flag}
                       updateRow={updateRow}
+                      rows={rows}
+                      setrows={setrows}
                     />
                   );
                 },
@@ -317,8 +346,6 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   }, [dropdown_options]);
 
   useEffect(() => {
-    console.log("rows updated");
-    console.log("rows", rows);
     if (!rows.length && transactions) {
       settransactions(false);
     }

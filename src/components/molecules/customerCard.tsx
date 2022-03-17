@@ -164,15 +164,6 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
           {data.firstName} {data.lastName}
         </SubName>
         <SubHeader>
-          <div
-            // style={{}}
-            onClick={(e) => {
-              history.push(`/editclient/${data.ID}`);
-              e.stopPropagation();
-            }}
-          >
-            Edit
-          </div>
           <SubNew1
             onClick={(e) => {
               setClientDetailsId(data.ID);
@@ -189,4 +180,3 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
 };
 
 export default CustomerCard;
-// data["new_Client"] === true &&

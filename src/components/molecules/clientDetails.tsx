@@ -5,6 +5,9 @@ import Circle from "../atoms/circle";
 import CloseIcon from "@mui/icons-material/Close";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { useHistory } from "react-router";
+import EditIcon from "@mui/icons-material/Edit";
+
 const Container = styled.div`
   display: flex;
   position: relative;
@@ -14,6 +17,7 @@ const Container = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 27px;
 `;
+
 const LeftContainer = styled.div`
   width: 50%;
   display: flex;
@@ -21,13 +25,15 @@ const LeftContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const SubLeftContainer = styled.div`
   width: 70%;
 `;
+
 const SubLeftContainer1 = styled.div`
-  /* margin-top: 35px; */
   width: 70%;
 `;
+
 const RightContainer = styled.div`
   width: 50%;
   display: flex;
@@ -35,6 +41,7 @@ const RightContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
 `;
+
 const CenterContainer = styled.div`
   display: flex;
   height: 100%;
@@ -43,6 +50,7 @@ const CenterContainer = styled.div`
   justify-content: center;
   margin-top: 20px;
 `;
+
 const SubContainerHeader = styled.div`
   width: 100%;
   display: flex;
@@ -53,6 +61,7 @@ const SubContainerHeader = styled.div`
   color: #999999;
   margin-bottom: 25px;
 `;
+
 const SubContainerItem = styled.div`
   width: 100%;
   display: flex;
@@ -61,44 +70,54 @@ const SubContainerItem = styled.div`
   justify-content: space-between;
   margin-top: 10px;
 `;
+
 const SubContainerItem1 = styled.div`
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   color: #343a40;
 `;
+
 const SubContainerItem2 = styled.div`
   font-weight: 600;
   font-size: 16px;
   color: #343a40;
 `;
+
 const Header = styled.div`
   width: 70%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  font-weight: 500;
-  font-size: 35px;
-  color: #000000;
+  align-items: center;
+  gap: 12px;
   margin-top: 20px;
   margin-bottom: 35px;
+  .client-name {
+    font-weight: 500;
+    font-size: 35px;
+    color: #000000;
+  }
+  .edit-icon {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `;
+
 export const CircleContainer = styled.div`
   position: absolute;
   left: 0;
   top: 0;
   overflow: hidden;
   border-radius: 25px;
-  /* .dark {
-    position: absolute;
-    transform: translate(-30%, 30%);
-  } */
   .light {
     transform: translate(-60%, -60%);
     border-radius: 27px;
     z-index: 5;
   }
 `;
+
 const DeleteIcon = styled.div`
   position: absolute;
   display: flex;
@@ -107,14 +126,19 @@ const DeleteIcon = styled.div`
   left: 18px;
   top: 18px;
   cursor: pointer;
-  /* transform: translate(-50%, -50%); */
   z-index: 9;
 `;
 
-const ClientDetails = ({ clientDetails, handleClose }: any) => {
+const ClientDetails = ({
+  clientDetails,
+  handleClose,
+  currentClientId,
+}: any) => {
   const lang: any = useSelector((state: RootState) => {
     return state.lang;
   });
+  const history = useHistory();
+
   return (
     <Container>
       <CircleContainer>
@@ -173,7 +197,18 @@ const ClientDetails = ({ clientDetails, handleClose }: any) => {
       </CenterContainer>
       <RightContainer>
         <Header>
-          {clientDetails.firstName} {clientDetails.lastName}
+          <div
+            onClick={(e: any) => {
+              history.push(`/editclient/${currentClientId}`);
+              e.stopPropagation();
+            }}
+            className="edit-icon"
+          >
+            <EditIcon />
+          </div>
+          <div className="client-name">
+            {clientDetails.firstName} {clientDetails.lastName}
+          </div>
         </Header>
         <SubLeftContainer1>
           <SubContainerHeader>

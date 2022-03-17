@@ -216,9 +216,9 @@ const ChartDetailsCard = ({ theme, chartData }: any) => {
           </Heading>
         </SubContainer1>
       </DetailsContainer>
-      <BalanceContainer theme={theme}>
+      <BalanceContainer theme={theme} style={{ opacity: 0 }}>
         <div className="balance-amount">{chartData.SPY.toFixed(2)}</div>
-        <div className="balance-text">
+        <div className="balance-text" style={{ opacity: 0 }}>
           {lang ? "חסכון שנתי" : "Savings per year"}
         </div>
       </BalanceContainer>

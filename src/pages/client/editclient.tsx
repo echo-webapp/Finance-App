@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../../components/atoms/input";
 import SelectComponent from "../../components/atoms/select";
@@ -15,6 +15,7 @@ import validator from "validator";
 import { get_AllClients, get_Dropdown } from "../../api/get";
 import { updateClient } from "../../api/update";
 import { useHistory } from "react-router";
+import LoaderScreen from "../../components/molecules/LoaderScreen";
 
 const AddClientContainer = styled.div`
   display: flex;
@@ -140,7 +141,7 @@ const EditClient = ({ match }: any) => {
 
   const [flag, setflag] = useState(false);
   const [allClient, setallClient] = useState([]);
-  const [ClientDetails, setClientDetails]: any = useState([]);
+  const [ClientDetails, setClientDetails]: any = useState(null);
 
   const [firstname, setfirstname] = useState("");
   const [lastname, setlastname] = useState("");
@@ -190,10 +191,13 @@ const EditClient = ({ match }: any) => {
   useEffect(() => {
     const genResult = async () => {
       const res: any = await get_AllClients(token);
+      console.log("res", res);
       setallClient(res);
-      setflag(false);
+
       for (let i = 0; i < res.length; i++) {
         if (res[i].ID === match.params.id) {
+          console.log("matched");
+          console.log("details", ClientDetails);
           setClientDetails(res[i]);
         }
       }
@@ -204,6 +208,8 @@ const EditClient = ({ match }: any) => {
 
   useEffect(() => {
     if (ClientDetails) {
+      setflag(false);
+      console.log("clientDetails", ClientDetails);
       setfirstname(ClientDetails.firstName);
       setlastname(ClientDetails.lastName);
       setcity(ClientDetails.city);
@@ -239,6 +245,7 @@ const EditClient = ({ match }: any) => {
       processStartData: psd,
       processEndDate: ped,
     };
+    console.log("edited data", data);
 
     const arr = Object.keys(data);
     for (let i = 0; i < arr.length; i++) {
@@ -269,188 +276,195 @@ const EditClient = ({ match }: any) => {
       return;
     }
     const res = await updateClient(match.params.id, data);
-    const res1 = res[res.length - 1];
-    const new_res = [res1, ...allClient];
-    dispatch(SetCustomer(new_res));
+    console.log("all cusotomers", res);
+    dispatch(SetCustomer(res));
     history.push("/");
   };
 
   return (
-    <AddClientContainer>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={open}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <NewCustomer firstname={firstname} lastname={lastname} />
-      </Modal>
-      <Header
-        heading={lang ? "פרטי לקוח" : "Clientele details"}
-        subheading="Add new"
-        buttonText={lang ? "שלח נתונים" : "Submit data"}
-        buttonHandler={SubmitData}
-      />
+    <Fragment>
+      {!flag ? (
+        <AddClientContainer>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            open={open}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <NewCustomer firstname={firstname} lastname={lastname} />
+          </Modal>
+          <Header
+            heading={lang ? "פרטי לקוח" : "Clientele details"}
+            subheading="Add new"
+            buttonText={lang ? "שלח נתונים" : "Submit data"}
+            buttonHandler={SubmitData}
+          />
 
-      <Details>
-        <PersonalDetails>
-          <PHeading>{lang ? "פרטים אישיים" : "Personal Details"}</PHeading>
-          <PInputFields>
-            <InputContainerLeft>
-              <Input
-                type="text"
-                label={lang ? "שם פרטי" : "First Name"}
-                placeholder="Kristin"
-                height={56}
-                value={firstname}
-                setvalue={setfirstname}
-              />
-            </InputContainerLeft>
-            <InputContainerLeft>
-              <Input
-                type="text"
-                label={lang ? "שם משפחה" : "Last Name"}
-                placeholder="Watson"
-                height={56}
-                value={lastname}
-                setvalue={setlastname}
-              />
-            </InputContainerLeft>
-            <SelectComponent
-              label={lang ? "מין" : "Gender"}
-              value={gender}
-              setvalue={setgender}
-              options={dropdown_options.gender}
-            />
-            <InputContainerLeft>
-              <Input
-                type="date"
-                label={lang ? "תאריך לידה" : "Date of birth"}
-                placeholder="04/12/1989"
-                height={56}
-                value={dob}
-                setvalue={setdob}
-              />
-            </InputContainerLeft>
-            <InputContainerLeft>
-              <Input
-                type="email"
-                label={lang ? "מייל" : "Email"}
-                placeholder="test1.pikel@gmail.com"
-                height={56}
-                value={email}
-                setvalue={setemail}
-              />
-            </InputContainerLeft>
-            <InputContainerLeft>
-              <Input
-                type="text"
-                label={lang ? "טלפון סלולרי" : "Mobile Number"}
-                placeholder="0543451311"
-                height={56}
-                value={mobile}
-                setvalue={setmobile}
-              />
-            </InputContainerLeft>
-            <SelectComponent
-              label={lang ? "עיר" : "City"}
-              value={city}
-              setvalue={setcity}
-              options={dropdown_options.city}
-            />
-            <SelectComponent
-              label={lang ? "סטָטוּס" : "Status"}
-              value={status}
-              setvalue={setstatus}
-              options={dropdown_options.status}
-            />
-            <SelectComponent
-              label={lang ? "מצב משפחתי" : "Marriage status"}
-              value={marriage_status}
-              setvalue={setmarriage_status}
-              options={Marriage_Option}
-            />
-            <InputContainerLeft>
-              <Input
-                type="text"
-                label={lang ? "מספר ילדים" : "Number of children"}
-                placeholder="03"
-                height={56}
-                value={noc}
-                setvalue={setnoc}
-              />
-            </InputContainerLeft>
-          </PInputFields>
-        </PersonalDetails>
-        <Divider />
-        <FinancialDetails>
-          <FHeading> {lang ? "מידע פיננסי" : "Financial details"}</FHeading>
-          <FInputFields>
-            <InputContainerRight>
-              <Input
-                type="text"
-                label={lang ? "שווי נטו" : "Net worth"}
-                placeholder="13000"
-                height={56}
-                value={networth}
-                setvalue={setnetworth}
-              />
-            </InputContainerRight>
+          <Details>
+            <PersonalDetails>
+              <PHeading>{lang ? "פרטים אישיים" : "Personal Details"}</PHeading>
+              <PInputFields>
+                <InputContainerLeft>
+                  <Input
+                    type="text"
+                    label={lang ? "שם פרטי" : "First Name"}
+                    placeholder="Kristin"
+                    height={56}
+                    value={firstname}
+                    setvalue={setfirstname}
+                  />
+                </InputContainerLeft>
+                <InputContainerLeft>
+                  <Input
+                    type="text"
+                    label={lang ? "שם משפחה" : "Last Name"}
+                    placeholder="Watson"
+                    height={56}
+                    value={lastname}
+                    setvalue={setlastname}
+                  />
+                </InputContainerLeft>
+                <SelectComponent
+                  label={lang ? "מין" : "Gender"}
+                  value={gender}
+                  setvalue={setgender}
+                  options={dropdown_options.gender}
+                />
+                <InputContainerLeft>
+                  <Input
+                    type="date"
+                    label={lang ? "תאריך לידה" : "Date of birth"}
+                    placeholder="04/12/1989"
+                    height={56}
+                    value={dob}
+                    setvalue={setdob}
+                  />
+                </InputContainerLeft>
+                <InputContainerLeft>
+                  <Input
+                    type="email"
+                    label={lang ? "מייל" : "Email"}
+                    placeholder="test1.pikel@gmail.com"
+                    height={56}
+                    value={email}
+                    setvalue={setemail}
+                  />
+                </InputContainerLeft>
+                <InputContainerLeft>
+                  <Input
+                    type="text"
+                    label={lang ? "טלפון סלולרי" : "Mobile Number"}
+                    placeholder="0543451311"
+                    height={56}
+                    value={mobile}
+                    setvalue={setmobile}
+                  />
+                </InputContainerLeft>
+                <SelectComponent
+                  label={lang ? "עיר" : "City"}
+                  value={city}
+                  setvalue={setcity}
+                  options={dropdown_options.city}
+                />
+                <SelectComponent
+                  label={lang ? "סטָטוּס" : "Status"}
+                  value={status}
+                  setvalue={setstatus}
+                  options={dropdown_options.status}
+                />
+                <SelectComponent
+                  label={lang ? "מצב משפחתי" : "Marriage status"}
+                  value={marriage_status}
+                  setvalue={setmarriage_status}
+                  options={Marriage_Option}
+                />
+                <InputContainerLeft>
+                  <Input
+                    type="text"
+                    label={lang ? "מספר ילדים" : "Number of children"}
+                    placeholder="03"
+                    height={56}
+                    value={noc}
+                    setvalue={setnoc}
+                  />
+                </InputContainerLeft>
+              </PInputFields>
+            </PersonalDetails>
+            <Divider />
+            <FinancialDetails>
+              <FHeading> {lang ? "מידע פיננסי" : "Financial details"}</FHeading>
+              <FInputFields>
+                <InputContainerRight>
+                  <Input
+                    type="text"
+                    label={lang ? "שווי נטו" : "Net worth"}
+                    placeholder="13000"
+                    height={56}
+                    value={networth}
+                    setvalue={setnetworth}
+                  />
+                </InputContainerRight>
 
-            <InputContainerRight>
-              <Input
-                type="text"
-                label={lang ? `ת"ז` : "CSN"}
-                placeholder="031734399"
-                height={56}
-                value={csn}
-                setvalue={setcsn}
-              />
-            </InputContainerRight>
+                <InputContainerRight>
+                  <Input
+                    type="text"
+                    label={lang ? `ת"ז` : "CSN"}
+                    placeholder="031734399"
+                    height={56}
+                    value={csn}
+                    setvalue={setcsn}
+                  />
+                </InputContainerRight>
 
-            <InputContainerRight>
-              <Input
-                type="date"
-                label={lang ? "מתאריך" : "Process Start Date"}
-                placeholder="04/12/1989"
-                height={56}
-                value={psd}
-                setvalue={setpsd}
-              />
-            </InputContainerRight>
-            <InputContainerRight>
-              <Input
-                type="date"
-                label={lang ? "עד תאריך" : "Process End Date"}
-                placeholder="04/12/1989"
-                height={56}
-                value={ped}
-                setvalue={setped}
-              />
-            </InputContainerRight>
-            <InputContainerRight>
-              <Input
-                type="text"
-                label={lang ? "הכנסה שנתית נוספת" : "Additional annual income"}
-                placeholder="5000"
-                height={56}
-                value={annual_income}
-                setvalue={setannual_income}
-              />
-            </InputContainerRight>
-          </FInputFields>
-        </FinancialDetails>
-      </Details>
-    </AddClientContainer>
+                <InputContainerRight>
+                  <Input
+                    type="date"
+                    label={lang ? "מתאריך" : "Process Start Date"}
+                    placeholder="04/12/1989"
+                    height={56}
+                    value={psd}
+                    setvalue={setpsd}
+                  />
+                </InputContainerRight>
+                <InputContainerRight>
+                  <Input
+                    type="date"
+                    label={lang ? "עד תאריך" : "Process End Date"}
+                    placeholder="04/12/1989"
+                    height={56}
+                    value={ped}
+                    setvalue={setped}
+                  />
+                </InputContainerRight>
+                <InputContainerRight>
+                  <Input
+                    type="text"
+                    label={
+                      lang ? "הכנסה שנתית נוספת" : "Additional annual income"
+                    }
+                    placeholder="5000"
+                    height={56}
+                    value={annual_income}
+                    setvalue={setannual_income}
+                  />
+                </InputContainerRight>
+              </FInputFields>
+            </FinancialDetails>
+          </Details>
+        </AddClientContainer>
+      ) : (
+        <LoaderScreen />
+      )}
+    </Fragment>
   );
 };
 

@@ -337,12 +337,17 @@ const AddClient = () => {
               setvalue={setstatus}
               options={dropdown_options.status}
             />
-            <SelectComponent
-              label={lang ? "מצב משפחתי" : "Marriage status"}
-              value={marriage_status}
-              setvalue={setmarriage_status}
-              options={Marriage_Option}
-            />
+            <InputContainerLeft>
+              <Input
+                type="text"
+                label={lang ? `ת"ז` : "CSN"}
+                placeholder="031734399"
+                height={56}
+                value={csn}
+                setvalue={setcsn}
+              />
+            </InputContainerLeft>
+
             <InputContainerLeft>
               <Input
                 type="text"
@@ -369,26 +374,12 @@ const AddClient = () => {
                 setvalue={setnetworth}
               />
             </InputContainerRight>
-
             <InputContainerRight>
-              <Input
-                type="text"
-                label={lang ? `ת"ז` : "CSN"}
-                placeholder="031734399"
-                height={56}
-                value={csn}
-                setvalue={setcsn}
-              />
-            </InputContainerRight>
-
-            <InputContainerRight>
-              <Input
-                type="date"
-                label={lang ? "מתאריך" : "Process Start Date"}
-                placeholder="04/12/1989"
-                height={56}
-                value={psd}
-                setvalue={setpsd}
+              <SelectComponent
+                label={lang ? "מצב משפחתי" : "Marriage status"}
+                value={marriage_status}
+                setvalue={setmarriage_status}
+                options={Marriage_Option}
               />
             </InputContainerRight>
             <InputContainerRight>
@@ -399,6 +390,16 @@ const AddClient = () => {
                 height={56}
                 value={ped}
                 setvalue={setped}
+              />
+            </InputContainerRight>
+            <InputContainerRight>
+              <Input
+                type="date"
+                label={lang ? "מתאריך" : "Process Start Date"}
+                placeholder="04/12/1989"
+                height={56}
+                value={psd}
+                setvalue={setpsd}
               />
             </InputContainerRight>
             <InputContainerRight>

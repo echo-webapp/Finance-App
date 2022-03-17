@@ -248,12 +248,12 @@ const ChartDetailsCard1 = ({ theme, chartData }: any) => {
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
-        <div className="balance-amount">
+        <div className="balance-amount" style={{ opacity: 0 }}>
           {chartData.length > 0
             ? parseFloat(chartData[0].SPY).toFixed(2)
             : null}
         </div>
-        <div className="balance-text">
+        <div className="balance-text" style={{ opacity: 0 }}>
           {lang ? "חסכון שנתי" : "Savings per year"}
         </div>
       </BalanceContainer>

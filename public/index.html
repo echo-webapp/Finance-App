@@ -21,6 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Oswald&family=Poppins:wght@200;300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -31,6 +32,17 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Finance App</title>
+    <script>
+      document.onmouseover = function () {
+        //User's mouse is inside the page.
+        window.innerDocClick = true;
+      };
+
+      document.onmouseleave = function () {
+        //User's mouse has left the page.
+        window.innerDocClick = false;
+      };
+    </script>
     <script type="text/javascript">
       (function (l) {
         if (l.search[1] === "/") {

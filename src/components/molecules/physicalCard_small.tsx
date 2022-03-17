@@ -182,8 +182,12 @@ const PhysicalCard_small = ({ theme, details, name }: Physical_cardProps) => {
         </SubContainer>
       </DetailsContainer>
       <BalanceContainer theme={theme}>
-        <div className="balance-text">Balance</div>
-        <div className="balance-amount">xx xxx</div>
+        <div className="balance-text" style={{ opacity: 0 }}>
+          Balance
+        </div>
+        <div className="balance-amount" style={{ opacity: 0 }}>
+          xx xxx
+        </div>
       </BalanceContainer>
     </Container>
   );

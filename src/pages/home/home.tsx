@@ -109,9 +109,17 @@ const Home = () => {
   const [flag, setFlag] = useState(true);
   const [clientDetails, setClientDetails] = useState(null);
   const [clientDetailsId, setClientDetailsId] = useState(null);
+  const [currentClientId, setcurrentClientId] = useState(null);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = (id: any) => {
+    setcurrentClientId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   useEffect(() => {
     if (!token) {
       history.push("/login");
@@ -180,6 +188,7 @@ const Home = () => {
         <ClientDetails
           clientDetails={clientDetails}
           handleClose={handleClose}
+          currentClientId={currentClientId}
         />
       </Modal>
       <Header
@@ -220,7 +229,7 @@ const Home = () => {
                 data={data}
                 key={data.ID}
                 setClientDetailsId={setClientDetailsId}
-                handleOpen={handleOpen}
+                handleOpen={() => handleOpen(data.ID)}
               />
             );
           })}
