@@ -116,8 +116,8 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   });
 
   useEffect(() => {
-    console.log(value);
-  }, [value]);
+    console.log(rows);
+  }, [rows]);
   useEffect(() => {
     const getDropdownValues = async () => {
       dropdown_name_arr.forEach(async (name) => {
