@@ -15,6 +15,10 @@ import SubtypeColumn from "../atoms/DataGridColumns/SubtypeColumn";
 import TypeColumn from "../atoms/DataGridColumns/TypeColumn";
 import ExcludeFlag from "../atoms/DataGridColumns/ExcludeFlag";
 import InOut from "../atoms/DataGridColumns/InOut";
+
+import MainDateRangePicker from "./MainDateRangePicker";
+import { DatePicker } from "antd";
+const { RangePicker } = DatePicker;
 interface ClientDataGridProps {
   source_id: any;
 }
@@ -75,16 +79,31 @@ const DeleteTransactionButton = styled.div`
     }
   }
 `;
-
+const FilterDateButton = styled.div`
+  position: absolute;
+  bottom: 6px;
+  left: 170px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 340px;
+`;
 const InOut_Options = [
   { value: "in", name: "In" },
   { value: "out", name: "Out" },
 ];
 
 const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
-
+var date = new Date();
 const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const lang = useSelector((state: RootState) => state.lang);
+  const [value, setValue]: any = useState([
+    new Date(date.getFullYear(), date.getMonth(), 1),
+    new Date(),
+  ]);
+
   const [rows, setrows]: any = useState([]);
   const [columns, setcolumns] = useState([]);
   const [transactions, settransactions]: any = useState(null);
@@ -96,6 +115,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
     subtype: [],
   });
 
+  useEffect(() => {
+    console.log(value);
+  }, [value]);
   useEffect(() => {
     const getDropdownValues = async () => {
       dropdown_name_arr.forEach(async (name) => {
@@ -509,6 +531,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
             <DeleteTransactionButton onClick={deleteSelected}>
               <DeleteIcon />
             </DeleteTransactionButton>
+            <FilterDateButton>
+              <MainDateRangePicker value={value} setValue={setValue} />
+            </FilterDateButton>
           </Fragment>
           <DataGrid
             rows={rows}
