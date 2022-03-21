@@ -13,7 +13,11 @@ const InOut = ({ params, handleOptionChange, InOut_Options }: any) => {
           }
         >
           {InOut_Options.map((item: any) => {
-            return <MenuItem value={item.value}>{item.name}</MenuItem>;
+            return (
+              <MenuItem key={item.value} value={item.value}>
+                {item.name}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

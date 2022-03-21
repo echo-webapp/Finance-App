@@ -52,6 +52,7 @@ const GlobalStyle: any = createGlobalStyle`
     --font:"Poppins";
   }
 
+  
   .MuiOutlinedInput-root{
     color:white !important;
   }

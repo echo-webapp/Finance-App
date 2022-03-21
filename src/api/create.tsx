@@ -77,3 +77,21 @@ export const create_Transaction = async (data: any, id: any) => {
       console.error("Error:", error);
     });
 };
+
+export const create_Type = async (clientId: any, value: any) => {
+  const url = `https://pikel-it.com/finapp/LOV/create.php?type=TRANS_TYPE&clientId=${clientId}&value=${value}`;
+  return fetch(url, {
+    method: "POST", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};

@@ -47,6 +47,16 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    if (lang) {
+      document.documentElement.style.setProperty("--font", "Varela Round");
+      document.documentElement.style.setProperty("--oswald", "Varela Round");
+    } else {
+      document.documentElement.style.setProperty("--font", "Poppins");
+      document.documentElement.style.setProperty("--oswald", "Oswald");
+    }
+  }, [lang]);
+
   return (
     <Fragment>
       <ToastContainer />

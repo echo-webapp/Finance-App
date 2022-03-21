@@ -367,7 +367,7 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="text"
-                label={lang ? "שווי נטו" : "Net worth"}
+                label={lang ? "(₪) שווי נטו" : "(₪) Net worth"}
                 placeholder="13000"
                 height={56}
                 value={networth}
@@ -405,7 +405,11 @@ const AddClient = () => {
             <InputContainerRight>
               <Input
                 type="text"
-                label={lang ? "הכנסה שנתית נוספת" : "Additional annual income"}
+                label={
+                  lang
+                    ? "(₪) הכנסה שנתית נוספת"
+                    : "(₪) Additional annual income"
+                }
                 placeholder="5000"
                 height={56}
                 value={annual_income}

@@ -19,17 +19,6 @@ const Label = styled.div<LabelProps>`
   text-align: right;
   font-size: 18px;
   font-weight: ${(props) => (props.focus === true ? 700 : 500)};
-  &::before {
-    content: "₪";
-    position: absolute;
-    left: 0;
-    top: 55%;
-    padding-left: 20px;
-    display: ${(props) =>
-      props.label == "Net Worth" || props.label == "Additional Annual Income"
-        ? "block"
-        : "none"};
-  }
 `;
 
 const InputBase = styled.input<InputBaseProps>`

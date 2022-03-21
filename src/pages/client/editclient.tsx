@@ -209,7 +209,6 @@ const EditClient = ({ match }: any) => {
   useEffect(() => {
     if (ClientDetails) {
       setflag(false);
-      console.log("clientDetails", ClientDetails);
       setfirstname(ClientDetails.firstName);
       setlastname(ClientDetails.lastName);
       setcity(ClientDetails.city);
@@ -224,6 +223,7 @@ const EditClient = ({ match }: any) => {
       setnoc(ClientDetails.children);
       setdob(ClientDetails.DOB);
       setmobile(ClientDetails.mobile);
+      setannual_income(ClientDetails.additionalAnnIncome);
     }
   }, [ClientDetails]);
 
@@ -239,6 +239,7 @@ const EditClient = ({ match }: any) => {
       CSN: csn,
       additionalAnnIncome: annual_income,
       city: city,
+      owner: ClientDetails.owner,
       status: status,
       gender: gender,
       netWorth: networth,
@@ -406,7 +407,7 @@ const EditClient = ({ match }: any) => {
                 <InputContainerRight>
                   <Input
                     type="text"
-                    label={lang ? "שווי נטו" : "Net worth"}
+                    label={lang ? "שווי נטו" : "(₪) Net worth"}
                     placeholder="13000"
                     height={56}
                     value={networth}
@@ -449,7 +450,9 @@ const EditClient = ({ match }: any) => {
                   <Input
                     type="text"
                     label={
-                      lang ? "הכנסה שנתית נוספת" : "Additional annual income"
+                      lang
+                        ? "(₪) הכנסה שנתית נוספת"
+                        : "(₪) Additional annual income"
                     }
                     placeholder="5000"
                     height={56}

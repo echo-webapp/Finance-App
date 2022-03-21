@@ -165,7 +165,7 @@ const ClientDetails = ({
           <SubContainerItem>
             <SubContainerItem2>{clientDetails.netWorth}</SubContainerItem2>
             <SubContainerItem1>
-              {lang ? "שווי נטו" : "Net worth"}
+              {lang ? "(₪) שווי נטו" : "(₪) Net worth"}
             </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
@@ -185,9 +185,11 @@ const ClientDetails = ({
             </SubContainerItem1>
           </SubContainerItem>
           <SubContainerItem>
-            <SubContainerItem2>{clientDetails.netWorth}</SubContainerItem2>
+            <SubContainerItem2>
+              {clientDetails.additionalAnnIncome}
+            </SubContainerItem2>
             <SubContainerItem1>
-              {lang ? "הכנסה שנתית נוספת" : "Additional annual income"}
+              {lang ? "(₪) הכנסה שנתית נוספת" : "Additional annual income"}
             </SubContainerItem1>
           </SubContainerItem>
         </SubLeftContainer>

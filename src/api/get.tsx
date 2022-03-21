@@ -85,6 +85,23 @@ export const get_Dropdown = async (name: any) => {
     });
 };
 
+export const getType = async (clientId: any) => {
+  const url = `https://pikel-it.com/finapp/LOV/get.php?type=TRANS_TYPE&clientId=${clientId}`;
+  return fetch(url, {
+    method: "GET", // or 'PUT'
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+};
+
 export const getSubtypeValuesForType = async (type: any) => {
   const url = `https://pikel-it.com/finapp/LOV/get.php?type=TRANS_SUB_TYPE&parent=${type}`;
   return fetch(url, {

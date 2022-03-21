@@ -248,7 +248,7 @@ const Transactions = ({ id }: any) => {
           />
           <SubContainer>
             <DataGrid>
-              <ClientDataGrid source_id={source_details?.ID} />
+              <ClientDataGrid clientId={id} source_id={source_details?.ID} />
             </DataGrid>
             <CardsComponents>
               <BankAccountCardsHeading>

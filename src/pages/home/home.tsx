@@ -167,6 +167,16 @@ const Home = () => {
     }
   }, [clientDetailsId]);
 
+  useEffect(() => {
+    window.history.pushState(null, document.title, window.location.href);
+    window.addEventListener("popstate", function (event) {
+      console.log("window.location.href", window.location.href);
+      if (!window.location.href.includes("source")) {
+        window.history.pushState(null, document.title, window.location.href);
+      }
+    });
+  }, []);
+
   return (
     <AddClientContainer>
       <Modal

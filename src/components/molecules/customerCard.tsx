@@ -94,12 +94,10 @@ const SubNew = styled("div")`
   color: var(--background);
 `;
 const SubNew1 = styled("div")`
-  width: 136px;
   height: 22px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-decoration: underline;
 `;
 
@@ -163,17 +161,15 @@ const CustomerCard = ({ data, setClientDetailsId, handleOpen }: any) => {
         <SubName>
           {data.firstName} {data.lastName}
         </SubName>
-        <SubHeader>
-          <SubNew1
-            onClick={(e) => {
-              setClientDetailsId(data.ID);
-              handleOpen();
-              e.stopPropagation();
-            }}
-          >
-            {lang ? "פרטי לקוח" : "View Client Details"}
-          </SubNew1>
-        </SubHeader>
+        <SubNew1
+          onClick={(e) => {
+            setClientDetailsId(data.ID);
+            handleOpen();
+            e.stopPropagation();
+          }}
+        >
+          {lang ? "פרטי לקוח" : "View Client Details"}
+        </SubNew1>
       </SubContainer>
     </MainContainer>
   );

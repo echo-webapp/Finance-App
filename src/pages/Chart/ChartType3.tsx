@@ -102,9 +102,6 @@ const ChartType3 = ({ clientId }: any) => {
   const [columns, setcolumns] = useState([]);
   const [chartData, setChartData]: any = useState([]);
   const [flag, setFlag] = useState(false);
-  const handleChange = (event: any) => {
-    setOption(event.target.value);
-  };
 
   useEffect(() => {
     const getData = async () => {

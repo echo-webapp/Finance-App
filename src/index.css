@@ -74,7 +74,12 @@
   font-size: 18px !important;
 }
 
-
 ::-moz-scrollbar {
-    display: none !important;
+  display: none !important;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }

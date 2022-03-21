@@ -4,14 +4,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { getSubtypeValuesForType } from "../../../api/get";
 
-const SubtypeColumn = ({
-  params,
-  handleOptionChange,
-  flag,
-  updateRow,
-  rows,
-  setrows,
-}: any) => {
+const SubtypeColumn = ({ params, handleOptionChange, flag, rows }: any) => {
   const [row, setrow]: any = useState(params.row);
   const [subtype_options, setsubtype_options]: any = useState([]);
   const [value, setvalue]: any = useState(params.value);
@@ -50,11 +43,6 @@ const SubtypeColumn = ({
           value={value}
           onChange={(e) => {
             handleOptionChange(params.row, params.field, e.target.value);
-            const row = {
-              ...params.row,
-              [params.field]: e.target.value,
-            };
-            // updateRow(row);
             setvalue(e.target.value);
           }}
         >

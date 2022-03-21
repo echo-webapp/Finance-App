@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { getTransactionDetails, get_Dropdown } from "../../api/get";
+import { getTransactionDetails, getType, get_Dropdown } from "../../api/get";
 import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 import { updateTransaction } from "../../api/update";
@@ -17,9 +17,9 @@ import ExcludeFlag from "../atoms/DataGridColumns/ExcludeFlag";
 import InOut from "../atoms/DataGridColumns/InOut";
 
 import MainDateRangePicker from "./MainDateRangePicker";
-import { DatePicker } from "antd";
-const { RangePicker } = DatePicker;
+
 interface ClientDataGridProps {
+  clientId: any;
   source_id: any;
 }
 
@@ -121,9 +121,7 @@ const InOut_Options = [
   { value: "out", name: "Out" },
 ];
 
-const dropdown_name_arr = ["TRANS_TYPE", "TRANS_SUB_TYPE"];
-var date = new Date();
-const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
+const ClientDataGrid = ({ clientId, source_id }: ClientDataGridProps) => {
   const lang = useSelector((state: RootState) => state.lang);
   const [value, setValue]: any = useState([null, null]);
   const [hideDateFilter, setHideDateFilter]: any = useState(false);
@@ -156,33 +154,24 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   }, [value]);
   useEffect(() => {
     const getDropdownValues = async () => {
-      dropdown_name_arr.forEach(async (name) => {
-        const res = await get_Dropdown(name);
-        const arr: any = [];
-        res.forEach((lov: any) => {
-          const obj = {
-            value: lov.LOV_CODE,
-            name: lov.LOV_VAL,
-          };
-          arr.push(obj);
-        });
-        if (name == "TRANS_TYPE") {
-          setdropdown_options((prev) => {
-            return {
-              ...prev,
-              type: arr,
-            };
-          });
-        } else {
-          setdropdown_options((prev) => {
-            return {
-              ...prev,
-              subtype: arr,
-            };
-          });
-        }
+      const res = await getType(clientId);
+      const arr: any = [];
+      res.forEach((lov: any) => {
+        const obj = {
+          value: lov.LOV_CODE,
+          name: lov.LOV_VAL,
+        };
+        arr.push(obj);
+      });
+
+      setdropdown_options((prev) => {
+        return {
+          ...prev,
+          type: arr,
+        };
       });
     };
+
     getDropdownValues();
   }, []);
 
@@ -304,8 +293,9 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                       params={params}
                       handleOptionChange={handleOptionChange}
                       dropdown_options={dropdown_options}
+                      setdropdown_options={setdropdown_options}
                       setflag={setflag}
-                      updateRow={updateRow}
+                      clientId={clientId}
                     />
                   );
                 },
@@ -324,10 +314,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
                       params={params}
                       handleOptionChange={handleOptionChange}
                       flag={flag}
-                      updateRow={updateRow}
                       rows={rows}
-                      setrows={setrows}
-                      setRowCopy={setRowCopy}
                     />
                   );
                 },
@@ -397,10 +384,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   }, [source_id, flag, dropdown_options]);
 
   useEffect(() => {
-    if (
-      dropdown_options.subtype.length > 0 &&
-      dropdown_options.type.length > 0
-    ) {
+    if (dropdown_options.type.length > 0) {
       setTimeout(() => setloader(false), 1000);
     }
   }, [dropdown_options]);
@@ -413,8 +397,6 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
       settransactions(true);
     }
   }, [rows]);
-
-  const updateRow = (updatedRow: any) => {};
 
   const addTransaction = async () => {
     setloader(true);
@@ -505,6 +487,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
   const handleOptionChange = async (row: any, field: any, val: any) => {
     console.log("clicked row", row);
     setrows((prev: any) => {
+      console.log("prevrows", prev);
       const filteredRows: any = prev.map((obj: any) => {
         const updatedObj: any = { ...obj };
         if (obj.ID === row.ID) {
@@ -513,9 +496,11 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         return updatedObj;
       });
 
-      setrows(filteredRows);
+      return filteredRows;
     });
+
     setRowCopy((prev: any) => {
+      console.log("prevcopyrows", prev);
       const filteredRows: any = prev.map((obj: any) => {
         const updatedObj: any = { ...obj };
         if (obj.ID === row.ID) {
@@ -524,7 +509,7 @@ const ClientDataGrid = ({ source_id }: ClientDataGridProps) => {
         return updatedObj;
       });
 
-      setrows(filteredRows);
+      return filteredRows;
     });
     const new_obj = {
       ...row,

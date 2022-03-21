@@ -12,7 +12,7 @@ const SvgArrowleft = (props: SVGProps<SVGSVGElement>) => (
     <path
       d="M17.15 2L3 14.8636L15.8636 27.7273"
       stroke="currentColor"
-      stroke-width="3"
+      strokeWidth="3"
     />
   </svg>
 );
