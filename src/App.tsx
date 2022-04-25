@@ -10,7 +10,6 @@ import { RootState } from "./store/store";
 import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
 import ThemeSwitch from "./components/atoms/themeSwitch";
-import Switch from "@mui/material/Switch";
 import { ChangeLanguage } from "./store/Reducers/lang";
 import { MenuItem, Select } from "@mui/material";
 
@@ -41,7 +40,7 @@ const App = () => {
 
   const handleChange = (event: any) => {
     console.log("e", event.target.value);
-    if (event.target.value != selectedLanguage) {
+    if (event.target.value !== selectedLanguage) {
       setSelectedLanguage(event.target.value);
       dispatch(ChangeLanguage());
     }

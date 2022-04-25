@@ -26,8 +26,8 @@ const Login: any = () => {
   const theme = useSelector((state: RootState) => state.theme);
   const history = useHistory();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("yuval.pikel@gmail.com");
+  const [password, setPassword] = useState("123456");
   const [flag, setFlag] = useState(false);
   const [token, lang] = useSelector((state: RootState) => {
     return [state.isAuth.isAuth, state.lang];
@@ -38,6 +38,8 @@ const Login: any = () => {
   useEffect(() => {
     if (token) {
       history.push("/");
+    } else {
+      clickHandler();
     }
   }, [token]);
 
